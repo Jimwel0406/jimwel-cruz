@@ -1,2 +1,9 @@
+# *
 User-agent: *
 Allow: /
+
+# Host
+Host: https://jimwel-cruz.vercel.app
+
+# Sitemaps
+Sitemap: https://jimwel-cruz.vercel.app/sitemap.xml
