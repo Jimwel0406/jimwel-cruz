@@ -6,9 +6,10 @@ import {
   ChevronRight,
   Code2,
   Frame,
-  SearchCheck,
   Eye,
   MonitorSmartphone,
+  ShoppingCart,
+  Gauge,
 } from "lucide-react";
 import { TriangleDownIcon } from "@radix-ui/react-icons";
 import Spline from "@splinetool/react-spline";
@@ -29,73 +30,86 @@ import { motion } from "framer-motion";
 
 const aboutStats = [
   { label: "Years of experience", value: "3+" },
-  { label: "Technologies mastered", value: "5+" },
-  { label: "Companies worked with", value: "15+" },
+  { label: "Projects delivered", value: "6+" },
+  { label: "Company", value: "1" },
+  { label: "Technologies mastered", value: "8+" },
 ];
 
 const projects = [
   {
-    title: "Unqueue",
-    description: "E-commerce platform for selling digital products",
-    image: "/assets/unqueue.webm",
-    href: "https://unqueue.shop/",
+    title: "ModernHaven",
+    description: "E-commerce store for modern furniture",
+    image: "/assets/projects/modernhaven.jpg",
+    href: "https://modern-haven-nine.vercel.app/",
   },
   {
-    title: "InfiniteVPS",
-    description: "High performance VPS hosting solution",
-    image: "/assets/infinitevps.webm",
+    title: "ContactFlow",
+    description: "CRM platform for managing customer interactions",
+    image: "/assets/projects/contactflow.png",
+    href: "https://contactflow-crm.vercel.app/",
+  },
+  {
+    title: "Quizipedia",
+    description: "Interactive trivia and quiz game",
+    image: "/assets/projects/quizipedia.jpg",
     href: "#",
   },
   {
-    title: "TranslateBot",
-    description: "Powerful Multilingual Translation Bot for Discord",
-    image: "/assets/translate_bot.webm",
-    href: "https://translatebot.app/",
+    title: "Whack-A-Mole",
+    description: "Classic arcade-style whack-a-mole game",
+    image: "/assets/projects/whackamole.jpg",
+    href: "#",
   },
   {
-    title: "Wrona",
-    description: "Robotics-focused technology company",
-    image: "/assets/wrona.jpeg",
-    href: "https://www.wrona.com/",
+    title: "Calculator",
+    description: "Modern and responsive calculator app",
+    image: "/assets/projects/calculator.jpg",
+    href: "#",
   },
   {
-    title: "This website",
-    description: "My personal website",
-    image: "/assets/portfolio.webm",
-    href: "https://github.com/wendoj/portfolio",
+    title: "Block Puzzle",
+    description: "Relaxing block puzzle game",
+    image: "/assets/projects/blockpuzzle.jpg",
+    href: "#",
   },
 ];
 
 const services = [
   {
-    service: "Frontend Development",
+    service: "Full-Stack Development",
     description:
-      "Creating stellar user interfaces and web experiences using the latest technologies.",
+      "Building complete, production-ready web applications from database to user interface.",
     icon: Code2,
   },
   {
-    service: "UX Design",
+    service: "E-commerce Development",
     description:
-      "Building intuitive, user-centric designs that drive engagement and conversion.",
+      "Creating Shopify and custom online stores that convert visitors into customers.",
+    icon: ShoppingCart,
+  },
+  {
+    service: "UI Implementation",
+    description:
+      "Turning designs into pixel-perfect, responsive interfaces using modern frameworks.",
     icon: Frame,
   },
   {
-    service: "SEO Optimization",
+    service: "Performance Optimization",
     description:
-      "Enhancing your website's visibility in search engines for increased organic traffic.",
-    icon: SearchCheck,
+      "Improving load times and Lighthouse scores for a faster, smoother experience.",
+    icon: Gauge,
+  },
+  {
+    service: "Accessibility Audits",
+    description:
+      "Reviewing and fixing usability so everyone can navigate and use your website.",
+    icon: Eye,
   },
   {
     service: "Responsive Design",
     description:
       "Designing websites that look and perform equally well on all devices and screen sizes.",
     icon: MonitorSmartphone,
-  },
-  {
-    service: "Backend Development",
-    description:
-      "Developing robust, scalable server-side logic for a wide range of web applications.",
-    icon: Eye,
   },
 ];
 
@@ -190,9 +204,11 @@ export default function Home() {
               data-scroll-speed=".09"
               className="flex flex-row items-center space-x-1.5"
             >
+              <span className={styles.pill}>react.js</span>
               <span className={styles.pill}>next.js</span>
-              <span className={styles.pill}>tailwindcss</span>
-              <span className={styles.pill}>typescript</span>
+              <span className={styles.pill}>node.js</span>
+              <span className={styles.pill}>php</span>
+              <span className={styles.pill}>shopify</span>
             </div>
             <div>
               <h1
@@ -206,7 +222,7 @@ export default function Home() {
                   <br />
                 </span>
                 <span className="clash-grotesk text-gradient text-6xl 2xl:text-8xl">
-                  WendoJ.
+                  Jimwel.
                 </span>
               </h1>
               <p
@@ -215,8 +231,8 @@ export default function Home() {
                 data-scroll-speed=".06"
                 className="mt-1 max-w-lg tracking-tight text-muted-foreground 2xl:text-xl"
               >
-                An experienced full-stack website developer with a passion for
-                crafting unique digital experiences.
+                A full-stack developer and web team lead with a passion for
+                crafting performant, user-friendly digital experiences.
               </p>
             </div>
             <span
@@ -225,7 +241,7 @@ export default function Home() {
               data-scroll-speed=".06"
               className="flex flex-row items-center space-x-1.5 pt-6"
             >
-              <Link href="mailto:wendoj@proton.me" passHref>
+              <Link href="mailto:jimwelscruz0406@gmail.com" passHref>
                 <Button>
                   Get in touch <ChevronRight className="ml-1 h-4 w-4" />
                 </Button>
@@ -271,19 +287,18 @@ export default function Home() {
             <h2 className="py-16  pb-2 text-3xl font-light leading-normal tracking-tighter text-foreground xl:text-[40px]">
               I&apos;m an experienced full-stack developer proficient in{" "}
               <Link
-                href="https://create.t3.gg/"
+                href="https://react.dev/"
                 target="_blank"
                 className="underline"
               >
-                TypeScript, Tailwind, and Next.js
+                React, Next.js, and Node.js
               </Link>{" "}
-              since 2021. My experience spans from startups to mid-sized
-              companies, where I&apos;ve been instrumental in the entire product
-              design process; from ideation and wireframing, through
-              prototyping, to the delivery of the final product, all while
-              efficiently collaborating with cross-functional teams.
+              since 2023. From e-commerce stores to interactive web apps, I&apos;ve
+              helped take products from ideation and wireframing through
+              prototyping to final delivery — while leading a development team
+              and mentoring teammates along the way.
             </h2>
-            <div className="grid grid-cols-2 gap-8 xl:grid-cols-3">
+            <div className="grid grid-cols-2 gap-8 xl:grid-cols-4">
               {aboutStats.map((stat) => (
                 <div
                   key={stat.label}
@@ -339,24 +354,14 @@ export default function Home() {
                       <Card id="tilt">
                         <CardHeader className="p-0">
                           <Link href={project.href} target="_blank" passHref>
-                            {project.image.endsWith(".webm") ? (
-                              <video
-                                src={project.image}
-                                autoPlay
-                                loop
-                                muted
-                                className="aspect-video h-full w-full rounded-t-md bg-primary object-cover"
-                              />
-                            ) : (
-                              <Image
-                                src={project.image}
-                                alt={project.title}
-                                width={600}
-                                height={300}
-                                quality={100}
-                                className="aspect-video h-full w-full rounded-t-md bg-primary object-cover"
-                              />
-                            )}
+                            <Image
+                              src={project.image}
+                              alt={project.title}
+                              width={600}
+                              height={338}
+                              quality={100}
+                              className="aspect-video h-full w-full rounded-t-md bg-primary object-cover"
+                            />
                           </Link>
                         </CardHeader>
                         <CardContent className="absolute bottom-0 w-full bg-background/50 backdrop-blur">
@@ -446,7 +451,7 @@ export default function Home() {
               I&apos;m currently available for freelance work and open to
               discussing new projects.
             </p>
-            <Link href="mailto:wendoj@proton.me" passHref>
+            <Link href="mailto:jimwelscruz0406@gmail.com" passHref>
               <Button className="mt-6">Get in touch</Button>
             </Link>
           </div>

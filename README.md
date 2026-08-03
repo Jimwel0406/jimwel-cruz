@@ -1,13 +1,10 @@
-# 🖥️ Personal Portfolio
+# 🖥️ Jimwel Cruz — Personal Portfolio
 
 A sleek, modern, and responsive portfolio bootstrapped with [create-t3-app](https://create.t3.gg/).
 
-[Website Preview](https://github.com/wendoj/portfolio/assets/77996774/b73b02d7-0657-41e3-9124-e6d04b17fe93)
+[🔗 Link to portfolio](https://jimwel-cruz.vercel.app)
 
-[🔗 Link to portfolio](https://wendoj.vercel.app)
-
-All you need to know about me, my projects and skills can be found here. Personalize the portfolio by modifying `src/pages/index.tsx` and `src/styles/globals.css` to emulate your own portfolio. Made some improvements and want to share? Open a pull request.
-For any issues, feel free to report them here.
+All you need to know about me, my projects and skills can be found here. Built on top of the [developer-portfolio](https://github.com/wendoj/developer-portfolio) template.
 
 ## 🎉 Features
 - **Responsive Design**: The portfolio is designed to be fully responsive, providing an optimal viewing experience across a wide range of devices from desktops to mobile phones.
@@ -20,7 +17,7 @@ For any issues, feel free to report them here.
 ### Prerequisites
 To get started with this portfolio, ensure that you have the following installed on your system:
 - Node.js
-- npm
+- pnpm
 - git
 
 ## 🛠️ Installation
@@ -28,10 +25,10 @@ Follow the steps below to clone and run this project on your local system:
 
 ```bash
 # Clone the repository
-$ git clone https://github.com/wendoj/developer-portfolio.git
+$ git clone https://github.com/Jimwel0406/jimwel-cruz.git
 
 # Navigate to the project directory
-$ cd developer-portfolio
+$ cd jimwel-cruz
 
 # Remove current origin repository
 $ git remote remove origin
@@ -42,13 +39,12 @@ $ git remote remove origin
 Then install the required dependencies:
 ```bash
 # Install dependencies
-$ npm install
+$ pnpm install
 
 # Start the development server:
-$ npm run dev
+$ pnpm run dev
 ```
 Now, open your browser and navigate to `http://localhost:3000` to view your portfolio live.
-
 
 ## How do I deploy this?
 
