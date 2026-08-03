@@ -116,6 +116,10 @@ export default function Container(props: ContainerProps) {
     <>
       <Head>
         <title>{meta.title}</title>
+        <meta
+          name="google-site-verification"
+          content="google8b7d6ffafafc3f99"
+        />
         <meta name="robots" content="follow, index" />
         <meta name="theme-color" content="#7B82FE" />
         <meta content={meta.description} name="description" />
