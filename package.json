@@ -34,6 +34,7 @@
     "sharp": "^0.33.2",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.185.1",
     "vanilla-tilt": "^1.8.1",
     "zod": "^3.22.4"
   },
@@ -44,6 +45,7 @@
     "@types/node": "^18.17.0",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
+    "@types/three": "^0.185.3",
     "@typescript-eslint/eslint-plugin": "^6.11.0",
     "@typescript-eslint/parser": "^6.11.0",
     "autoprefixer": "^10.4.14",

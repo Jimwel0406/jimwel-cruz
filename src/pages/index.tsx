@@ -1,5 +1,5 @@
 import Container from "@/components/Container";
-import { useEffect, useRef, Suspense, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "@/styles/Home.module.css";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +12,7 @@ import {
   Gauge,
 } from "lucide-react";
 import { TriangleDownIcon } from "@radix-ui/react-icons";
-import Spline from "@splinetool/react-spline";
+import GoldenCard3D from "@/components/GoldenCard3D";
 import Link from "next/link";
 import { cn, scrollTo } from "@/lib/utils";
 import Image from "next/image";
@@ -26,7 +26,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import VanillaTilt from "vanilla-tilt";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 
 const aboutStats = [
   { label: "Years of experience", value: "3+" },
@@ -120,6 +120,31 @@ export default function Home() {
   const [current, setCurrent] = useState<number>(0);
   const [count, setCount] = useState<number>(0);
 
+  // premium 3D cards drifting + rotating with full-page scroll
+  const { scrollYProgress } = useScroll();
+  const card1Y = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, 480]),
+    { stiffness: 60, damping: 20, mass: 0.6 },
+  );
+  const card1Rotate = useTransform(scrollYProgress, [0, 1], [0, 18]);
+  const card1X = useTransform(scrollYProgress, [0, 1], [0, 50]);
+  const card2Y = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, -350]),
+    { stiffness: 60, damping: 20, mass: 0.6 },
+  );
+  const card2Rotate = useTransform(scrollYProgress, [0, 1], [0, -15]);
+  const card2X = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const card3Y = useSpring(
+    useTransform(scrollYProgress, [0, 1], [0, 600]),
+    { stiffness: 60, damping: 20, mass: 0.6 },
+  );
+  const card3Rotate = useTransform(scrollYProgress, [0, 1], [0, 22]);
+  const cardsOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.08, 0.82, 0.97],
+    [0, 0.7, 0.6, 0],
+  );
+
   // handle scroll
   useEffect(() => {
     const sections = document.querySelectorAll("section");
@@ -191,11 +216,33 @@ export default function Home() {
       <div ref={refScrollContainer}>
         <Gradient />
 
+        {/* 3 premium 3D cards — fixed behind all content, follow full-page scroll */}
+        <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
+          <motion.div
+            style={{ y: card1Y, x: card1X, rotate: card1Rotate, opacity: cardsOpacity }}
+            className="absolute left-[5%] top-[8%] h-[200px] w-[130px] sm:h-[280px] sm:w-[180px] lg:h-[340px] lg:w-[220px] lg:left-[6%] lg:top-[12%]"
+          >
+            <GoldenCard3D color="#d4af37" accent="#ffffff" />
+          </motion.div>
+          <motion.div
+            style={{ y: card2Y, x: card2X, rotate: card2Rotate, opacity: cardsOpacity }}
+            className="absolute right-[4%] top-[35%] h-[180px] w-[120px] sm:h-[260px] sm:w-[170px] lg:h-[320px] lg:w-[210px] lg:right-[5%] lg:top-[30%]"
+          >
+            <GoldenCard3D color="#c0c0c0" accent="#e8e8e8" />
+          </motion.div>
+          <motion.div
+            style={{ y: card3Y, rotate: card3Rotate, opacity: cardsOpacity }}
+            className="absolute left-[10%] top-[65%] h-[170px] w-[110px] sm:h-[240px] sm:w-[160px] lg:h-[300px] lg:w-[195px] lg:left-[12%] lg:top-[60%]"
+          >
+            <GoldenCard3D color="#b76e79" accent="#f5d5d5" />
+          </motion.div>
+        </div>
+
         {/* Intro */}
         <section
           id="home"
           data-scroll-section
-          className="mt-40 flex w-full flex-col items-center xl:mt-0 xl:min-h-screen xl:flex-row xl:justify-between"
+          className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden"
         >
           <div className={styles.intro}>
             <div
@@ -253,26 +300,16 @@ export default function Home() {
                 Learn more
               </Button>
             </span>
-
-            <div
-              className={cn(
-                styles.scroll,
-                isScrolled && styles["scroll--hidden"],
-              )}
-            >
-              Scroll to discover{" "}
-              <TriangleDownIcon className="mt-1 animate-bounce" />
-            </div>
           </div>
+
           <div
-            data-scroll
-            data-scroll-speed="-.01"
-            id={styles["canvas-container"]}
-            className="mt-14 h-full w-full xl:mt-0"
+            className={cn(
+              styles.scroll,
+              isScrolled && styles["scroll--hidden"],
+            )}
           >
-            <Suspense fallback={<span>Loading...</span>}>
-              <Spline scene="/assets/scene.splinecode" />
-            </Suspense>
+            Scroll to discover{" "}
+            <TriangleDownIcon className="mt-1 animate-bounce" />
           </div>
         </section>
 
@@ -392,7 +429,7 @@ export default function Home() {
             data-scroll
             data-scroll-speed=".4"
             data-scroll-position="top"
-            className="my-24 flex flex-col justify-start space-y-10"
+            className="my-14 md:my-24 flex flex-col justify-start space-y-10"
           >
             <motion.div
               initial={{ opacity: 0, y: -10 }}
@@ -436,7 +473,7 @@ export default function Home() {
         </section>
 
         {/* Contact */}
-        <section id="contact" data-scroll-section className="my-64">
+        <section id="contact" data-scroll-section className="my-20 md:my-40 lg:my-64">
           <div
             data-scroll
             data-scroll-speed=".4"
