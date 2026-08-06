@@ -39,7 +39,7 @@ const projects = [
   {
     title: "ModernHaven",
     description: "E-commerce store for modern furniture",
-    image: "/assets/projects/modernhaven.jpg",
+    video: "/assets/projects/modernhaven.mp4",
     href: "https://modern-haven-nine.vercel.app/",
   },
   {
