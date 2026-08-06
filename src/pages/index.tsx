@@ -245,14 +245,8 @@ export default function Home() {
           className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden"
         >
           <div className={styles.intro}>
-            <div
-              data-scroll
-              data-scroll-direction="horizontal"
-              data-scroll-speed=".09"
-              className="flex flex-row items-center space-x-1.5"
-            >
+            <div className="flex flex-row items-center space-x-1.5">
               <span className={styles.pill}>react.js</span>
-              <span className={styles.pill}>next.js</span>
               <span className={styles.pill}>node.js</span>
               <span className={styles.pill}>php</span>
               <span className={styles.pill}>shopify</span>
@@ -286,7 +280,7 @@ export default function Home() {
               data-scroll
               data-scroll-enable-touch-speed
               data-scroll-speed=".06"
-              className="flex flex-row items-center space-x-1.5 pt-6"
+              className="flex flex-row flex-wrap items-center gap-2 pt-6"
             >
               <Link href="mailto:jimwelscruz0406@gmail.com" passHref>
                 <Button>
@@ -413,7 +407,7 @@ export default function Home() {
                           </Link>
                         </CardHeader>
                         <CardContent className="absolute bottom-0 w-full bg-background/50 backdrop-blur">
-                          <CardTitle className="border-t border-white/5 p-4 text-base font-normal tracking-tighter">
+                          <CardTitle className="border-t border-white/5 p-3 text-xs font-normal tracking-tighter sm:p-4 sm:text-base">
                             {project.description}
                           </CardTitle>
                         </CardContent>
