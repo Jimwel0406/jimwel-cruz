@@ -45,7 +45,7 @@ const projects = [
   {
     title: "ContactFlow",
     description: "CRM platform for managing customer interactions",
-    image: "/assets/projects/contactflow.png",
+    video: "/assets/projects/contactflow.mp4",
     href: "https://contactflow-crm.vercel.app/",
   },
   {
@@ -391,14 +391,25 @@ export default function Home() {
                       <Card id="tilt">
                         <CardHeader className="p-0">
                           <Link href={project.href} target="_blank" passHref>
-                            <Image
-                              src={project.image}
-                              alt={project.title}
-                              width={600}
-                              height={338}
-                              quality={100}
-                              className="aspect-video h-full w-full rounded-t-md bg-primary object-cover"
-                            />
+                            {"video" in project && project.video ? (
+                              <video
+                                src={project.video}
+                                autoPlay
+                                loop
+                                muted
+                                playsInline
+                                className="aspect-video h-full w-full rounded-t-md bg-primary object-cover"
+                              />
+                            ) : (
+                              <Image
+                                src={project.image!}
+                                alt={project.title}
+                                width={600}
+                                height={338}
+                                quality={100}
+                                className="aspect-video h-full w-full rounded-t-md bg-primary object-cover"
+                              />
+                            )}
                           </Link>
                         </CardHeader>
                         <CardContent className="absolute bottom-0 w-full bg-background/50 backdrop-blur">
