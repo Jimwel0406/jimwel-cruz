@@ -1,0 +1,99 @@
+# Jimwel Cruz — Full-Stack Developer and Web Team Lead
+
+> Complete profile of Jimwel Cruz, a full-stack developer and web team lead based in the Philippines, building performant, user-friendly digital experiences with React, Next.js, Node.js, PHP, and Shopify since 2023.
+
+## Profile
+
+Jimwel Cruz is a full-stack developer and web team lead based in the Philippines. He has been building production web applications since 2023, working across the full stack from database design and API development to polished, responsive user interfaces. He helps clients and teams take products from ideation and wireframing through prototyping to final delivery, and he leads a development team while mentoring teammates along the way.
+
+His focus is on performant, user-friendly digital experiences: fast load times, accessible markup, clean interfaces, and conversion-focused e-commerce flows. He is available for freelance work and open to discussing new opportunities.
+
+## Services
+
+### Full-Stack Development
+
+Building complete, production-ready web applications from database to user interface. This includes designing database schemas, building RESTful APIs, implementing authentication and authorization, and delivering responsive front-ends with React and Next.js.
+
+### E-commerce Development
+
+Creating Shopify and custom online stores that convert visitors into customers. This covers theme customization, product catalog architecture, cart and checkout flows, payment integration, and performance tuning for stores that scale during traffic spikes.
+
+### UI Implementation
+
+Turning designs into pixel-perfect, responsive interfaces using modern frameworks. Working from Figma or other design files, delivering component systems that match the intended visual design at every breakpoint.
+
+### Performance Optimization
+
+Improving load times and Lighthouse scores for a faster, smoother experience. This includes code splitting, image optimization, caching strategies, bundle analysis, and Core Web Vitals tuning.
+
+### Accessibility Audits
+
+Reviewing and fixing usability so everyone can navigate and use your website. Conducting WCAG-oriented reviews of keyboard navigation, screen-reader support, color contrast, and focus management, then implementing fixes.
+
+### Responsive Design
+
+Designing websites that look and perform equally well on all devices and screen sizes. Mobile-first layouts that preserve content and interaction quality from a 320px phone to a 4K monitor.
+
+## Selected Work
+
+### ModernHaven — E-commerce Store for Modern Furniture
+
+https://modern-haven-nine.vercel.app/
+
+A production e-commerce store for modern furniture, demonstrating product catalog organization, cart and checkout flows, and polished responsive design.
+
+### ContactFlow — CRM Platform
+
+https://contactflow-crm.vercel.app/
+
+A CRM platform for managing customer interactions, showcasing data modeling, list and detail views, and interaction tracking in a full-stack application.
+
+### Quizipedia — Interactive Trivia and Quiz Game
+
+An interactive trivia and quiz game built as a personal project.
+
+### Whack-A-Mole — Classic Arcade Game
+
+A classic arcade-style whack-a-mole game built as a personal project.
+
+### Calculator — Modern Calculator App
+
+A modern, responsive calculator application built as a personal project.
+
+### Block Puzzle — Relaxing Puzzle Game
+
+A relaxing block puzzle game built as a personal project.
+
+## Technology Stack
+
+- Frontend: React, Next.js, TypeScript, Tailwind CSS, Framer Motion, Three.js
+- Backend: Node.js, PHP
+- E-commerce: Shopify
+- Tooling: Git, Docker, REST APIs, package managers, CI/CD workflows
+
+## Experience Highlights
+
+- 3+ years of experience as a full-stack developer.
+- 6+ products delivered from ideation to final delivery.
+- 1 company team led, including mentoring of teammates.
+- 8+ technologies mastered.
+
+## FAQ
+
+### What services does Jimwel Cruz offer?
+
+Full-stack development, e-commerce development, UI implementation, performance optimization, accessibility audits, and responsive design — from React and Next.js front-ends to Node.js, PHP, and Shopify back-ends.
+
+### Is Jimwel available for freelance work?
+
+Yes. Jimwel is currently available for freelance work and open to discussing new opportunities. The fastest way to get a reply is an email to jimwelscruz0406@gmail.com.
+
+### How much experience does Jimwel have?
+
+Over three years as a full-stack developer and web team lead, delivering more than six products from ideation and wireframing through prototyping to final delivery while mentoring teammates along the way.
+
+## Contact
+
+- Email: [jimwelscruz0406@gmail.com](mailto:jimwelscruz0406@gmail.com)
+- GitHub: [github.com/Jimwel0406](https://github.com/Jimwel0406)
+- Portfolio: [jimwel-cruz.vercel.app](https://jimwel-cruz.vercel.app/)

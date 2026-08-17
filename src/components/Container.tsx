@@ -195,6 +195,17 @@ export default function Container(props: ContainerProps) {
                     availableLanguage: "English",
                   },
                 },
+                {
+                  "@type": "Person",
+                  "@id": `${siteUrl}/#person`,
+                  name: "Jimwel Cruz",
+                  url: siteUrl,
+                  jobTitle: "Full-Stack Developer and Web Team Lead",
+                  email: "mailto:jimwelscruz0406@gmail.com",
+                  nationality: "Philippines",
+                  worksFor: { "@id": `${siteUrl}/#organization` },
+                  sameAs: ["https://github.com/Jimwel0406"],
+                },
               ],
             }).replace(/</g, "\\u003c"),
           }}

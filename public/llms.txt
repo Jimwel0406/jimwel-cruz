@@ -4,11 +4,11 @@
 
 ## About
 
-Jimwel Cruz is a full-stack developer proficient in React, Next.js, and Node.js since 2023. From e-commerce stores to interactive web apps, he helps take products from ideation and wireframing through prototyping to final delivery, while leading a development team and mentoring teammates.
+[Portfolio](https://jimwel-cruz.vercel.app/) — Jimwel Cruz is a full-stack developer proficient in React, Next.js, and Node.js. From e-commerce stores to interactive web apps, he helps take products from ideation and wireframing through prototyping to final delivery, while leading a development team and mentoring teammates.
 
 ## Services
 
-- Full-Stack Development: Building complete, production-ready web applications from database to user interface.
+- Full-Stack Development: [Building complete, production-ready web applications](https://jimwel-cruz.vercel.app/#services) from database to user interface.
 - E-commerce Development: Creating Shopify and custom online stores that convert visitors into customers.
 - UI Implementation: Turning designs into pixel-perfect, responsive interfaces using modern frameworks.
 - Performance Optimization: Improving load times and Lighthouse scores for a faster, smoother experience.
@@ -17,8 +17,8 @@ Jimwel Cruz is a full-stack developer proficient in React, Next.js, and Node.js 
 
 ## Selected Work
 
-- ModernHaven: E-commerce store for modern furniture — https://modern-haven-nine.vercel.app/
-- ContactFlow: CRM platform for managing customer interactions — https://contactflow-crm.vercel.app/
+- [ModernHaven](https://modern-haven-nine.vercel.app/) — E-commerce store for modern furniture.
+- [ContactFlow](https://contactflow-crm.vercel.app/) — CRM platform for managing customer interactions.
 - Quizipedia: Interactive trivia and quiz game.
 - Whack-A-Mole: Classic arcade-style whack-a-mole game.
 - Calculator: Modern and responsive calculator app.
@@ -31,7 +31,21 @@ Jimwel Cruz is a full-stack developer proficient in React, Next.js, and Node.js 
 - 1 company team led with mentoring of teammates.
 - 8+ technologies mastered.
 
+## FAQ
+
+- What services does Jimwel Cruz offer? — Full-stack development, e-commerce development, UI implementation, performance optimization, accessibility audits, and responsive design.
+- Is Jimwel available for freelance work? — Yes. Email jimwelscruz0406@gmail.com for the fastest reply.
+- How much experience does Jimwel have? — Over three years as a full-stack developer and web team lead.
+
 ## Contact
 
-- Email: jimwelscruz0406@gmail.com
-- GitHub: https://github.com/Jimwel0406
+- Email: [jimwelscruz0406@gmail.com](mailto:jimwelscruz0406@gmail.com)
+- GitHub: [github.com/Jimwel0406](https://github.com/Jimwel0406)
+
+## Optional
+
+- [Sitemap](https://jimwel-cruz.vercel.app/sitemap.xml)
+- [RSS Feed](https://jimwel-cruz.vercel.app/feed.xml)
+- [AI Summary](https://jimwel-cruz.vercel.app/ai/summary.json)
+- [AI FAQ](https://jimwel-cruz.vercel.app/ai/faq.json)
+- [AI Services](https://jimwel-cruz.vercel.app/ai/service.json)
