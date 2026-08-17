@@ -17,6 +17,10 @@
 /out/
 next-env.d.ts
 
+# next-pwa generated service worker
+/service-worker.js
+/workbox-*.js
+
 # production
 /build
 

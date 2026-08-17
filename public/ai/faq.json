@@ -1,0 +1,16 @@
+{
+  "faqs": [
+    {
+      "question": "What services does Jimwel Cruz offer?",
+      "answer": "Full-stack development, e-commerce development, UI implementation, performance optimization, accessibility audits, and responsive design — from React and Next.js front-ends to Node.js, PHP, and Shopify back-ends."
+    },
+    {
+      "question": "Is Jimwel available for freelance work?",
+      "answer": "Yes. Jimwel is currently available for freelance work and open to discussing new opportunities. The fastest way to get a reply is an email to jimwelscruz0406@gmail.com."
+    },
+    {
+      "question": "How much experience does Jimwel have?",
+      "answer": "Over three years as a full-stack developer and web team lead, delivering more than six products from ideation and wireframing through prototyping to final delivery while mentoring teammates along the way."
+    }
+  ]
+}

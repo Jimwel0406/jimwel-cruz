@@ -1,0 +1,29 @@
+{
+  "provider": "Jimwel Cruz",
+  "services": [
+    {
+      "name": "Full-Stack Development",
+      "description": "Building complete, production-ready web applications from database to user interface."
+    },
+    {
+      "name": "E-commerce Development",
+      "description": "Creating Shopify and custom online stores that convert visitors into customers."
+    },
+    {
+      "name": "UI Implementation",
+      "description": "Turning designs into pixel-perfect, responsive interfaces using modern frameworks."
+    },
+    {
+      "name": "Performance Optimization",
+      "description": "Improving load times and Lighthouse scores for a faster, smoother experience."
+    },
+    {
+      "name": "Accessibility Audits",
+      "description": "Reviewing and fixing usability so everyone can navigate and use your website."
+    },
+    {
+      "name": "Responsive Design",
+      "description": "Designing websites that look and perform equally well on all devices and screen sizes."
+    }
+  ]
+}

@@ -82,10 +82,11 @@ export default function Container(props: ContainerProps) {
 
   const { children, ...customMeta } = props;
   const router = useRouter();
+  const siteUrl = "https://jimwel-cruz.vercel.app";
   const meta = {
     title: "Jimwel Cruz",
-    description: `Full-stack developer and web team lead based in the Philippines.`,
-    image: "/assets/logo.webp",
+    description: `Full-stack developer and web team lead based in the Philippines. Building performant, user-friendly digital experiences with React, Next.js, and Node.js since 2023.`,
+    image: `${siteUrl}/assets/logo.webp`,
     type: "website",
     ...customMeta,
   };
@@ -153,6 +154,51 @@ export default function Container(props: ContainerProps) {
         />
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Jimwel Cruz"
+          href={`${siteUrl}/feed.xml`}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "WebSite",
+                  "@id": `${siteUrl}/#website`,
+                  name: meta.title,
+                  url: siteUrl,
+                  description: meta.description,
+                  inLanguage: "en",
+                  publisher: { "@id": `${siteUrl}/#organization` },
+                },
+                {
+                  "@type": "Organization",
+                  "@id": `${siteUrl}/#organization`,
+                  name: "Jimwel Cruz",
+                  url: siteUrl,
+                  logo: {
+                    "@type": "ImageObject",
+                    url: `${siteUrl}/assets/logo.webp`,
+                  },
+                  image: `${siteUrl}/assets/logo.webp`,
+                  description: meta.description,
+                  sameAs: ["https://github.com/Jimwel0406"],
+                  contactPoint: {
+                    "@type": "ContactPoint",
+                    email: "jimwelscruz0406@gmail.com",
+                    url: `${siteUrl}/#contact`,
+                    contactType: "sales",
+                    availableLanguage: "English",
+                  },
+                },
+              ],
+            }).replace(/</g, "\\u003c"),
+          }}
+        />
       </Head>
       <nav
         className={cn(

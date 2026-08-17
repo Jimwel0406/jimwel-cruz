@@ -1,0 +1,37 @@
+# Jimwel Cruz
+
+> Full-stack developer and web team lead based in the Philippines, building performant, user-friendly digital experiences with React, Next.js, Node.js, PHP, and Shopify since 2023.
+
+## About
+
+Jimwel Cruz is a full-stack developer proficient in React, Next.js, and Node.js since 2023. From e-commerce stores to interactive web apps, he helps take products from ideation and wireframing through prototyping to final delivery, while leading a development team and mentoring teammates.
+
+## Services
+
+- Full-Stack Development: Building complete, production-ready web applications from database to user interface.
+- E-commerce Development: Creating Shopify and custom online stores that convert visitors into customers.
+- UI Implementation: Turning designs into pixel-perfect, responsive interfaces using modern frameworks.
+- Performance Optimization: Improving load times and Lighthouse scores for a faster, smoother experience.
+- Accessibility Audits: Reviewing and fixing usability so everyone can navigate and use your website.
+- Responsive Design: Designing websites that look and perform equally well on all devices and screen sizes.
+
+## Selected Work
+
+- ModernHaven: E-commerce store for modern furniture — https://modern-haven-nine.vercel.app/
+- ContactFlow: CRM platform for managing customer interactions — https://contactflow-crm.vercel.app/
+- Quizipedia: Interactive trivia and quiz game.
+- Whack-A-Mole: Classic arcade-style whack-a-mole game.
+- Calculator: Modern and responsive calculator app.
+- Block Puzzle: Relaxing block puzzle game.
+
+## Experience
+
+- 3+ years of experience as a full-stack developer.
+- 6+ products delivered from ideation to final delivery.
+- 1 company team led with mentoring of teammates.
+- 8+ technologies mastered.
+
+## Contact
+
+- Email: jimwelscruz0406@gmail.com
+- GitHub: https://github.com/Jimwel0406

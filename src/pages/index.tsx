@@ -1,5 +1,6 @@
 import Container from "@/components/Container";
 import { useEffect, useRef, useState } from "react";
+import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { Button } from "@/components/ui/button";
 import {
@@ -113,10 +114,30 @@ const services = [
   },
 ];
 
+const faqs = [
+  {
+    question: "What services does Jimwel Cruz offer?",
+    answer:
+      "Full-stack development, e-commerce development, UI implementation, performance optimization, accessibility audits, and responsive design — from React and Next.js front-ends to Node.js, PHP, and Shopify back-ends.",
+  },
+  {
+    question: "Is Jimwel available for freelance work?",
+    answer:
+      "Yes. Jimwel is currently available for freelance work and open to discussing new opportunities. The fastest way to get a reply is an email to jimwelscruz0406@gmail.com.",
+  },
+  {
+    question: "How much experience does Jimwel have?",
+    answer:
+      "Over three years as a full-stack developer and web team lead, delivering more than six products from ideation and wireframing through prototyping to final delivery while mentoring teammates along the way.",
+  },
+];
+
 export default function Home() {
   const refScrollContainer = useRef(null);
   const [isScrolled, setIsScrolled] = useState<boolean>(false);
   const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
+  const carouselApiRef = useRef<CarouselApi | null>(null);
+  const wheelWrapperRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState<number>(0);
   const [count, setCount] = useState<number>(0);
 
@@ -198,6 +219,38 @@ export default function Home() {
     });
   }, [carouselApi]);
 
+  // keep the carousel api always fresh for the wheel handler
+  useEffect(() => {
+    carouselApiRef.current = carouselApi;
+  }, [carouselApi]);
+
+  // wheel over projects -> navigate carousel, block page scroll
+  useEffect(() => {
+    const el = wheelWrapperRef.current;
+    if (!el) return;
+
+    let cooldown = false;
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (cooldown) return;
+      cooldown = true;
+      const api = carouselApiRef.current;
+      if (e.deltaY > 0) {
+        api?.scrollNext();
+      } else {
+        api?.scrollPrev();
+      }
+      window.setTimeout(() => {
+        cooldown = false;
+      }, 700);
+    };
+
+    el.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      el.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
+
   // card hover effect
   useEffect(() => {
     const tilt: HTMLElement[] = Array.from(document.querySelectorAll("#tilt"));
@@ -212,6 +265,56 @@ export default function Home() {
   }, []);
 
   return (
+    <>
+      <Head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@graph": [
+                {
+                  "@type": "BreadcrumbList",
+                  itemListElement: [
+                    {
+                      "@type": "ListItem",
+                      position: 1,
+                      name: "Home",
+                      item: "https://jimwel-cruz.vercel.app/",
+                    },
+                  ],
+                },
+                {
+                  "@type": "FAQPage",
+                  mainEntity: faqs.map((faq) => ({
+                    "@type": "Question",
+                    name: faq.question,
+                    acceptedAnswer: {
+                      "@type": "Answer",
+                      text: faq.answer,
+                    },
+                  })),
+                },
+                ...projects
+                  .filter(
+                    (project): project is (typeof project) & { video: string } =>
+                      "video" in project && !!project.video,
+                  )
+                  .map((project) => ({
+                    "@type": "VideoObject",
+                    name: `${project.title} — web application demo`,
+                    description: `${project.description}. Built by Jimwel Cruz, full-stack developer and web team lead.`,
+                    contentUrl: `https://jimwel-cruz.vercel.app${project.video}`,
+                    thumbnailUrl: `https://jimwel-cruz.vercel.app/assets/projects/${project.title.toLowerCase()}.${
+                      project.title.toLowerCase() === "contactflow" ? "png" : "jpg"
+                    }`,
+                    uploadDate: "2024-01-01",
+                  })),
+              ],
+            }).replace(/</g, "\\u003c"),
+          }}
+        />
+      </Head>
     <Container>
       <div ref={refScrollContainer}>
         <Gradient />
@@ -372,12 +475,14 @@ export default function Home() {
               Streamlined digital experiences.
             </h2>
             <p className="mt-1.5 text-base tracking-tight text-muted-foreground xl:text-lg">
-              I&apos;ve worked on a variety of personal projects, from small websites to
-              large-scale web applications. Here are some of my favorites:
+              From small marketing sites to large-scale web applications, I&apos;ve
+              shipped products across e-commerce, CRM, and interactive
+              entertainment. Here are a few recent builds:
             </p>
 
             {/* Carousel */}
             <div className="mt-14">
+              <div ref={wheelWrapperRef}>
               <Carousel setApi={setCarouselApi} className="w-full">
                 <CarouselContent>
                   {projects.map((project) => (
@@ -392,6 +497,8 @@ export default function Home() {
                                 loop
                                 muted
                                 playsInline
+                                title={`${project.title} — ${project.description}`}
+                                aria-label={`${project.title} — ${project.description}`}
                                 className="aspect-video h-full w-full rounded-t-md bg-primary object-cover"
                               />
                             ) : (
@@ -418,6 +525,7 @@ export default function Home() {
                 <CarouselPrevious />
                 <CarouselNext />
               </Carousel>
+              </div>
               <div className="py-2 text-center text-sm text-muted-foreground">
                 <span className="font-semibold">
                   {current} / {count}
@@ -477,6 +585,33 @@ export default function Home() {
           </div>
         </section>
 
+        {/* FAQ */}
+        <section id="faq" data-scroll-section>
+          <div
+            data-scroll
+            data-scroll-speed=".4"
+            data-scroll-position="top"
+            className="mx-auto my-14 flex w-full max-w-3xl flex-col justify-start space-y-8 md:my-24"
+          >
+            <h2 className="text-3xl font-medium tracking-tighter xl:text-5xl">
+              Frequently asked questions.
+            </h2>
+            {faqs.map((faq) => (
+              <details
+                key={faq.question}
+                className="rounded-md bg-white/5 p-6 shadow-md backdrop-blur"
+              >
+                <summary className="cursor-pointer text-lg font-medium tracking-tight text-foreground">
+                  {faq.question}
+                </summary>
+                <p className="mt-3 tracking-tight text-muted-foreground">
+                  {faq.answer}
+                </p>
+              </details>
+            ))}
+          </div>
+        </section>
+
         {/* Contact */}
         <section id="contact" data-scroll-section className="my-20 md:my-40 lg:my-64">
           <div
@@ -491,7 +626,7 @@ export default function Home() {
             </h2>
             <p className="mt-1.5 text-base tracking-tight text-muted-foreground xl:text-lg">
               I&apos;m currently available for freelance work and open to
-              discussing new projects.
+              discussing new opportunities.
             </p>
             <Link href="mailto:jimwelscruz0406@gmail.com" passHref>
               <Button className="mt-6">Get in touch</Button>
@@ -500,6 +635,7 @@ export default function Home() {
         </section>
       </div>
     </Container>
+    </>
   );
 }
 

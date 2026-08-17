@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Jimwel Cruz</title>
+  <subtitle>Full-stack developer and web team lead based in the Philippines.</subtitle>
+  <link href="https://jimwel-cruz.vercel.app/"/>
+  <link rel="self" href="https://jimwel-cruz.vercel.app/feed.xml"/>
+  <updated>2024-01-01T00:00:00Z</updated>
+  <id>https://jimwel-cruz.vercel.app/</id>
+  <author>
+    <name>Jimwel Cruz</name>
+    <email>jimwelscruz0406@gmail.com</email>
+  </author>
+  <entry>
+    <title>ModernHaven — E-commerce store for modern furniture</title>
+    <link href="https://modern-haven-nine.vercel.app/"/>
+    <id>https://jimwel-cruz.vercel.app/projects/modernhaven</id>
+    <updated>2024-01-01T00:00:00Z</updated>
+    <summary>E-commerce store for modern furniture, built by Jimwel Cruz.</summary>
+  </entry>
+  <entry>
+    <title>ContactFlow — CRM platform for managing customer interactions</title>
+    <link href="https://contactflow-crm.vercel.app/"/>
+    <id>https://jimwel-cruz.vercel.app/projects/contactflow</id>
+    <updated>2024-01-01T00:00:00Z</updated>
+    <summary>CRM platform for managing customer interactions, built by Jimwel Cruz.</summary>
+  </entry>
+</feed>

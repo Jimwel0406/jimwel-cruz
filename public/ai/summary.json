@@ -1,0 +1,17 @@
+{
+  "name": "Jimwel Cruz",
+  "url": "https://jimwel-cruz.vercel.app",
+  "summary": "Jimwel Cruz is a full-stack developer and web team lead based in the Philippines. Since 2023 he has built e-commerce stores, CRM platforms, and interactive web apps with React, Next.js, Node.js, PHP, and Shopify, leading a development team from ideation and wireframing through prototyping to final delivery.",
+  "services": [
+    "Full-Stack Development",
+    "E-commerce Development",
+    "UI Implementation",
+    "Performance Optimization",
+    "Accessibility Audits",
+    "Responsive Design"
+  ],
+  "contact": {
+    "email": "jimwelscruz0406@gmail.com",
+    "github": "https://github.com/Jimwel0406"
+  }
+}
