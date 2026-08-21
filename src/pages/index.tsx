@@ -53,25 +53,25 @@ const projects = [
     title: "Quizipedia",
     description: "Interactive trivia and quiz game",
     image: "/assets/projects/quizipedia.jpg",
-    href: "#",
+    href: "https://quizipedia.epizy.com/",
   },
   {
     title: "Whack-A-Mole",
     description: "Classic arcade-style whack-a-mole game",
     image: "/assets/projects/whackamole.jpg",
-    href: "#",
+    href: "/projects/mole-bash",
   },
   {
     title: "Calculator",
     description: "Modern and responsive calculator app",
     image: "/assets/projects/calculator.jpg",
-    href: "#",
+    href: "/projects/calculator",
   },
   {
     title: "Block Puzzle",
     description: "Relaxing block puzzle game",
     image: "/assets/projects/blockpuzzle.jpg",
-    href: "#",
+    href: "https://block-puzzle-board.vercel.app/",
   },
 ];
 

@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Mole Bash - Whack A Mole</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "on-secondary": "#ffffff",
+        "on-background": "#191c21",
+        "surface-bright": "#f8f9ff",
+        "primary-fixed": "#d4e3ff",
+        "secondary-fixed": "#6bfad8",
+        "secondary-fixed-dim": "#48ddbc",
+        "on-surface-variant": "#414751",
+        "inverse-surface": "#2e3036",
+        "on-primary-fixed-variant": "#004883",
+        "on-primary": "#ffffff",
+        "on-tertiary-container": "#464100",
+        "on-secondary-fixed-variant": "#005142",
+        "tertiary-fixed-dim": "#d9c900",
+        "tertiary-container": "#bbae00",
+        "tertiary-fixed": "#f7e61a",
+        "surface-container-lowest": "#ffffff",
+        "on-error": "#ffffff",
+        "primary-fixed-dim": "#a4c9ff",
+        "surface-container": "#ecedf5",
+        "primary-container": "#2976c7",
+        "inverse-on-surface": "#eff0f8",
+        "on-tertiary-fixed": "#1f1c00",
+        "surface-container-highest": "#e1e2e9",
+        "background": "#f8f9ff",
+        "surface-container-high": "#e6e8ef",
+        "surface-dim": "#d8dae1",
+        "secondary-container": "#67f7d5",
+        "on-error-container": "#93000a",
+        "surface": "#f8f9ff",
+        "on-secondary-container": "#00705c",
+        "primary": "#005da7",
+        "on-primary-container": "#fdfcff",
+        "outline-variant": "#c1c7d3",
+        "outline": "#717783",
+        "error": "#ba1a1a",
+        "secondary": "#006b58",
+        "on-primary-fixed": "#001c39",
+        "inverse-primary": "#a4c9ff",
+        "surface-container-low": "#f2f3fb",
+        "on-tertiary-fixed-variant": "#4e4800",
+        "on-secondary-fixed": "#002019",
+        "on-surface": "#191c21",
+        "error-container": "#ffdad6",
+        "surface-variant": "#e1e2e9",
+        "on-tertiary": "#ffffff",
+        "tertiary": "#686000",
+        "surface-tint": "#0060ac",
+        "gold": "#f5a623",
+        "gold-light": "#fff3d6"
+      },
+      borderRadius: {
+        DEFAULT: "0.25rem",
+        lg: "0.5rem",
+        xl: "0.75rem",
+        full: "9999px"
+      },
+      spacing: {
+        "grid-gap": "1rem",
+        "safe-area": "2rem",
+        "element-margin": "0.75rem",
+        "panel-padding": "1.5rem"
+      },
+      fontFamily: {
+        "display-lg": ["Plus Jakarta Sans"],
+        "body-lg": ["Plus Jakarta Sans"],
+        "headline-lg": ["Plus Jakarta Sans"],
+        "body-md": ["Plus Jakarta Sans"],
+        "headline-md": ["Plus Jakarta Sans"],
+        "stats-num": ["Plus Jakarta Sans"],
+        "label-bold": ["Plus Jakarta Sans"]
+      },
+      fontSize: {
+        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "600"}],
+        "headline-lg": ["32px", {"lineHeight": "40px", "fontWeight": "700"}],
+        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "500"}],
+        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+        "stats-num": ["20px", {"lineHeight": "24px", "fontWeight": "800"}],
+        "label-bold": ["14px", {"lineHeight": "20px", "fontWeight": "700"}]
+      }
+    },
+  },
+}
+</script>
+<style>
+body {
+  background: linear-gradient(135deg, #f2c994 0%, #b3e5fc 50%, #81d4fa 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.game-tile {
+  box-shadow: inset 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  transition: transform 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  user-select: none;
+}
+.game-tile:active { transform: scale(0.92); }
+
+.mole-active {
+  animation: popUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes popUp {
+  0% { transform: translateY(100%) scale(0.5); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.mole-hidden {
+  animation: popDown 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes popDown {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(100%) scale(0.5); opacity: 0; }
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-3d {
+  box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.1s ease;
+}
+.btn-3d:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.2);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+.fill-icon { font-variation-settings: 'FILL' 1; }
+
+.splatter {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 100;
+  animation: splat 0.6s ease-out forwards;
+}
+@keyframes splat {
+  0% { transform: translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
+}
+
+.score-popup {
+  position: fixed;
+  pointer-events: none;
+  z-index: 99;
+  font-weight: 800;
+  animation: floatUp 0.8s ease-out forwards;
+}
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(0.5); opacity: 1; }
+  100% { transform: translateY(-80px) scale(1.2); opacity: 0; }
+}
+
+.combo-indicator {
+  animation: comboPulse 0.3s ease-out;
+}
+@keyframes comboPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.shake {
+  animation: shake 0.3s ease-in-out;
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+
+.modal-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: fadeIn 0.3s ease-out;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-content {
+  animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.tile-hit {
+  animation: tileHit 0.2s ease-out;
+}
+
+.mole-timer-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: #dc2626;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 4;
+  box-sizing: border-box;
+}
+@keyframes tileHit {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.85); }
+  100% { transform: scale(1); }
+}
+
+.sound-toggle {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.sound-toggle:hover { transform: scale(1.1); }
+.sound-toggle:active { transform: scale(0.9); }
+
+.drawer-overlay {
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: fadeIn 0.25s ease-out;
+}
+
+.drawer-panel {
+  animation: slideInRight 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-height: 100vh;
+  overflow-y: auto;
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.achievement-toast {
+  animation: toastIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+@keyframes toastIn {
+  from { transform: translateX(120%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.achievement-toast-out {
+  animation: toastOut 0.3s ease-in forwards;
+}
+@keyframes toastOut {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(120%); opacity: 0; }
+}
+
+.achieve-card {
+  transition: all 0.2s ease;
+}
+.achieve-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.achieve-locked {
+  filter: grayscale(1);
+  opacity: 0.5;
+}
+
+.profile-color-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: all 0.2s;
+}
+.profile-color-swatch:hover { transform: scale(1.15); }
+.profile-color-swatch.active { border-color: #191c21; transform: scale(1.1); }
+
+.nav-hidden {
+  transform: translateY(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-visible {
+  transform: translateY(0);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bubble {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  z-index: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(255,255,255,0.1));
+  border: 1px solid rgba(255,255,255,0.3);
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  0% { transform: translateY(100vh) scale(0); opacity: 0; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.4; }
+  100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+}
+</style>
+</head>
+<body class="font-body-md text-on-background">
+
+<header class="fixed top-0 left-0 w-full z-50 px-safe pt-safe bg-transparent">
+<div class="flex justify-between items-center w-full px-4 sm:px-6 py-3 sm:py-4 max-w-7xl mx-auto">
+<h1 class="font-display-lg text-3xl sm:text-display-lg font-extrabold text-primary shadow-sm tracking-tight">Mole Bash</h1>
+<div class="flex items-center gap-2 sm:gap-4">
+<button id="soundBtn" class="sound-toggle w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full text-primary" title="Toggle Sound">
+<span class="material-symbols-outlined text-2xl sm:text-3xl fill-icon">volume_up</span>
+</button>
+</div>
+</div>
+</header>
+
+<main class="flex flex-col lg:flex-row items-center justify-center min-h-screen gap-6 sm:gap-8 lg:gap-12 px-3 sm:px-6 pt-20 sm:pt-24 pb-28 sm:pb-32 max-w-7xl mx-auto">
+<div class="w-full max-w-[420px] sm:max-w-[500px]">
+<div id="gameGrid" class="w-full aspect-square grid grid-cols-3 grid-rows-3 gap-2 sm:gap-4 bg-primary/10 p-2 sm:p-4 rounded-2xl sm:rounded-3xl backdrop-blur-sm border-2 sm:border-4 border-white/20">
+</div>
+</div>
+
+<aside class="glass-panel w-full lg:w-[320px] rounded-2xl sm:rounded-[2.5rem] p-4 sm:p-panel-padding shadow-2xl flex flex-col gap-4 sm:gap-6">
+<div class="flex flex-col gap-3 sm:gap-4">
+<h2 class="font-headline-md text-headline-md text-center text-primary mb-1 sm:mb-2">Stats</h2>
+<div class="space-y-2 sm:space-y-3">
+<div class="flex justify-between items-center bg-white/40 p-2 sm:p-3 rounded-xl sm:rounded-2xl">
+<span class="font-label-bold text-on-surface-variant text-xs sm:text-sm">Score</span>
+<div class="flex items-center gap-2">
+<span id="comboDisplay" class="text-xs font-bold text-gold hidden"></span>
+<span id="scoreDisplay" class="font-stats-num text-stats-num text-primary">0</span>
+</div>
+</div>
+<div class="flex justify-between items-center bg-white/40 p-2 sm:p-3 rounded-xl sm:rounded-2xl">
+<span class="font-label-bold text-on-surface-variant text-xs sm:text-sm">Time Left</span>
+<span id="timeDisplay" class="font-stats-num text-stats-num text-primary">0:30</span>
+</div>
+<div class="flex justify-between items-center bg-white/40 p-2 sm:p-3 rounded-xl sm:rounded-2xl">
+<span class="font-label-bold text-on-surface-variant text-xs sm:text-sm">Lives</span>
+<div id="livesDisplay" class="flex gap-0.5 sm:gap-1"></div>
+</div>
+<div class="flex justify-between items-center bg-white/40 p-2 sm:p-3 rounded-xl sm:rounded-2xl">
+<span class="font-label-bold text-on-surface-variant text-xs sm:text-sm">High Score</span>
+<span id="highScoreDisplay" class="font-stats-num text-stats-num text-secondary">0</span>
+</div>
+</div>
+</div>
+
+<div class="flex flex-col gap-2 sm:gap-3">
+<span class="font-label-bold text-on-surface-variant text-center text-xs sm:text-sm">Speed</span>
+<div id="speedGroup" class="flex justify-between gap-2">
+<button data-speed="1" class="speed-btn flex-1 py-2 sm:py-3 px-1 sm:px-2 rounded-xl border-2 border-primary bg-primary-container text-primary font-bold transition-all btn-3d text-xs sm:text-sm">1x</button>
+<button data-speed="2" class="speed-btn flex-1 py-2 sm:py-3 px-1 sm:px-2 rounded-xl border-2 border-transparent bg-white/50 text-outline font-bold hover:bg-white/80 transition-all text-xs sm:text-sm">2x</button>
+<button data-speed="3" class="speed-btn flex-1 py-2 sm:py-3 px-1 sm:px-2 rounded-xl border-2 border-transparent bg-white/50 text-outline font-bold hover:bg-white/80 transition-all text-xs sm:text-sm">3x</button>
+</div>
+</div>
+
+<div class="flex flex-col gap-2 sm:gap-3">
+<span class="font-label-bold text-on-surface-variant text-center text-xs sm:text-sm">Duration</span>
+<div id="timeGroup" class="flex justify-between gap-2">
+<button data-time="30" class="time-btn flex-1 py-2 sm:py-3 px-1 sm:px-1 rounded-xl border-2 border-error bg-error-container text-error font-bold transition-all btn-3d text-xs sm:text-sm">30s</button>
+<button data-time="60" class="time-btn flex-1 py-2 sm:py-3 px-1 sm:px-1 rounded-xl border-2 border-transparent bg-white/50 text-outline font-bold hover:bg-white/80 transition-all text-xs sm:text-sm">60s</button>
+<button data-time="90" class="time-btn flex-1 py-2 sm:py-3 px-1 sm:px-1 rounded-xl border-2 border-transparent bg-white/50 text-outline font-bold hover:bg-white/80 transition-all text-xs sm:text-sm">90s</button>
+</div>
+</div>
+
+<button id="startBtn" class="w-full py-3 sm:py-4 mt-1 sm:mt-2 bg-secondary text-on-secondary rounded-full font-headline-md text-lg sm:text-headline-md btn-3d uppercase tracking-widest active:scale-95 transition-transform disabled:opacity-40 disabled:cursor-not-allowed disabled:translate-y-0 disabled:shadow-none">
+START
+</button>
+</aside>
+</main>
+
+<nav class="nav-visible fixed bottom-0 left-0 w-full z-50 bg-surface-container/80 backdrop-blur-md border-t border-outline-variant/30 shadow-lg px-4 py-2 sm:py-3 pb-1 flex justify-around items-center rounded-t-xl">
+<button id="navPlay" class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 sm:px-6 py-1 transition-all hover:scale-105 active:scale-90 duration-150 ease-out">
+<span class="material-symbols-outlined fill-icon text-xl sm:text-2xl">sports_esports</span>
+<span class="font-label-bold text-label-bold text-xs">Play</span>
+</button>
+<button id="navTrophies" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all active:scale-90 duration-150 ease-out">
+<span class="material-symbols-outlined text-xl sm:text-2xl">emoji_events</span>
+<span class="font-label-bold text-label-bold text-xs">Trophies</span>
+</button>
+<button id="navProfile" class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:text-primary transition-all active:scale-90 duration-150 ease-out">
+<span class="material-symbols-outlined text-xl sm:text-2xl">person</span>
+<span class="font-label-bold text-label-bold text-xs">Profile</span>
+</button>
+</nav>
+
+<div id="gameOverModal" class="modal-overlay fixed inset-0 z-[60] flex items-center justify-center p-4 hidden">
+<div class="modal-content glass-panel rounded-3xl sm:rounded-[2.5rem] p-6 sm:p-8 max-w-sm w-full shadow-2xl flex flex-col items-center gap-4 sm:gap-6 relative">
+<button id="closeModalBtn" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/30 transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+<h2 class="font-headline-lg text-headline-lg text-primary text-center">Game Over!</h2>
+<div class="w-full space-y-3">
+<div class="flex justify-between items-center bg-white/40 p-3 rounded-xl sm:rounded-2xl">
+<span class="font-label-bold text-on-surface-variant text-sm">Final Score</span>
+<span id="finalScore" class="font-stats-num text-stats-num text-primary">0</span>
+</div>
+<div class="flex justify-between items-center bg-white/40 p-3 rounded-xl sm:rounded-2xl">
+<span class="font-label-bold text-on-surface-variant text-sm">Best Combo</span>
+<span id="finalCombo" class="font-stats-num text-stats-num text-gold">x1</span>
+</div>
+<div class="flex justify-between items-center bg-white/40 p-3 rounded-xl sm:rounded-2xl">
+<span class="font-label-bold text-on-surface-variant text-sm">High Score</span>
+<span id="finalHigh" class="font-stats-num text-stats-num text-secondary">0</span>
+</div>
+</div>
+<div class="flex gap-3 w-full">
+<button id="playAgainBtn" class="flex-1 py-3 bg-secondary text-on-secondary rounded-full font-headline-md btn-3d uppercase tracking-wider active:scale-95 transition-transform">Play Again</button>
+</div>
+</div>
+</div>
+
+<div id="trophiesModal" class="modal-overlay fixed inset-0 z-[60] flex items-center justify-center p-4 hidden">
+<div class="modal-content glass-panel rounded-3xl sm:rounded-[2.5rem] p-5 sm:p-7 max-w-lg w-full shadow-2xl flex flex-col gap-4 sm:gap-5 relative max-h-[80vh]">
+<button id="closeTrophiesBtn" class="absolute top-3 right-3 w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/30 transition-colors text-on-surface-variant z-10">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+<h2 class="font-headline-md text-headline-md text-primary text-center">Trophies</h2>
+<div id="achievementsList" class="flex flex-col gap-2 overflow-y-auto pr-1">
+</div>
+</div>
+</div>
+
+<div id="profileDrawerOverlay" class="drawer-overlay fixed inset-0 z-[65] hidden" onclick="closeProfileDrawer(event)">
+<div id="profileDrawer" class="drawer-panel absolute right-0 top-0 h-full w-full max-w-sm glass-panel rounded-none sm:rounded-l-3xl p-5 sm:p-7 flex flex-col gap-5 shadow-2xl overflow-y-auto">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-md text-headline-md text-primary">Profile</h2>
+<button id="closeProfileBtn" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/30 transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined text-xl">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-4">
+<div>
+<label class="font-label-bold text-on-surface-variant text-sm block mb-1">Name</label>
+<input id="profileNameInput" class="w-full px-4 py-3 rounded-xl bg-white/60 border border-outline-variant focus:outline-none focus:ring-2 focus:ring-primary font-body-md" placeholder="Enter your name" maxlength="20"/>
+</div>
+<div>
+<label class="font-label-bold text-on-surface-variant text-sm block mb-2">Theme Color</label>
+<div id="themeSwatches" class="flex gap-3 flex-wrap">
+</div>
+</div>
+<div class="border-t border-outline-variant/30 pt-4">
+<h3 class="font-label-bold text-on-surface-variant text-sm mb-2">Your Stats</h3>
+<div class="space-y-2">
+<div class="flex justify-between bg-white/40 p-2 rounded-xl"><span class="text-sm">Games Played</span><span id="statGames" class="font-bold text-primary">0</span></div>
+<div class="flex justify-between bg-white/40 p-2 rounded-xl"><span class="text-sm">Total Moles Hit</span><span id="statHits" class="font-bold text-primary">0</span></div>
+<div class="flex justify-between bg-white/40 p-2 rounded-xl"><span class="text-sm">Golden Moles</span><span id="statGolden" class="font-bold text-gold">0</span></div>
+<div class="flex justify-between bg-white/40 p-2 rounded-xl"><span class="text-sm">Lifetime Score</span><span id="statLifetime" class="font-bold text-primary">0</span></div>
+<div class="flex justify-between bg-white/40 p-2 rounded-xl"><span class="text-sm">Best Combo</span><span id="statBestCombo" class="font-bold text-gold">x0</span></div>
+</div>
+</div>
+<div class="border-t border-outline-variant/30 pt-4">
+<button id="resetDataBtn" class="w-full py-3 rounded-xl bg-error-container text-error font-bold hover:brightness-95 transition-all active:scale-95 text-sm">Reset All Data</button>
+</div>
+</div>
+</div>
+</div>
+
+<div id="achievementToast" class="fixed top-20 sm:top-24 right-2 sm:right-4 z-[70] hidden">
+<div class="achievement-toast glass-panel rounded-2xl px-4 sm:px-5 py-3 sm:py-4 pr-4 sm:pr-12 shadow-2xl flex items-center gap-3 relative max-w-[260px] sm:max-w-sm border-l-4 border-gold">
+<div id="toastIcon" class="material-symbols-outlined text-2xl sm:text-3xl text-gold fill-icon shrink-0">emoji_events</div>
+<div class="min-w-0 flex-1">
+<div class="font-label-bold text-xs sm:text-sm text-on-surface-variant">Achievement Unlocked!</div>
+<div id="toastTitle" class="font-bold text-sm sm:text-headline-md text-primary truncate"></div>
+</div>
+</div>
+</div>
+
+<script>
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+let soundEnabled = true;
+
+function initAudio() {
+  if (!audioCtx) audioCtx = new AudioCtx();
+}
+
+function playTone(freq, duration, type = 'sine', vol = 0.15) {
+  if (!soundEnabled) return;
+  try {
+    initAudio();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  } catch (e) {}
+}
+
+function playHit() { playTone(800, 0.1, 'square', 0.1); }
+function playGolden() {
+  playTone(1000, 0.08, 'sine', 0.12);
+  setTimeout(() => playTone(1400, 0.12, 'sine', 0.12), 80);
+}
+function playMiss() { playTone(300, 0.2, 'sawtooth', 0.08); }
+function playGameOver() {
+  playTone(600, 0.15, 'sine', 0.1);
+  setTimeout(() => playTone(400, 0.2, 'sine', 0.1), 150);
+  setTimeout(() => playTone(200, 0.3, 'sine', 0.1), 350);
+}
+function playCombo() { playTone(1000, 0.06, 'sine', 0.1); }
+
+const GRID_SIZE = 9;
+
+const state = {
+  score: 0,
+  highScore: parseInt(localStorage.getItem('moleBashHigh') || '0'),
+  lives: 3,
+  maxLives: 3,
+  timeLeft: 30,
+  totalTime: 30,
+  speed: 1,
+  combo: 0,
+  maxCombo: 0,
+  molesHit: 0,
+  molesMissed: 0,
+  isPlaying: false,
+  currentMoleIndex: -1,
+  moleTimer: null,
+  gameTimer: null,
+  moleTimeout: null,
+  spawnTimeout: null,
+  goldenMole: false,
+};
+
+const MOLE_TIMES = [750, 550, 400];
+const SPAWN_INTERVALS = [650, 500, 350];
+const BASE_POINTS = 10;
+const GOLDEN_MULTIPLIER = 4;
+
+const tiles = [];
+const gridEl = document.getElementById('gameGrid');
+const scoreDisplay = document.getElementById('scoreDisplay');
+const timeDisplay = document.getElementById('timeDisplay');
+const livesDisplay = document.getElementById('livesDisplay');
+const highScoreDisplay = document.getElementById('highScoreDisplay');
+const startBtn = document.getElementById('startBtn');
+const bottomNav = document.querySelector('nav.fixed.bottom-0');
+const comboDisplay = document.getElementById('comboDisplay');
+const gameOverModal = document.getElementById('gameOverModal');
+const finalScore = document.getElementById('finalScore');
+const finalCombo = document.getElementById('finalCombo');
+const finalHigh = document.getElementById('finalHigh');
+const playAgainBtn = document.getElementById('playAgainBtn');
+const closeModalBtn = document.getElementById('closeModalBtn');
+const soundBtn = document.getElementById('soundBtn');
+
+highScoreDisplay.textContent = state.highScore;
+
+function createGrid() {
+  gridEl.innerHTML = '';
+  for (let i = 0; i < GRID_SIZE; i++) {
+    const tile = document.createElement('div');
+    tile.className = 'relative overflow-hidden bg-primary-container rounded-xl sm:rounded-2xl game-tile flex items-center justify-center cursor-pointer';
+    tile.dataset.index = i;
+    tile.innerHTML = `<span class="material-symbols-outlined text-4xl sm:text-7xl text-on-primary-container/20 pointer-events-none relative z-[2]">pest_control</span><div class="mole-timer-fill rounded-xl sm:rounded-2xl"></div>`;
+    const moleDiv = document.createElement('div');
+    moleDiv.className = 'mole-container absolute inset-0 flex items-center justify-center pointer-events-none hidden z-[3]';
+    moleDiv.innerHTML = `<div class="mole-body w-full h-full flex items-center justify-center rounded-xl sm:rounded-2xl shadow-xl"><span class="material-symbols-outlined text-4xl sm:text-7xl fill-icon">smart_toy</span></div>`;
+    tile.appendChild(moleDiv);
+    tile.addEventListener('click', () => handleTileClick(i));
+    tile.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      handleTileClick(i);
+    }, { passive: false });
+    gridEl.appendChild(tile);
+    tiles.push(tile);
+  }
+}
+
+function updateLives() {
+  livesDisplay.innerHTML = '';
+  for (let i = 0; i < state.maxLives; i++) {
+    const heart = document.createElement('span');
+    heart.className = `material-symbols-outlined ${i < state.lives ? 'text-error fill-icon' : 'text-error/30'}`;
+    heart.textContent = 'favorite';
+    livesDisplay.appendChild(heart);
+  }
+}
+
+function formatTime(seconds) {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${s.toString().padStart(2, '0')}`;
+}
+
+function updateUI() {
+  scoreDisplay.textContent = state.score.toLocaleString();
+  timeDisplay.textContent = formatTime(state.timeLeft);
+  updateLives();
+  if (state.combo > 1) {
+    comboDisplay.textContent = `x${state.combo}`;
+    comboDisplay.classList.remove('hidden');
+    comboDisplay.classList.add('combo-indicator');
+    setTimeout(() => comboDisplay.classList.remove('combo-indicator'), 300);
+  } else {
+    comboDisplay.classList.add('hidden');
+  }
+}
+
+function showMole(index, golden = false) {
+  hideMole();
+  if (index < 0 || index >= GRID_SIZE) return;
+  const tile = tiles[index];
+  const container = tile.querySelector('.mole-container');
+  const body = container.querySelector('.mole-body');
+  
+  if (golden) {
+    body.className = 'mole-body w-full h-full flex items-center justify-center rounded-xl sm:rounded-2xl shadow-xl bg-gold border-b-4 border-gold';
+    body.innerHTML = `<span class="material-symbols-outlined text-4xl sm:text-7xl fill-icon text-white">stars</span>`;
+  } else {
+    body.className = 'mole-body w-full h-full flex items-center justify-center rounded-xl sm:rounded-2xl shadow-xl bg-tertiary border-b-4 border-tertiary-container';
+    body.innerHTML = `<span class="material-symbols-outlined text-4xl sm:text-7xl fill-icon text-on-tertiary">smart_toy</span>`;
+  }
+  
+  container.classList.remove('hidden');
+  body.classList.remove('mole-hidden');
+  body.classList.add('mole-active');
+  state.currentMoleIndex = index;
+  state.goldenMole = golden;
+  
+  const fill = tile.querySelector('.mole-timer-fill');
+  if (fill) {
+    fill.style.transition = 'none';
+    fill.style.height = '0%';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        fill.style.transition = `height ${MOLE_TIMES[state.speed - 1]}ms linear`;
+        fill.style.height = '100%';
+      });
+    });
+  }
+  
+  if (state.moleTimeout) clearTimeout(state.moleTimeout);
+  state.moleTimeout = setTimeout(() => {
+    if (state.currentMoleIndex === index && state.isPlaying) {
+      missMole();
+    }
+  }, MOLE_TIMES[state.speed - 1]);
+}
+
+function hideMole() {
+  if (state.currentMoleIndex === -1) return;
+  const tile = tiles[state.currentMoleIndex];
+  if (tile) {
+    const container = tile.querySelector('.mole-container');
+    const body = container?.querySelector('.mole-body');
+    if (body) {
+      body.classList.remove('mole-active');
+      body.classList.add('mole-hidden');
+    }
+    if (container) {
+      setTimeout(() => { container.classList.add('hidden'); }, 200);
+    }
+    const fill = tile.querySelector('.mole-timer-fill');
+    if (fill) {
+      fill.style.transition = 'none';
+      fill.style.height = '0%';
+    }
+  }
+  state.currentMoleIndex = -1;
+  state.goldenMole = false;
+  if (state.moleTimeout) {
+    clearTimeout(state.moleTimeout);
+    state.moleTimeout = null;
+  }
+}
+
+function missMole() {
+  if (!state.isPlaying) return;
+  const missedIndex = state.currentMoleIndex;
+  state.molesMissed++;
+  state.combo = 0;
+  state.lives--;
+  playMiss();
+  updateUI();
+  
+  if (missedIndex >= 0) {
+    const tile = tiles[missedIndex];
+    const fill = tile.querySelector('.mole-timer-fill');
+    if (fill) {
+      fill.style.transition = 'none';
+      fill.style.height = '0%';
+    }
+    const container = tile.querySelector('.mole-container');
+    if (container) {
+      const body = container.querySelector('.mole-body');
+      if (body) {
+        body.className = 'mole-body w-full h-full flex items-center justify-center rounded-xl sm:rounded-2xl bg-error/20';
+        body.innerHTML = '<span class="material-symbols-outlined text-4xl sm:text-7xl fill-icon text-error">heart_broken</span>';
+        body.classList.remove('mole-hidden');
+        body.classList.add('mole-active');
+      }
+      setTimeout(() => { container.classList.add('hidden'); }, 500);
+    }
+  }
+  
+  state.currentMoleIndex = -1;
+  state.goldenMole = false;
+  
+  if (state.lives <= 0) {
+    endGame();
+    return;
+  }
+  
+  scheduleNextMole();
+}
+
+function spawnMole() {
+  if (!state.isPlaying) return;
+  hideMole();
+  
+  const available = [];
+  for (let i = 0; i < GRID_SIZE; i++) {
+    if (i !== state.currentMoleIndex) available.push(i);
+  }
+  
+  if (available.length === 0) return;
+  const idx = available[Math.floor(Math.random() * available.length)];
+  const golden = Math.random() < 0.15;
+  showMole(idx, golden);
+}
+
+function scheduleNextMole() {
+  if (state.spawnTimeout) clearTimeout(state.spawnTimeout);
+  const delay = SPAWN_INTERVALS[state.speed - 1] + Math.random() * 400;
+  state.spawnTimeout = setTimeout(spawnMole, delay);
+}
+
+function handleTileClick(index) {
+  if (!state.isPlaying || index !== state.currentMoleIndex) return;
+  const tile = tiles[index];
+  tile.classList.add('tile-hit');
+  setTimeout(() => tile.classList.remove('tile-hit'), 200);
+  
+  if (state.goldenMole) {
+    const points = BASE_POINTS * GOLDEN_MULTIPLIER * Math.max(1, state.combo);
+    state.score += points;
+    playGolden();
+    showScorePopup(index, `+${points} ⭐`);
+  } else {
+    state.combo++;
+    if (state.combo > state.maxCombo) state.maxCombo = state.combo;
+    const points = BASE_POINTS * state.combo;
+    state.score += points;
+    playHit();
+    if (state.combo > 1) playCombo();
+    showScorePopup(index, `+${points}${state.combo > 1 ? ` x${state.combo}` : ''}`);
+  }
+  
+  state.molesHit++;
+  playerStats.totalHits++;
+  if (state.goldenMole) playerStats.totalGolden++;
+  saveStats();
+  createSplatter(tile);
+  const bubbleCount = state.goldenMole ? 8 : Math.min(3 + state.combo * 1.5, 12);
+  burstBubbles(Math.floor(bubbleCount));
+  updateUI();
+  hideMole();
+  
+  if (state.lives <= 0) {
+    endGame();
+  } else {
+    scheduleNextMole();
+  }
+}
+
+function showScorePopup(tileIndex, text) {
+  const tile = tiles[tileIndex];
+  const rect = tile.getBoundingClientRect();
+  const popup = document.createElement('div');
+  popup.className = 'score-popup';
+  popup.textContent = text;
+  const isGolden = text.includes('⭐');
+  popup.style.cssText = `
+    left: ${rect.left + rect.width / 2}px;
+    top: ${rect.top}px;
+    transform: translateX(-50%);
+    font-size: ${isGolden ? '28' : '20'}px;
+    color: ${isGolden ? '#f5a623' : '#005da7'};
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  `;
+  document.body.appendChild(popup);
+  setTimeout(() => popup.remove(), 800);
+}
+
+function createSplatter(tile) {
+  const rect = tile.getBoundingClientRect();
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+  const colors = ['#67f7d5', '#48ddbc', '#005da7', '#f5a623', '#bbae00'];
+  const count = 8 + Math.floor(Math.random() * 5);
+  
+  for (let i = 0; i < count; i++) {
+    const dot = document.createElement('div');
+    const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.5;
+    const dist = 30 + Math.random() * 50;
+    const size = 4 + Math.random() * 8;
+    dot.className = 'splatter';
+    dot.style.cssText = `
+      left: ${cx}px; top: ${cy}px;
+      width: ${size}px; height: ${size}px;
+      background: ${colors[i % colors.length]};
+      --dx: ${Math.cos(angle) * dist}px;
+      --dy: ${Math.sin(angle) * dist}px;
+    `;
+    document.body.appendChild(dot);
+    setTimeout(() => dot.remove(), 600);
+  }
+}
+
+function startGame() {
+  if (state.isPlaying) return;
+  initAudio();
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  state.score = 0;
+  state.lives = state.maxLives;
+  state.combo = 0;
+  state.maxCombo = 0;
+  state.molesHit = 0;
+  state.molesMissed = 0;
+  state.currentMoleIndex = -1;
+  state.isPlaying = true;
+  state.timeLeft = state.totalTime;
+  
+  if (window.innerWidth < 1024) {
+    bottomNav.classList.remove('nav-visible');
+    bottomNav.classList.add('nav-hidden');
+  }
+  
+  updateUI();
+  startBtn.textContent = 'GET READY...';
+  startBtn.disabled = true;
+  gameOverModal.classList.add('hidden');
+  
+  document.querySelectorAll('.speed-btn, .time-btn').forEach(b => b.style.pointerEvents = 'none');
+  
+  setTimeout(() => {
+    startBtn.textContent = 'PLAYING...';
+    spawnMole();
+  }, 1000);
+  
+  state.gameTimer = setInterval(() => {
+    state.timeLeft--;
+    timeDisplay.textContent = formatTime(state.timeLeft);
+    if (state.timeLeft <= 10) {
+      timeDisplay.classList.add('text-error');
+    }
+    if (state.timeLeft <= 0) {
+      endGame();
+    }
+  }, 1000);
+}
+
+function endGame() {
+  state.isPlaying = false;
+  clearInterval(state.gameTimer);
+  clearTimeout(state.spawnTimeout);
+  clearTimeout(state.moleTimeout);
+  state.gameTimer = null;
+  state.spawnTimeout = null;
+  state.moleTimeout = null;
+  
+  hideMole();
+  
+  if (state.score > state.highScore) {
+    state.highScore = state.score;
+    localStorage.setItem('moleBashHigh', state.highScore.toString());
+    highScoreDisplay.textContent = state.highScore;
+  }
+  
+  playerStats.totalGames++;
+  playerStats.lifetimeScore += state.score;
+  if (state.maxCombo > playerStats.bestCombo) playerStats.bestCombo = state.maxCombo;
+  if (state.score > playerStats.bestScore) playerStats.bestScore = state.score;
+  if (state.lives === state.maxLives) playerStats.perfectGames++;
+  if (!playerStats.wonSpeeds.includes(state.speed)) playerStats.wonSpeeds.push(state.speed);
+  saveStats();
+  checkAchievements();
+  
+  playGameOver();
+  
+  finalScore.textContent = state.score.toLocaleString();
+  finalCombo.textContent = `x${state.maxCombo}`;
+  finalHigh.textContent = state.highScore.toLocaleString();
+  gameOverModal.classList.remove('hidden');
+  
+  startBtn.textContent = 'START';
+  startBtn.disabled = false;
+  timeDisplay.classList.remove('text-error');
+  comboDisplay.classList.add('hidden');
+  
+  document.querySelectorAll('.speed-btn, .time-btn').forEach(b => b.style.pointerEvents = '');
+  
+  if (window.innerWidth < 1024) {
+    bottomNav.classList.remove('nav-hidden');
+    bottomNav.classList.add('nav-visible');
+  }
+}
+
+function resetGame() {
+  endGame();
+}
+
+function init() {
+  createGrid();
+  updateLives();
+  timeDisplay.textContent = formatTime(state.totalTime);
+  
+  document.querySelectorAll('.speed-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (state.isPlaying) return;
+      document.querySelectorAll('.speed-btn').forEach(b => {
+        b.className = 'speed-btn flex-1 py-2 sm:py-3 px-1 sm:px-2 rounded-xl border-2 border-transparent bg-white/50 text-outline font-bold hover:bg-white/80 transition-all text-xs sm:text-sm';
+      });
+      btn.className = 'speed-btn flex-1 py-2 sm:py-3 px-1 sm:px-2 rounded-xl border-2 border-primary bg-primary-container text-primary font-bold transition-all btn-3d text-xs sm:text-sm';
+      state.speed = parseInt(btn.dataset.speed);
+    });
+  });
+  
+  document.querySelectorAll('.time-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (state.isPlaying) return;
+      document.querySelectorAll('.time-btn').forEach(b => {
+        b.className = 'time-btn flex-1 py-2 sm:py-3 px-1 sm:px-1 rounded-xl border-2 border-transparent bg-white/50 text-outline font-bold hover:bg-white/80 transition-all text-xs sm:text-sm';
+      });
+      btn.className = 'time-btn flex-1 py-2 sm:py-3 px-1 sm:px-1 rounded-xl border-2 border-error bg-error-container text-error font-bold transition-all btn-3d text-xs sm:text-sm';
+      state.totalTime = parseInt(btn.dataset.time);
+      state.timeLeft = state.totalTime;
+      timeDisplay.textContent = formatTime(state.timeLeft);
+    });
+  });
+  
+  startBtn.addEventListener('click', startGame);
+  
+  playAgainBtn.addEventListener('click', () => {
+    playAgainBtn.disabled = true;
+    playAgainBtn.textContent = 'Starting...';
+    setTimeout(() => {
+      playAgainBtn.disabled = false;
+      playAgainBtn.textContent = 'Play Again';
+      startGame();
+    }, 600);
+  });
+  
+  closeModalBtn.addEventListener('click', () => {
+    gameOverModal.classList.add('hidden');
+  });
+  
+  soundBtn.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    soundBtn.querySelector('span').textContent = soundEnabled ? 'volume_up' : 'volume_off';
+  });
+  
+  document.getElementById('navTrophies').addEventListener('click', openTrophiesModal);
+  document.getElementById('navProfile').addEventListener('click', openProfileDrawer);
+  document.getElementById('navPlay').addEventListener('click', () => {
+    if (!state.isPlaying) startGame();
+  });
+  document.getElementById('closeTrophiesBtn').addEventListener('click', () => {
+    document.getElementById('trophiesModal').classList.add('hidden');
+  });
+  document.getElementById('closeProfileBtn').addEventListener('click', () => {
+    document.getElementById('profileDrawerOverlay').classList.add('hidden');
+  });
+  
+  document.getElementById('profileNameInput').addEventListener('input', (e) => {
+    profile.name = e.target.value || 'Player';
+    saveProfile();
+  });
+  
+  document.getElementById('resetDataBtn').addEventListener('click', () => {
+    if (confirm('Reset all progress? Achievements, stats, and high score will be lost.')) {
+      localStorage.removeItem('moleBashStats');
+      localStorage.removeItem('moleBashAchievements');
+      localStorage.removeItem('moleBashHigh');
+      playerStats = defaultStats();
+      unlockedAchievements = [];
+      state.highScore = 0;
+      highScoreDisplay.textContent = '0';
+      updateProfileUI();
+    }
+  });
+}
+
+let bubbleContainer;
+
+function createBubbles() {
+  bubbleContainer = document.createElement('div');
+  bubbleContainer.className = 'fixed inset-0 pointer-events-none overflow-hidden z-0';
+  document.body.prepend(bubbleContainer);
+  const sizes = [20, 30, 40, 50, 60, 80];
+  const durations = [12, 16, 20, 25, 30, 35];
+  for (let i = 0; i < 12; i++) {
+    addBubble(sizes, durations);
+  }
+}
+
+function addBubble(sizes, durations) {
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble';
+  const sizeList = sizes || [20, 30, 40, 50, 60, 80];
+  const durList = durations || [12, 16, 20, 25, 30, 35];
+  const size = sizeList[Math.floor(Math.random() * sizeList.length)];
+  bubble.style.width = size + 'px';
+  bubble.style.height = size + 'px';
+  bubble.style.left = Math.random() * 100 + '%';
+  bubble.style.animationDuration = (durList[Math.floor(Math.random() * durList.length)] + Math.random() * 10) + 's';
+  bubble.style.animationDelay = Math.random() * 5 + 's';
+  bubbleContainer.appendChild(bubble);
+  setTimeout(() => { if (bubble.parentNode) bubble.remove(); }, 35000);
+}
+
+function burstBubbles(count) {
+  const sizes = [15, 25, 35, 45, 55];
+  const durations = [8, 10, 12, 14, 16];
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => addBubble(sizes, durations), i * 80);
+  }
+}
+
+const THEMES = [
+  { id: 'default', name: 'Default', primary: '#005da7', secondary: '#006b58', bg: ['#f2c994','#b3e5fc','#81d4fa'] },
+  { id: 'sunset', name: 'Sunset', primary: '#c62828', secondary: '#e65100', bg: ['#ffccbc','#ffab91','#ff8a65'] },
+  { id: 'forest', name: 'Forest', primary: '#2e7d32', secondary: '#00695c', bg: ['#c8e6c9','#a5d6a7','#81c784'] },
+  { id: 'midnight', name: 'Midnight', primary: '#4527a0', secondary: '#283593', bg: ['#d1c4e9','#b39ddb','#9575cd'] },
+  { id: 'rose', name: 'Rose', primary: '#ad1457', secondary: '#880e4f', bg: ['#f8bbd0','#f48fb1','#f06292'] },
+  { id: 'ocean', name: 'Ocean', primary: '#01579b', secondary: '#004d40', bg: ['#b3e5fc','#81d4fa','#4fc3f7'] },
+];
+
+const ACHIEVEMENTS = [
+  { id: 'first_hit', name: 'First Blood', desc: 'Hit your first mole', icon: 'trackpad', check: s => s.totalHits >= 1 },
+  { id: 'score_200', name: 'Getting Started', desc: 'Score 200 in one game', icon: '200', check: s => s.bestScore >= 200 },
+  { id: 'score_1000', name: 'High Scorer', desc: 'Score 1,000 in one game', icon: '1000', check: s => s.bestScore >= 1000 },
+  { id: 'score_2500', name: 'Legendary', desc: 'Score 2,500 in one game', icon: '2500', check: s => s.bestScore >= 2500 },
+  { id: 'combo_5', name: 'Combo Novice', desc: 'Reach 5x combo', icon: '5', check: s => s.bestCombo >= 5 },
+  { id: 'combo_10', name: 'Combo Master', desc: 'Reach 10x combo', icon: '10', check: s => s.bestCombo >= 10 },
+  { id: 'combo_15', name: 'Combo God', desc: 'Reach 15x combo', icon: '15', check: s => s.bestCombo >= 15 },
+  { id: 'speed_1', name: 'Speed 1x', desc: 'Finish a game at 1x speed', icon: '1x', check: s => s.wonSpeeds.includes(1) },
+  { id: 'speed_2', name: 'Speed 2x', desc: 'Finish a game at 2x speed', icon: '2x', check: s => s.wonSpeeds.includes(2) },
+  { id: 'speed_3', name: 'Speed 3x', desc: 'Finish a game at 3x speed', icon: '3x', check: s => s.wonSpeeds.includes(3) },
+  { id: 'golden_10', name: 'Golden Touch', desc: 'Hit 10 golden moles', icon: 'stars', check: s => s.totalGolden >= 10 },
+  { id: 'golden_30', name: 'Golden Hunter', desc: 'Hit 30 golden moles', icon: 'stars', check: s => s.totalGolden >= 30 },
+  { id: 'survivor', name: 'Survivor', desc: 'Finish 3 games with all lives', icon: 'favorite', check: s => s.perfectGames >= 3 },
+  { id: 'games_25', name: 'Dedicated', desc: 'Play 25 games', icon: 'play_circle', check: s => s.totalGames >= 25 },
+  { id: 'games_100', name: 'Addicted', desc: 'Play 100 games', icon: 'play_circle', check: s => s.totalGames >= 100 },
+  { id: 'moles_250', name: 'Mole Slayer', desc: 'Hit 250 moles total', icon: 'pest_control', check: s => s.totalHits >= 250 },
+  { id: 'moles_1000', name: 'Mole Exterminator', desc: 'Hit 1,000 moles total', icon: 'pest_control', check: s => s.totalHits >= 1000 },
+];
+
+let playerStats = loadStats();
+let profile = loadProfile();
+let unlockedAchievements = loadAchievements();
+let toastTimeout = null;
+
+function loadStats() {
+  try { return JSON.parse(localStorage.getItem('moleBashStats')) || defaultStats(); } catch { return defaultStats(); }
+}
+function defaultStats() {
+  return { totalGames: 0, totalHits: 0, totalGolden: 0, bestScore: 0, bestCombo: 0, perfectGames: 0, wonSpeeds: [], lifetimeScore: 0 };
+}
+function saveStats() {
+  localStorage.setItem('moleBashStats', JSON.stringify(playerStats));
+}
+
+function loadProfile() {
+  try { return JSON.parse(localStorage.getItem('moleBashProfile')) || defaultProfile(); } catch { return defaultProfile(); }
+}
+function defaultProfile() {
+  return { name: 'Player', theme: 'default' };
+}
+function saveProfile() {
+  localStorage.setItem('moleBashProfile', JSON.stringify(profile));
+}
+
+function loadAchievements() {
+  try { return JSON.parse(localStorage.getItem('moleBashAchievements')) || []; } catch { return []; }
+}
+function saveAchievements() {
+  localStorage.setItem('moleBashAchievements', JSON.stringify(unlockedAchievements));
+}
+
+let toastQueue = [];
+let showingToast = false;
+
+function checkAchievements() {
+  const newlyUnlocked = [];
+  ACHIEVEMENTS.forEach(a => {
+    if (!unlockedAchievements.includes(a.id) && a.check(playerStats)) {
+      unlockedAchievements.push(a.id);
+      newlyUnlocked.push(a);
+    }
+  });
+  if (newlyUnlocked.length) {
+    saveAchievements();
+    toastQueue.push(...newlyUnlocked);
+    if (!showingToast) showNextToast();
+  }
+}
+
+function showNextToast() {
+  if (!toastQueue.length) { showingToast = false; return; }
+  showingToast = true;
+  const achievement = toastQueue.shift();
+  const toast = document.getElementById('achievementToast');
+  const title = document.getElementById('toastTitle');
+  const icon = document.getElementById('toastIcon');
+  title.textContent = achievement.name;
+  icon.textContent = achievement.icon || 'emoji_events';
+  toast.classList.remove('hidden', 'achievement-toast-out');
+  toast.classList.add('achievement-toast');
+  playAchievementSound();
+  if (toastTimeout) clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('achievement-toast');
+    toast.classList.add('achievement-toast-out');
+    setTimeout(() => {
+      toast.classList.add('hidden');
+      showNextToast();
+    }, 300);
+  }, 3000);
+}
+
+function renderAchievements() {
+  const list = document.getElementById('achievementsList');
+  list.innerHTML = '';
+  ACHIEVEMENTS.forEach(a => {
+    const unlocked = unlockedAchievements.includes(a.id);
+    const card = document.createElement('div');
+    card.className = `achieve-card flex items-center gap-3 p-3 rounded-xl ${unlocked ? 'bg-white/60' : 'bg-white/30 achieve-locked'}`;
+    card.innerHTML = `
+      <span class="material-symbols-outlined text-3xl ${unlocked ? 'text-gold fill-icon' : 'text-outline'}">${a.icon}</span>
+      <div class="flex-1 min-w-0">
+        <div class="font-bold text-sm ${unlocked ? 'text-on-background' : 'text-on-surface-variant'}">${a.name}</div>
+        <div class="text-xs text-on-surface-variant truncate">${a.desc}</div>
+      </div>
+      <span class="material-symbols-outlined ${unlocked ? 'text-secondary fill-icon' : 'text-outline'}">${unlocked ? 'check_circle' : 'lock'}</span>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function applyTheme(themeId) {
+  const theme = THEMES.find(t => t.id === themeId) || THEMES[0];
+  document.documentElement.style.setProperty('--theme-primary', theme.primary);
+  document.documentElement.style.setProperty('--theme-secondary', theme.secondary);
+  document.body.style.background = `linear-gradient(135deg, ${theme.bg[0]} 0%, ${theme.bg[1]} 50%, ${theme.bg[2]} 100%)`;
+  document.querySelectorAll('.theme-preview').forEach(el => {
+    el.style.background = `linear-gradient(135deg, ${theme.bg[0]}, ${theme.bg[2]})`;
+  });
+  profile.theme = themeId;
+  saveProfile();
+}
+
+function renderThemeSwatches() {
+  const container = document.getElementById('themeSwatches');
+  container.innerHTML = '';
+  THEMES.forEach(t => {
+    const swatch = document.createElement('button');
+    swatch.className = `profile-color-swatch ${profile.theme === t.id ? 'active' : ''}`;
+    swatch.style.background = `linear-gradient(135deg, ${t.bg[0]}, ${t.bg[2]})`;
+    swatch.title = t.name;
+    swatch.addEventListener('click', () => {
+      document.querySelectorAll('.profile-color-swatch').forEach(s => s.classList.remove('active'));
+      swatch.classList.add('active');
+      applyTheme(t.id);
+    });
+    container.appendChild(swatch);
+  });
+}
+
+function updateProfileUI() {
+  document.getElementById('profileNameInput').value = profile.name;
+  renderThemeSwatches();
+  document.getElementById('statGames').textContent = playerStats.totalGames;
+  document.getElementById('statHits').textContent = playerStats.totalHits;
+  document.getElementById('statGolden').textContent = playerStats.totalGolden;
+  document.getElementById('statLifetime').textContent = playerStats.lifetimeScore.toLocaleString();
+  document.getElementById('statBestCombo').textContent = `x${playerStats.bestCombo}`;
+}
+
+function openProfileDrawer() {
+  updateProfileUI();
+  document.getElementById('profileDrawerOverlay').classList.remove('hidden');
+}
+function closeProfileDrawer(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('profileDrawerOverlay').classList.add('hidden');
+}
+function openTrophiesModal() {
+  renderAchievements();
+  document.getElementById('trophiesModal').classList.remove('hidden');
+}
+
+function playAchievementSound() {
+  playTone(1200, 0.08, 'sine', 0.1);
+  setTimeout(() => playTone(1600, 0.12, 'sine', 0.12), 100);
+  setTimeout(() => playTone(2000, 0.15, 'sine', 0.12), 200);
+}
+
+createBubbles();
+applyTheme(profile.theme);
+init();
+</script>
+</body>
+</html>
