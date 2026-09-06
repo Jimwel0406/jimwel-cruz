@@ -1,77 +1,103 @@
 import Container from "@/components/Container";
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 import Head from "next/head";
-import styles from "@/styles/Home.module.css";
-import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Image from "next/image";
 import {
-  ChevronRight,
   Code2,
   Frame,
   Eye,
   MonitorSmartphone,
   ShoppingCart,
   Gauge,
+  Sparkles,
+  BrainCircuit,
+  MessageSquareCode,
 } from "lucide-react";
-import { TriangleDownIcon } from "@radix-ui/react-icons";
-import GoldenCard3D from "@/components/GoldenCard3D";
-import Link from "next/link";
-import { cn, scrollTo } from "@/lib/utils";
-import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-  type CarouselApi,
-} from "@/components/ui/carousel";
-import VanillaTilt from "vanilla-tilt";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-
-const aboutStats = [
-  { label: "Years of experience", value: "3+" },
-  { label: "Projects delivered", value: "6+" },
-  { label: "Company", value: "1" },
-  { label: "Technologies mastered", value: "8+" },
-];
 
 const projects = [
   {
     title: "ModernHaven",
-    description: "E-commerce store for modern furniture",
+    description:
+      "E-commerce store for modern furniture. Full-stack build with Next.js, Stripe payments, and real-time inventory management.",
+    image: "/assets/projects/modernhaven.webp",
     video: "/assets/projects/modernhaven.mp4",
     href: "https://modern-haven-nine.vercel.app/",
+    tags: ["Next.js", "Stripe", "PostgreSQL"],
+    priority: true,
   },
   {
     title: "ContactFlow",
-    description: "CRM platform for managing customer interactions",
+    description:
+      "CRM platform for managing customer interactions. Dashboard with role-based access, analytics, and responsive data visualization.",
+    image: "/assets/projects/contactflow.webp",
     video: "/assets/projects/contactflow.mp4",
     href: "https://contactflow-crm.vercel.app/",
+    tags: ["React", "Node.js", "REST API"],
   },
   {
     title: "Quizipedia",
-    description: "Interactive trivia and quiz game",
-    image: "/assets/projects/quizipedia.jpg",
+    description:
+      "Interactive trivia and quiz game. Real-time scoring, category filters, and a clean responsive interface.",
+    image: "/assets/projects/quizipedia.webp",
     href: "https://quizipedia.epizy.com/",
+    tags: ["JavaScript", "API", "CSS"],
   },
   {
     title: "Whack-A-Mole",
-    description: "Classic arcade-style whack-a-mole game",
-    image: "/assets/projects/whackamole.jpg",
+    description:
+      "Classic arcade-style whack-a-mole game. Vanilla HTML/CSS/JS with score tracking and responsive controls.",
+    image: "/assets/projects/whackamole.webp",
     href: "/projects/mole-bash",
+    tags: ["HTML", "CSS", "JavaScript"],
   },
   {
     title: "Calculator",
-    description: "Modern and responsive calculator app",
-    image: "/assets/projects/calculator.jpg",
+    description:
+      "Modern and responsive calculator app. Clean UI with keyboard support and arithmetic operations.",
+    image: "/assets/projects/calculator.webp",
     href: "/projects/calculator",
+    tags: ["HTML", "CSS", "JavaScript"],
   },
   {
     title: "Block Puzzle",
-    description: "Relaxing block puzzle game",
-    image: "/assets/projects/blockpuzzle.jpg",
+    description:
+      "Relaxing block puzzle game. Canvas-based logic with smooth animations and mobile-first controls.",
+    image: "/assets/projects/blockpuzzle.webp",
     href: "https://block-puzzle-board.vercel.app/",
+    tags: ["Canvas", "JavaScript", "Game Dev"],
+  },
+];
+
+const skillGroups = [
+  {
+    title: "Frontend",
+    items: [
+      "HTML / Semantic Markup",
+      "CSS / Sass / Tailwind",
+      "JavaScript / TypeScript",
+      "React / Next.js",
+    ],
+  },
+  {
+    title: "Backend",
+    items: [
+      "Node.js / Express",
+      "PHP",
+      "PostgreSQL / MongoDB",
+      "REST / GraphQL APIs",
+      "Shopify / Liquid",
+    ],
+  },
+  {
+    title: "Tools & DevOps",
+    items: [
+      "Git / GitHub Actions",
+      "Vercel / Netlify",
+      "CI/CD Pipelines",
+      "Performance Optimization",
+      "Responsive Design",
+    ],
   },
 ];
 
@@ -114,7 +140,7 @@ const services = [
   },
 ];
 
-const faqs = [
+const getFaqs = (years: number, projectCount: number) => [
   {
     question: "What services does Jimwel Cruz offer?",
     answer:
@@ -127,141 +153,85 @@ const faqs = [
   },
   {
     question: "How much experience does Jimwel have?",
-    answer:
-      "Over three years as a full-stack developer and web team lead, delivering more than six products from ideation and wireframing through prototyping to final delivery while mentoring teammates along the way.",
+    answer: `Over ${years} years as a full-stack developer and web team lead, delivering ${projectCount}+ products from ideation and wireframing through prototyping to final delivery while mentoring teammates along the way.`,
+  },
+];
+
+const START_YEAR = 2023;
+
+const aiTools = [
+  {
+    title: "AI-Assisted Development",
+    description:
+      "I use AI coding agents and LLM-powered tools to accelerate development — from scaffolding and debugging to code review and architecture decisions. AI doesn't replace my judgment; it amplifies it.",
+    icon: BrainCircuit,
+  },
+  {
+    title: "Vibe Coding",
+    description:
+      "Rapidly prototyping ideas by iterating with AI in real-time. I describe what I want, refine the output, and ship faster — turning concepts into working code through natural conversation.",
+    icon: MessageSquareCode,
+  },
+  {
+    title: "AI-Augmented Workflow",
+    description:
+      "From generating boilerplate to optimizing performance, I integrate AI into every stage of the development lifecycle so I can focus on the creative and strategic parts that matter most.",
+    icon: Sparkles,
   },
 ];
 
 export default function Home() {
-  const refScrollContainer = useRef(null);
-  const [isScrolled, setIsScrolled] = useState<boolean>(false);
-  const [carouselApi, setCarouselApi] = useState<CarouselApi | null>(null);
-  const carouselApiRef = useRef<CarouselApi | null>(null);
-  const wheelWrapperRef = useRef<HTMLDivElement>(null);
-  const [current, setCurrent] = useState<number>(0);
-  const [count, setCount] = useState<number>(0);
+  const yearsExperience = new Date().getFullYear() - START_YEAR;
+  const faqs = getFaqs(yearsExperience, projects.length);
 
-  // premium 3D cards drifting + rotating with full-page scroll
-  const { scrollYProgress } = useScroll();
-  const card1Y = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 480]),
-    { stiffness: 60, damping: 20, mass: 0.6 },
-  );
-  const card1Rotate = useTransform(scrollYProgress, [0, 1], [0, 18]);
-  const card1X = useTransform(scrollYProgress, [0, 1], [0, 50]);
-  const card2Y = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -350]),
-    { stiffness: 60, damping: 20, mass: 0.6 },
-  );
-  const card2Rotate = useTransform(scrollYProgress, [0, 1], [0, -15]);
-  const card2X = useTransform(scrollYProgress, [0, 1], [0, -40]);
-  const card3Y = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 600]),
-    { stiffness: 60, damping: 20, mass: 0.6 },
-  );
-  const card3Rotate = useTransform(scrollYProgress, [0, 1], [0, 22]);
-  const cardsOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.08, 0.82, 0.97],
-    [0, 0.7, 0.6, 0],
-  );
-
-  // handle scroll
+  // scroll reveal
   useEffect(() => {
-    const sections = document.querySelectorAll("section");
-    const navLinks = document.querySelectorAll(".nav-link");
+    const els = document.querySelectorAll("[data-reveal]");
 
-    async function getLocomotive() {
-      const Locomotive = (await import("locomotive-scroll")).default;
-      new Locomotive({
-        el: refScrollContainer.current ?? new HTMLElement(),
-        smooth: true,
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      );
+
+      els.forEach((el, i) => {
+        (el as HTMLElement).style.transitionDelay = `${(i % 4) * 0.08}s`;
+        observer.observe(el);
       });
+    } else {
+      els.forEach((el) => el.classList.add("is-visible"));
     }
-
-    function handleScroll() {
-      let current = "";
-      setIsScrolled(window.scrollY > 0);
-
-      sections.forEach((section) => {
-        const sectionTop = section.offsetTop;
-        if (window.scrollY >= sectionTop - 250) {
-          current = section.getAttribute("id") ?? "";
-        }
-      });
-
-      navLinks.forEach((li) => {
-        li.classList.remove("nav-active");
-
-        if (li.getAttribute("href") === `#${current}`) {
-          li.classList.add("nav-active");
-          console.log(li.getAttribute("href"));
-        }
-      });
-    }
-
-    void getLocomotive();
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
   }, []);
 
+  // lazy-play videos when they enter viewport
   useEffect(() => {
-    if (!carouselApi) return;
-
-    setCount(carouselApi.scrollSnapList().length);
-    setCurrent(carouselApi.selectedScrollSnap() + 1);
-
-    carouselApi.on("select", () => {
-      setCurrent(carouselApi.selectedScrollSnap() + 1);
-    });
-  }, [carouselApi]);
-
-  // keep the carousel api always fresh for the wheel handler
-  useEffect(() => {
-    carouselApiRef.current = carouselApi;
-  }, [carouselApi]);
-
-  // wheel over projects -> navigate carousel, block page scroll
-  useEffect(() => {
-    const el = wheelWrapperRef.current;
-    if (!el) return;
-
-    let cooldown = false;
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      if (cooldown) return;
-      cooldown = true;
-      const api = carouselApiRef.current;
-      if (e.deltaY > 0) {
-        api?.scrollNext();
-      } else {
-        api?.scrollPrev();
-      }
-      window.setTimeout(() => {
-        cooldown = false;
-      }, 700);
-    };
-
-    el.addEventListener("wheel", handleWheel, { passive: false });
-    return () => {
-      el.removeEventListener("wheel", handleWheel);
-    };
-  }, []);
-
-  // card hover effect
-  useEffect(() => {
-    const tilt: HTMLElement[] = Array.from(document.querySelectorAll("#tilt"));
-    VanillaTilt.init(tilt, {
-      speed: 300,
-      glare: true,
-      "max-glare": 0.1,
-      gyroscope: true,
-      perspective: 900,
-      scale: 0.9,
-    });
+    const videos = document.querySelectorAll("video[preload='none']");
+    if (!("IntersectionObserver" in window)) {
+      videos.forEach((v) => {
+        void (v as HTMLVideoElement).play();
+      });
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target as HTMLVideoElement;
+          if (entry.isIntersecting) {
+            void video.play();
+            observer.unobserve(video);
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+    videos.forEach((v) => observer.observe(v));
   }, []);
 
   return (
@@ -295,406 +265,534 @@ export default function Home() {
                     },
                   })),
                 },
-                ...projects
-                  .filter(
-                    (project): project is (typeof project) & { video: string } =>
-                      "video" in project && !!project.video,
-                  )
-                  .map((project) => ({
-                    "@type": "VideoObject",
-                    name: `${project.title} — web application demo`,
-                    description: `${project.description}. Built by Jimwel Cruz, full-stack developer and web team lead.`,
-                    contentUrl: `https://jimwel-cruz.vercel.app${project.video}`,
-                    thumbnailUrl: `https://jimwel-cruz.vercel.app/assets/projects/${project.title.toLowerCase()}.${
-                      project.title.toLowerCase() === "contactflow" ? "png" : "jpg"
-                    }`,
-                    uploadDate: "2024-01-01",
-                  })),
               ],
             }).replace(/</g, "\\u003c"),
           }}
         />
       </Head>
-    <Container>
-      <div ref={refScrollContainer}>
-        <Gradient />
 
-        {/* 3 premium 3D cards — fixed behind all content, follow full-page scroll */}
-        <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-          <motion.div
-            style={{ y: card1Y, x: card1X, rotate: card1Rotate, opacity: cardsOpacity }}
-            className="absolute left-[5%] top-[8%] h-[200px] w-[130px] sm:h-[280px] sm:w-[180px] lg:h-[340px] lg:w-[220px] lg:left-[6%] lg:top-[12%]"
-          >
-            <GoldenCard3D color="#d4af37" accent="#ffffff" />
-          </motion.div>
-          <motion.div
-            style={{ y: card2Y, x: card2X, rotate: card2Rotate, opacity: cardsOpacity }}
-            className="absolute right-[4%] top-[35%] h-[180px] w-[120px] sm:h-[260px] sm:w-[170px] lg:h-[320px] lg:w-[210px] lg:right-[5%] lg:top-[30%]"
-          >
-            <GoldenCard3D color="#c0c0c0" accent="#e8e8e8" />
-          </motion.div>
-          <motion.div
-            style={{ y: card3Y, rotate: card3Rotate, opacity: cardsOpacity }}
-            className="absolute left-[10%] top-[65%] h-[170px] w-[110px] sm:h-[240px] sm:w-[160px] lg:h-[300px] lg:w-[195px] lg:left-[12%] lg:top-[60%]"
-          >
-            <GoldenCard3D color="#b76e79" accent="#f5d5d5" />
-          </motion.div>
-        </div>
-
-        {/* Intro */}
+      <Container>
+        {/* ============================================
+            HERO
+        ============================================ */}
         <section
           id="home"
-          data-scroll-section
-          className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden"
+          className="relative flex min-h-[100dvh] flex-col justify-end overflow-hidden px-6 pb-24 pt-32 md:px-12 md:pb-32"
         >
-          <div className={styles.intro}>
-            <div className="flex flex-row items-center space-x-1.5">
-              <span className={styles.pill}>react.js</span>
-              <span className={styles.pill}>node.js</span>
-              <span className={styles.pill}>php</span>
-              <span className={styles.pill}>shopify</span>
-            </div>
-            <div>
-              <h1
-                data-scroll
-                data-scroll-enable-touch-speed
-                data-scroll-speed=".06"
-                data-scroll-direction="horizontal"
-              >
-                <span className="text-6xl tracking-tighter text-foreground 2xl:text-8xl">
-                  Hello, I&apos;m
-                  <br />
-                </span>
-                <span className="clash-grotesk text-gradient text-6xl 2xl:text-8xl">
-                  Jimwel.
-                </span>
-              </h1>
-              <p
-                data-scroll
-                data-scroll-enable-touch-speed
-                data-scroll-speed=".06"
-                className="mt-1 max-w-lg tracking-tight text-muted-foreground 2xl:text-xl"
-              >
-                A full-stack developer and web team lead with a passion for
-                crafting performant, user-friendly digital experiences.
+          {/* SVG background lines */}
+          <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+            <svg
+              className="h-full w-full"
+              viewBox="0 0 1440 900"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <line x1="100" y1="0" x2="400" y2="900" stroke="rgba(200,255,0,0.07)" strokeWidth="1" />
+              <line x1="300" y1="0" x2="600" y2="900" stroke="rgba(200,255,0,0.05)" strokeWidth="1" />
+              <line x1="900" y1="0" x2="1200" y2="900" stroke="rgba(200,255,0,0.04)" strokeWidth="1" />
+              <line x1="1100" y1="0" x2="1400" y2="900" stroke="rgba(200,255,0,0.07)" strokeWidth="1" />
+              <circle cx="1200" cy="200" r="300" stroke="rgba(200,255,0,0.03)" strokeWidth="1" fill="none" />
+              <circle cx="1200" cy="200" r="200" stroke="rgba(200,255,0,0.05)" strokeWidth="1" fill="none" />
+              <circle cx="1200" cy="200" r="100" stroke="rgba(200,255,0,0.03)" strokeWidth="1" fill="none" />
+            </svg>
+          </div>
+
+          <div className="container relative z-10 mx-auto max-w-5xl">
+            <p
+              data-reveal
+              className="mb-6 text-xs font-medium uppercase tracking-[0.15em] text-accent"
+            >
+              Web Developer
+            </p>
+            <h1
+              data-reveal
+              className="font-display text-[clamp(2.8rem,9vw,7.5rem)] font-bold leading-[0.92] tracking-[-0.04em]"
+            >
+              <span className="block">I build</span>
+              <span className="block text-accent">digital</span>
+              <span className="block">experiences.</span>
+            </h1>
+            <p
+              data-reveal
+              className="mt-4 font-display text-lg font-medium tracking-tight text-white/80"
+            >
+              Jimwel Cruz
+            </p>
+            <p
+              data-reveal
+              className="mt-4 max-w-md text-base leading-relaxed text-muted-foreground md:text-lg"
+            >
+              Full-stack developer and web team lead.{" "}
+              <span className="sm:whitespace-nowrap">Clean code, bold design, no fluff.</span>
+            </p>
+          </div>
+
+          {/* Scroll indicator */}
+          <div
+            className="pointer-events-none absolute bottom-8 right-6 md:right-12"
+            aria-hidden="true"
+          >
+            <span className="block h-20 w-px animate-scroll-line bg-gradient-to-b from-accent to-transparent" />
+          </div>
+        </section>
+
+        {/* ============================================
+            ABOUT
+        ============================================ */}
+        <section
+          id="about"
+          className="relative overflow-hidden bg-white px-6 py-32 md:px-12"
+        >
+          {/* Dot pattern */}
+          <div
+            className="pointer-events-none absolute inset-0 opacity-100"
+            aria-hidden="true"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle, rgba(10,10,10,0.06) 1px, transparent 1px)",
+              backgroundSize: "24px 24px",
+            }}
+          />
+
+          {/* Geometric SVG */}
+          <div
+            className="pointer-events-none absolute -right-[5%] top-[10%] w-[clamp(250px,35vw,500px)] opacity-60"
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="50" y="50" width="500" height="500" stroke="rgba(10,10,10,0.1)" strokeWidth="1" fill="none" rx="4" />
+              <rect x="100" y="100" width="400" height="400" stroke="rgba(10,10,10,0.06)" strokeWidth="1" fill="none" rx="4" />
+              <line x1="50" y1="50" x2="100" y2="100" stroke="rgba(10,10,10,0.08)" strokeWidth="1" />
+              <line x1="550" y1="50" x2="500" y2="100" stroke="rgba(10,10,10,0.08)" strokeWidth="1" />
+              <line x1="50" y1="550" x2="100" y2="500" stroke="rgba(10,10,10,0.08)" strokeWidth="1" />
+              <line x1="550" y1="550" x2="500" y2="500" stroke="rgba(10,10,10,0.08)" strokeWidth="1" />
+              <circle cx="300" cy="300" r="150" stroke="rgba(10,10,10,0.05)" strokeWidth="1" fill="none" />
+            </svg>
+          </div>
+
+          <div className="container relative z-10 mx-auto max-w-4xl text-black">
+            <p
+              data-reveal
+              className="mb-8 text-xs font-medium uppercase tracking-[0.12em] text-black/35"
+            >
+              01 / About
+            </p>
+            <h2
+              data-reveal
+              className="font-display text-[clamp(1.6rem,3.5vw,2.8rem)] font-bold leading-[1.15] tracking-[-0.03em]"
+            >
+              I&apos;m a web developer who cares about the details — code quality,
+              visual precision, and interfaces that actually work for people.
+            </h2>
+            <div data-reveal className="mt-8 flex max-w-xl flex-col gap-5">
+              <p className="text-base leading-[1.7] text-black/55">
+                Based in the Philippines. I spend my time building responsive,
+                accessible websites and web applications that feel intentional —
+                not assembled from templates.
+              </p>
+              <p className="text-base leading-[1.7] text-black/55">
+                Every project is a chance to solve a real problem with clean
+                architecture and thoughtful design. I believe the best interfaces
+                are the ones you don&apos;t notice — they just work.
               </p>
             </div>
-            <span
-              data-scroll
-              data-scroll-enable-touch-speed
-              data-scroll-speed=".06"
-              className="flex flex-row flex-wrap items-center gap-2 pt-6"
-            >
-              <Link href="mailto:jimwelscruz0406@gmail.com" passHref>
-                <Button>
-                  Get in touch <ChevronRight className="ml-1 h-4 w-4" />
-                </Button>
-              </Link>
-              <Button
-                variant="outline"
-                onClick={() => scrollTo(document.querySelector("#about"))}
-              >
-                Learn more
-              </Button>
-            </span>
-          </div>
-
-          <div
-            className={cn(
-              styles.scroll,
-              isScrolled && styles["scroll--hidden"],
-            )}
-          >
-            Scroll to discover{" "}
-            <TriangleDownIcon className="mt-1 animate-bounce" />
           </div>
         </section>
 
-        {/* About */}
-        <section id="about" data-scroll-section>
-          <div
-            data-scroll
-            data-scroll-speed=".4"
-            data-scroll-position="top"
-            className="my-14 flex max-w-6xl flex-col justify-start space-y-10"
-          >
-            <h2 className="py-16  pb-2 text-3xl font-light leading-normal tracking-tighter text-foreground xl:text-[40px]">
-              I&apos;m an experienced full-stack developer proficient in{" "}
-              <Link
-                href="https://react.dev/"
-                target="_blank"
-                className="underline"
-              >
-                React, Next.js, and Node.js
-              </Link>{" "}
-              since 2023. From e-commerce stores to interactive web apps, I&apos;ve
-              helped take products from ideation and wireframing through
-              prototyping to final delivery — while leading a development team
-              and mentoring teammates along the way.
+        {/* ============================================
+            WORK
+        ============================================ */}
+        <section id="work" className="bg-[#141414] px-6 py-32 md:px-12">
+          <div className="container mx-auto">
+            <p
+              data-reveal
+              className="mb-4 text-xs font-medium uppercase tracking-[0.12em] text-white/35"
+            >
+              02 / Work
+            </p>
+            <h2
+              data-reveal
+              className="mb-20 font-display text-[clamp(2.2rem,6vw,5rem)] font-bold leading-[0.95] tracking-[-0.04em] text-white"
+            >
+              Selected
+              <br />
+              Projects
             </h2>
-            <div className="grid grid-cols-2 gap-8 xl:grid-cols-4">
-              {aboutStats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="flex flex-col items-center text-center xl:items-start xl:text-start"
+
+            <div className="flex flex-col gap-24">
+              {projects.map((project, i) => (
+                <article
+                  key={project.title}
+                  data-reveal
+                  className={`grid gap-8 md:gap-16 ${
+                    i % 2 === 0
+                      ? "md:grid-cols-[1.2fr_1fr]"
+                      : "md:grid-cols-[1fr_1.2fr]"
+                  } items-center`}
                 >
-                  <span className="clash-grotesk text-gradient text-4xl font-semibold tracking-tight xl:text-6xl">
-                    {stat.value}
-                  </span>
-                  <span className="tracking-tight text-muted-foreground xl:text-lg">
-                    {stat.label}
-                  </span>
+                  {/* Image / Video */}
+                  <div
+                    className={`overflow-hidden rounded ${
+                      i % 2 !== 0 ? "md:order-2" : ""
+                    }`}
+                  >
+                    <Link
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group relative block aspect-video cursor-pointer overflow-hidden bg-[#1c1c1c]"
+                    >
+                      {"video" in project && project.video ? (
+                        <video
+                          src={project.video}
+                          loop
+                          muted
+                          playsInline
+                          preload="none"
+                          poster={project.image}
+                          title={`${project.title} — ${project.description}`}
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      ) : (
+                        <Image
+                          src={project.image}
+                          alt={`${project.title} — ${project.description}`}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                          priority={project.priority === true}
+                          className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      )}
+                    </Link>
+                  </div>
+
+                  {/* Info */}
+                  <div
+                    className={`relative py-4 ${
+                      i % 2 !== 0 ? "md:order-1" : ""
+                    }`}
+                  >
+                    <span
+                      className="pointer-events-none absolute -top-6 -left-2 font-display text-[clamp(4rem,8vw,7rem)] font-bold leading-none text-white/[0.04]"
+                      aria-hidden="true"
+                    >
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <h3 className="relative z-10 font-display text-[clamp(1.4rem,2.5vw,1.8rem)] font-bold tracking-[-0.02em] text-white">
+                      {project.title}
+                    </h3>
+                    <p className="relative z-10 mt-3 max-w-md text-sm leading-relaxed text-white/45">
+                      {project.description}
+                    </p>
+                    <div className="relative z-10 mt-5 flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="border border-accent/20 px-3 py-1 text-[0.65rem] font-medium uppercase tracking-[0.06em] text-accent"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ============================================
+            SKILLS
+        ============================================ */}
+        <section id="skills" className="relative overflow-hidden bg-background px-6 py-32 md:px-12">
+          {/* Flowing SVG */}
+          <div
+            className="pointer-events-none absolute left-[5%] top-[5%] w-[clamp(80px,12vw,180px)] opacity-80"
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M100 0 C100 200, 180 300, 100 400 C20 500, 100 600, 100 800"
+                stroke="rgba(200,255,0,0.1)"
+                strokeWidth="1"
+                fill="none"
+              />
+              <circle cx="100" cy="400" r="60" stroke="rgba(200,255,0,0.06)" strokeWidth="1" fill="none" />
+            </svg>
+          </div>
+
+          <div className="container relative z-10 mx-auto">
+            <p
+              data-reveal
+              className="mb-4 text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground"
+            >
+              03 / Skills
+            </p>
+            <h2
+              data-reveal
+              className="mb-16 font-display text-[clamp(2.2rem,5.5vw,4.2rem)] font-bold leading-[0.95] tracking-[-0.04em]"
+            >
+              What I
+              <br />
+              Work With
+            </h2>
+
+            <div className="grid gap-12 md:grid-cols-3 md:gap-16">
+              {skillGroups.map((group) => (
+                <div data-reveal key={group.title}>
+                  <h3 className="mb-6 border-b border-accent/15 pb-3 text-xs font-semibold uppercase tracking-[0.1em] text-accent">
+                    {group.title}
+                  </h3>
+                  <ul className="flex flex-col gap-3">
+                    {group.items.map((item) => (
+                      <li
+                        key={item}
+                        className="text-sm text-white/55 transition-colors hover:text-white"
+                      >
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Projects */}
-        <section id="projects" data-scroll-section>
-          {/* Gradient */}
-          <div className="relative isolate -z-10">
-            <div
-              className="absolute inset-x-0 -top-40 transform-gpu overflow-hidden blur-[100px] sm:-top-80 lg:-top-60"
-              aria-hidden="true"
+        {/* ============================================
+            AI-ASSISTED DEVELOPMENT
+        ============================================ */}
+        <section className="relative overflow-hidden bg-[#141414] px-6 py-32 md:px-12">
+          {/* Subtle grid pattern */}
+          <div
+            className="pointer-events-none absolute inset-0"
+            aria-hidden="true"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(200,255,0,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(200,255,0,0.02) 1px, transparent 1px)",
+              backgroundSize: "80px 80px",
+            }}
+          />
+
+          <div className="container relative z-10 mx-auto">
+            <p
+              data-reveal
+              className="mb-4 text-xs font-medium uppercase tracking-[0.12em] text-white/35"
             >
-              <div
-                className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-primary via-primary to-secondary opacity-10 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-                style={{
-                  clipPath:
-                    "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
-                }}
-              />
-            </div>
-          </div>
-          <div data-scroll data-scroll-speed=".4" className="my-64">
-            <span className="text-gradient clash-grotesk text-sm font-semibold tracking-tighter">
-              ✨ Projects
-            </span>
-            <h2 className="mt-3 text-4xl font-semibold tracking-tight tracking-tighter xl:text-6xl">
-              Streamlined digital experiences.
+              AI &amp; Tools
+            </p>
+            <h2
+              data-reveal
+              className="mb-6 font-display text-[clamp(2.2rem,5.5vw,4.2rem)] font-bold leading-[0.95] tracking-[-0.04em] text-white"
+            >
+              Smarter With
+              <br />
+              <span className="text-accent">AI</span>
             </h2>
-            <p className="mt-1.5 text-base tracking-tight text-muted-foreground xl:text-lg">
-              From small marketing sites to large-scale web applications, I&apos;ve
-              shipped products across e-commerce, CRM, and interactive
-              entertainment. Here are a few recent builds:
+            <p
+              data-reveal
+              className="mb-16 max-w-lg text-base leading-relaxed text-white/45"
+            >
+              I leverage AI agents and modern AI-powered tools to write better code, faster.
+              Here&apos;s how AI fits into my workflow.
             </p>
 
-            {/* Carousel */}
-            <div className="mt-14">
-              <div ref={wheelWrapperRef}>
-              <Carousel setApi={setCarouselApi} className="w-full">
-                <CarouselContent>
-                  {projects.map((project) => (
-                    <CarouselItem key={project.title} className="md:basis-1/2">
-                      <Card id="tilt">
-                        <CardHeader className="p-0">
-                          <Link href={project.href} target="_blank" passHref>
-                            {"video" in project && project.video ? (
-                              <video
-                                src={project.video}
-                                autoPlay
-                                loop
-                                muted
-                                playsInline
-                                title={`${project.title} — ${project.description}`}
-                                aria-label={`${project.title} — ${project.description}`}
-                                className="aspect-video h-full w-full rounded-t-md bg-primary object-cover"
-                              />
-                            ) : (
-                              <Image
-                                src={project.image!}
-                                alt={project.title}
-                                width={600}
-                                height={338}
-                                quality={100}
-                                className="aspect-video h-full w-full rounded-t-md bg-primary object-cover"
-                              />
-                            )}
-                          </Link>
-                        </CardHeader>
-                        <CardContent className="absolute bottom-0 w-full bg-background/50 backdrop-blur">
-                          <CardTitle className="border-t border-white/5 p-3 text-xs font-normal tracking-tighter sm:p-4 sm:text-base">
-                            {project.description}
-                          </CardTitle>
-                        </CardContent>
-                      </Card>
-                    </CarouselItem>
-                  ))}
-                </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
-              </Carousel>
-              </div>
-              <div className="py-2 text-center text-sm text-muted-foreground">
-                <span className="font-semibold">
-                  {current} / {count}
-                </span>{" "}
-                projects
-              </div>
+            <div className="grid gap-6 md:grid-cols-3">
+              {aiTools.map((tool) => (
+                <div
+                  data-reveal
+                  key={tool.title}
+                  className="group border border-white/5 bg-white/[0.02] p-8 transition-colors hover:border-accent/30"
+                >
+                  <tool.icon
+                    className="mb-5 text-accent transition-transform group-hover:scale-110"
+                    size={22}
+                  />
+                  <h3 className="font-display text-base font-semibold tracking-tight text-white">
+                    {tool.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-white/45">
+                    {tool.description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Services */}
-        <section id="services" data-scroll-section>
+        {/* ============================================
+            STATS
+        ============================================ */}
+        <section className="relative overflow-hidden bg-[#1c1c1c] px-6 py-32 md:px-12">
+          {/* Grid background */}
           <div
-            data-scroll
-            data-scroll-speed=".4"
-            data-scroll-position="top"
-            className="my-14 md:my-24 flex flex-col justify-start space-y-10"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{
-                duration: 1,
-                staggerChildren: 0.5,
-              }}
-              viewport={{ once: true }}
-              className="grid items-center gap-1.5 md:grid-cols-2 xl:grid-cols-3"
-            >
-              <div className="flex flex-col py-6 xl:p-6">
-                <h2 className="text-4xl font-medium tracking-tight">
-                  Need more info?
-                  <br />
-                  <span className="text-gradient clash-grotesk tracking-normal">
-                    I got you.
-                  </span>
-                </h2>
-                <p className="mt-2 tracking-tighter text-secondary-foreground">
-                  Here are some of the services I offer. If you have any
-                  questions, feel free to reach out.
-                </p>
-              </div>
-              {services.map((service) => (
-                <div
-                  key={service.service}
-                  className="flex flex-col items-start rounded-md bg-white/5 p-14 shadow-md backdrop-blur transition duration-300 hover:-translate-y-0.5 hover:bg-white/10 hover:shadow-md"
-                >
-                  <service.icon className="my-6 text-primary" size={20} />
-                  <span className="text-lg tracking-tight text-foreground">
-                    {service.service}
-                  </span>
-                  <span className="mt-2 tracking-tighter text-muted-foreground">
-                    {service.description}
-                  </span>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
+            className="pointer-events-none absolute inset-0"
+            aria-hidden="true"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(200,255,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(200,255,0,0.03) 1px, transparent 1px)",
+              backgroundSize: "60px 60px",
+            }}
+          />
 
-        {/* FAQ */}
-        <section id="faq" data-scroll-section>
-          <div
-            data-scroll
-            data-scroll-speed=".4"
-            data-scroll-position="top"
-            className="mx-auto my-14 flex w-full max-w-3xl flex-col justify-start space-y-8 md:my-24"
-          >
-            <h2 className="text-3xl font-medium tracking-tighter xl:text-5xl">
-              Frequently asked questions.
-            </h2>
-            {faqs.map((faq) => (
-              <details
-                key={faq.question}
-                className="rounded-md bg-white/5 p-6 shadow-md backdrop-blur"
-              >
-                <summary className="cursor-pointer text-lg font-medium tracking-tight text-foreground">
-                  {faq.question}
-                </summary>
-                <p className="mt-3 tracking-tight text-muted-foreground">
-                  {faq.answer}
-                </p>
-              </details>
+          <div className="container relative z-10 mx-auto grid grid-cols-2 gap-12 md:grid-cols-4">
+            {[
+              {
+                number: `${new Date().getFullYear() - START_YEAR}+`,
+                label: "Years Building",
+              },
+              {
+                number: `${projects.length}+`,
+                label: "Projects Shipped",
+              },
+              { number: "10+", label: "Technologies" },
+              { number: "100%", label: "Responsive" },
+            ].map((stat) => (
+              <div data-reveal key={stat.label} className="flex flex-col gap-2">
+                <span className="font-display text-[clamp(2.8rem,7vw,5.5rem)] font-bold leading-none tracking-[-0.04em] text-accent">
+                  {stat.number}
+                </span>
+                <span className="text-[0.75rem] font-medium uppercase tracking-[0.08em] text-white/35">
+                  {stat.label}
+                </span>
+              </div>
             ))}
           </div>
         </section>
 
-        {/* Contact */}
-        <section id="contact" data-scroll-section className="my-20 md:my-40 lg:my-64">
-          <div
-            data-scroll
-            data-scroll-speed=".4"
-            data-scroll-position="top"
-            className="flex flex-col items-center justify-center rounded-lg bg-gradient-to-br from-primary/[6.5%] to-white/5 px-8 py-16 text-center xl:py-24"
-          >
-            <h2 className="text-4xl font-medium tracking-tighter xl:text-6xl">
-              Let&apos;s work{" "}
-              <span className="text-gradient clash-grotesk">together.</span>
-            </h2>
-            <p className="mt-1.5 text-base tracking-tight text-muted-foreground xl:text-lg">
-              I&apos;m currently available for freelance work and open to
-              discussing new opportunities.
+        {/* ============================================
+            SERVICES
+        ============================================ */}
+        <section className="bg-background px-6 py-32 md:px-12">
+          <div className="container mx-auto">
+            <p
+              data-reveal
+              className="mb-4 text-xs font-medium uppercase tracking-[0.12em] text-muted-foreground"
+            >
+              04 / Services
             </p>
-            <Link href="mailto:jimwelscruz0406@gmail.com" passHref>
-              <Button className="mt-6">Get in touch</Button>
+            <h2
+              data-reveal
+              className="mb-16 font-display text-[clamp(2.2rem,5.5vw,4.2rem)] font-bold leading-[0.95] tracking-[-0.04em]"
+            >
+              What I
+              <br />
+              Can Do
+            </h2>
+
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {services.map((service) => (
+                <div
+                  data-reveal
+                  key={service.service}
+                  className="group border border-border p-8 transition-colors hover:border-accent/30"
+                >
+                  <service.icon className="mb-5 text-accent transition-transform group-hover:scale-110" size={20} />
+                  <h3 className="font-display text-base font-semibold tracking-tight">
+                    {service.service}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {service.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ============================================
+            FAQ
+        ============================================ */}
+        <section className="bg-[#141414] px-6 py-32 md:px-12">
+          <div className="container mx-auto max-w-3xl">
+            <h2
+              data-reveal
+              className="mb-12 font-display text-[clamp(1.8rem,4vw,3rem)] font-bold tracking-[-0.03em] text-white"
+            >
+              Frequently asked questions.
+            </h2>
+            <div className="flex flex-col gap-4">
+              {faqs.map((faq) => (
+                <details
+                  data-reveal
+                  key={faq.question}
+                  className="group border border-white/5 bg-white/[0.02] p-6"
+                >
+                  <summary className="cursor-pointer text-base font-medium tracking-tight text-white outline-none">
+                    {faq.question}
+                  </summary>
+                  <p className="mt-3 text-sm leading-relaxed text-white/45">
+                    {faq.answer}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ============================================
+            CONTACT
+        ============================================ */}
+        <section
+          id="contact"
+          className="relative overflow-hidden bg-off-white px-6 py-32 md:px-12"
+          style={{ backgroundColor: "#f0f0f0" }}
+        >
+          {/* Concentric circles SVG */}
+          <div
+            className="pointer-events-none absolute left-1/2 top-1/2 w-[clamp(400px,60vw,800px)] -translate-x-1/2 -translate-y-1/2 opacity-50"
+            aria-hidden="true"
+          >
+            <svg viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="400" cy="300" r="250" stroke="rgba(10,10,10,0.07)" strokeWidth="1" fill="none" />
+              <circle cx="400" cy="300" r="180" stroke="rgba(10,10,10,0.05)" strokeWidth="1" fill="none" />
+              <circle cx="400" cy="300" r="110" stroke="rgba(10,10,10,0.03)" strokeWidth="1" fill="none" />
+              <line x1="150" y1="300" x2="650" y2="300" stroke="rgba(10,10,10,0.04)" strokeWidth="1" />
+              <line x1="400" y1="50" x2="400" y2="550" stroke="rgba(10,10,10,0.04)" strokeWidth="1" />
+            </svg>
+          </div>
+
+          <div className="container relative z-10 mx-auto max-w-4xl text-black">
+            <p
+              data-reveal
+              className="mb-4 text-xs font-medium uppercase tracking-[0.12em] text-black/35"
+            >
+              05 / Contact
+            </p>
+            <h2
+              data-reveal
+              className="font-display text-[clamp(2.2rem,6.5vw,5rem)] font-bold leading-[0.95] tracking-[-0.04em]"
+            >
+              Let&apos;s build
+              <br />
+              something{" "}
+              <span className="relative inline-block">
+                great.
+                <span className="absolute bottom-[0.1em] left-0 right-0 -z-10 h-[0.35em] bg-accent" />
+              </span>
+            </h2>
+            <Link
+              data-reveal
+              href="mailto:jimwelscruz0406@gmail.com"
+              className="mt-10 inline-flex items-center gap-2 border-2 border-black px-4 py-2.5 text-xs font-semibold transition-colors hover:bg-black hover:text-[#f0f0f0] sm:gap-3 sm:px-8 sm:py-4 sm:text-base"
+            >
+              <span className="whitespace-nowrap">
+                jimwelscruz0406@gmail.com
+              </span>
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </Link>
           </div>
         </section>
-      </div>
-    </Container>
-    </>
-  );
-}
-
-function Gradient() {
-  return (
-    <>
-      {/* Upper gradient */}
-      <div className="absolute -top-40 right-0 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
-        <svg
-          className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
-          viewBox="0 0 1155 678"
-        >
-          <path
-            fill="url(#45de2b6b-92d5-4d68-a6a0-9b9b2abad533)"
-            fillOpacity=".1"
-            d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z"
-          />
-          <defs>
-            <linearGradient
-              id="45de2b6b-92d5-4d68-a6a0-9b9b2abad533"
-              x1="1155.49"
-              x2="-78.208"
-              y1=".177"
-              y2="474.645"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#7980fe" />
-              <stop offset={1} stopColor="#f0fff7" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
-
-      {/* Lower gradient */}
-      <div className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
-        <svg
-          className="relative left-[calc(50%+3rem)] h-[21.1875rem] max-w-none -translate-x-1/2 sm:left-[calc(50%+36rem)] sm:h-[42.375rem]"
-          viewBox="0 0 1155 678"
-        >
-          <path
-            fill="url(#ecb5b0c9-546c-4772-8c71-4d3f06d544bc)"
-            fillOpacity=".1"
-            d="M317.219 518.975L203.852 678 0 438.341l317.219 80.634 204.172-286.402c1.307 132.337 45.083 346.658 209.733 145.248C936.936 126.058 882.053-94.234 1031.02 41.331c119.18 108.451 130.68 295.337 121.53 375.223L855 299l21.173 362.054-558.954-142.079z"
-          />
-          <defs>
-            <linearGradient
-              id="ecb5b0c9-546c-4772-8c71-4d3f06d544bc"
-              x1="1155.49"
-              x2="-78.208"
-              y1=".177"
-              y2="474.645"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stopColor="#9A70FF" />
-              <stop offset={1} stopColor="#838aff" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </div>
+      </Container>
     </>
   );
 }

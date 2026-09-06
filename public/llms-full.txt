@@ -34,6 +34,20 @@ Reviewing and fixing usability so everyone can navigate and use your website. Co
 
 Designing websites that look and perform equally well on all devices and screen sizes. Mobile-first layouts that preserve content and interaction quality from a 320px phone to a 4K monitor.
 
+## AI & Tools
+
+### AI-Assisted Development
+
+Using AI coding agents and LLM-powered tools to accelerate development — from scaffolding and debugging to code review and architecture decisions. AI doesn't replace judgment; it amplifies it.
+
+### Vibe Coding
+
+Rapidly prototyping ideas by iterating with AI in real-time. Describing what you want, refining the output, and shipping faster — turning concepts into working code through natural conversation.
+
+### AI-Augmented Workflow
+
+From generating boilerplate to optimizing performance, integrating AI into every stage of the development lifecycle so you can focus on the creative and strategic parts that matter most.
+
 ## Selected Work
 
 ### ModernHaven — E-commerce Store for Modern Furniture
@@ -66,17 +80,10 @@ A relaxing block puzzle game built as a personal project.
 
 ## Technology Stack
 
-- Frontend: React, Next.js, TypeScript, Tailwind CSS, Framer Motion, Three.js
-- Backend: Node.js, PHP
+- Frontend: React, Next.js, TypeScript, Tailwind CSS
+- Backend: Node.js, PHP, PostgreSQL, MongoDB
 - E-commerce: Shopify
-- Tooling: Git, Docker, REST APIs, package managers, CI/CD workflows
-
-## Experience Highlights
-
-- 3+ years of experience as a full-stack developer.
-- 6+ products delivered from ideation to final delivery.
-- 1 company team led, including mentoring of teammates.
-- 8+ technologies mastered.
+- Tools: Git, GitHub Actions, Docker, Vercel, Netlify, CI/CD
 
 ## FAQ
 
@@ -90,7 +97,7 @@ Yes. Jimwel is currently available for freelance work and open to discussing new
 
 ### How much experience does Jimwel have?
 
-Over three years as a full-stack developer and web team lead, delivering more than six products from ideation and wireframing through prototyping to final delivery while mentoring teammates along the way.
+Over three years as a full-stack developer and web team lead, delivering multiple products from ideation and wireframing through prototyping to final delivery while mentoring teammates along the way.
 
 ## Contact
 

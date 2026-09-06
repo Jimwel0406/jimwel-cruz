@@ -1,51 +1,61 @@
-# 🖥️ Jimwel Cruz — Personal Portfolio
+# Jimwel Cruz — Personal Portfolio
 
-A sleek, modern, and responsive portfolio bootstrapped with [create-t3-app](https://create.t3.gg/).
+A modern, responsive, and AI-enhanced portfolio built with [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/).
 
-[🔗 Link to portfolio](https://jimwel-cruz.vercel.app)
+[Live Demo](https://jimwel-cruz.vercel.app)
 
-All you need to know about me, my projects and skills can be found here. Built on top of the [developer-portfolio](https://github.com/wendoj/developer-portfolio) template.
+## Features
 
-## 🎉 Features
-- **Responsive Design**: The portfolio is designed to be fully responsive, providing an optimal viewing experience across a wide range of devices from desktops to mobile phones.
-- **Easy Customization**: The portfolio structure is straightforward and well organized, making it easy to customize and showcase your unique set of skills and projects.
-- **Stunning UI/UX Design**: The portfolio boasts a sleek and modern design, using smooth animations to capture the attention of potential employers or clients.
-- **Interactive UI**: Utilizing modern web development techniques, the portfolio offers an interactive user interface that enhances user experience, such as `locomotive-scroll` and `framer-motion`.
+- **Responsive Design** — Fully responsive across all devices from 320px to 4K.
+- **AI-Assisted Development** — Showcasing how I use AI agents and vibe coding to build faster.
+- **Dark Theme** — Sleek dark UI with acid green accent and noise texture overlay.
+- **Scroll Reveal Animations** — Smooth entrance animations powered by IntersectionObserver.
+- **PWA Ready** — Installable as a Progressive Web App with offline support.
+- **SEO Optimized** — JSON-LD structured data, Open Graph, sitemap, llms.txt, and AI-readable metadata.
+- **Accessibility** — Skip links, focus-visible outlines, prefers-reduced-motion support, semantic HTML.
+- **Embedded Projects** — Interactive mini-apps (calculator, whack-a-mole) embedded directly into the site.
 
-## 🚀 Getting Started
+## Tech Stack
+
+- **Framework:** Next.js 14 (Pages Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS
+- **UI:** shadcn/ui pattern (CVA + Radix)
+- **Icons:** Lucide React
+- **Fonts:** Space Grotesk + Inter (Google Fonts)
+- **Deployment:** Vercel
+
+## Getting Started
 
 ### Prerequisites
-To get started with this portfolio, ensure that you have the following installed on your system:
-- Node.js
-- pnpm
-- git
 
-## 🛠️ Installation
-Follow the steps below to clone and run this project on your local system:
+- Node.js 18+
+- pnpm
+
+### Installation
 
 ```bash
 # Clone the repository
-$ git clone https://github.com/Jimwel0406/jimwel-cruz.git
+git clone https://github.com/Jimwel0406/portfolio.git
 
 # Navigate to the project directory
-$ cd jimwel-cruz
+cd portfolio
 
-# Remove current origin repository
-$ git remote remove origin
-```
-
-<br />
-
-Then install the required dependencies:
-```bash
 # Install dependencies
-$ pnpm install
+pnpm install
 
-# Start the development server:
-$ pnpm run dev
+# Start the development server
+pnpm run dev
 ```
-Now, open your browser and navigate to `http://localhost:3000` to view your portfolio live.
 
-## How do I deploy this?
+Open [http://localhost:3000](http://localhost:3000) to view the portfolio.
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Deployment
+
+Deploy to [Vercel](https://vercel.com) with one click:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Jimwel0406/portfolio)
+
+## License
+
+[MIT](LICENSE.md)

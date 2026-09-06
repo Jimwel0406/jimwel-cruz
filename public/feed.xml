@@ -4,7 +4,7 @@
   <subtitle>Full-stack developer and web team lead based in the Philippines.</subtitle>
   <link href="https://jimwel-cruz.vercel.app/"/>
   <link rel="self" href="https://jimwel-cruz.vercel.app/feed.xml"/>
-  <updated>2024-01-01T00:00:00Z</updated>
+  <updated>2026-09-06T00:00:00Z</updated>
   <id>https://jimwel-cruz.vercel.app/</id>
   <author>
     <name>Jimwel Cruz</name>
@@ -14,14 +14,42 @@
     <title>ModernHaven — E-commerce store for modern furniture</title>
     <link href="https://modern-haven-nine.vercel.app/"/>
     <id>https://jimwel-cruz.vercel.app/projects/modernhaven</id>
-    <updated>2024-01-01T00:00:00Z</updated>
+    <updated>2026-09-06T00:00:00Z</updated>
     <summary>E-commerce store for modern furniture, built by Jimwel Cruz.</summary>
   </entry>
   <entry>
     <title>ContactFlow — CRM platform for managing customer interactions</title>
     <link href="https://contactflow-crm.vercel.app/"/>
     <id>https://jimwel-cruz.vercel.app/projects/contactflow</id>
-    <updated>2024-01-01T00:00:00Z</updated>
+    <updated>2026-09-06T00:00:00Z</updated>
     <summary>CRM platform for managing customer interactions, built by Jimwel Cruz.</summary>
+  </entry>
+  <entry>
+    <title>Quizipedia — Interactive trivia and quiz game</title>
+    <link href="https://quizipedia.epizy.com/"/>
+    <id>https://jimwel-cruz.vercel.app/projects/quizipedia</id>
+    <updated>2026-09-06T00:00:00Z</updated>
+    <summary>Interactive trivia and quiz game, built by Jimwel Cruz.</summary>
+  </entry>
+  <entry>
+    <title>Whack-A-Mole — Classic arcade-style game</title>
+    <link href="https://jimwel-cruz.vercel.app/projects/mole-bash"/>
+    <id>https://jimwel-cruz.vercel.app/projects/mole-bash</id>
+    <updated>2026-09-06T00:00:00Z</updated>
+    <summary>Classic arcade-style whack-a-mole game, built by Jimwel Cruz.</summary>
+  </entry>
+  <entry>
+    <title>Calculator — Modern responsive calculator</title>
+    <link href="https://jimwel-cruz.vercel.app/projects/calculator"/>
+    <id>https://jimwel-cruz.vercel.app/projects/calculator</id>
+    <updated>2026-09-06T00:00:00Z</updated>
+    <summary>Modern and responsive calculator app, built by Jimwel Cruz.</summary>
+  </entry>
+  <entry>
+    <title>Block Puzzle — Relaxing puzzle game</title>
+    <link href="https://block-puzzle-board.vercel.app/"/>
+    <id>https://jimwel-cruz.vercel.app/projects/blockpuzzle</id>
+    <updated>2026-09-06T00:00:00Z</updated>
+    <summary>Relaxing block puzzle game, built by Jimwel Cruz.</summary>
   </entry>
 </feed>

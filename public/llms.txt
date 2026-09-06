@@ -15,6 +15,12 @@
 - Accessibility Audits: Reviewing and fixing usability so everyone can navigate and use your website.
 - Responsive Design: Designing websites that look and perform equally well on all devices and screen sizes.
 
+## AI & Tools
+
+- AI-Assisted Development: Using AI coding agents and LLM-powered tools to accelerate development.
+- Vibe Coding: Rapidly prototyping ideas by iterating with AI in real-time.
+- AI-Augmented Workflow: Integrating AI into every stage of the development lifecycle.
+
 ## Selected Work
 
 - [ModernHaven](https://modern-haven-nine.vercel.app/) — E-commerce store for modern furniture.
@@ -23,13 +29,6 @@
 - Whack-A-Mole: Classic arcade-style whack-a-mole game.
 - Calculator: Modern and responsive calculator app.
 - Block Puzzle: Relaxing block puzzle game.
-
-## Experience
-
-- 3+ years of experience as a full-stack developer.
-- 6+ products delivered from ideation to final delivery.
-- 1 company team led with mentoring of teammates.
-- 8+ technologies mastered.
 
 ## FAQ
 

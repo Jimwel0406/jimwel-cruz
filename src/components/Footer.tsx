@@ -1,60 +1,46 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
-import { MailIcon } from "lucide-react";
-
 export default function Footer() {
-  // get the current time in UTC+1 time zone
-  const [time, setTime] = useState<string>("");
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const date = new Date();
-      date.setHours(date.getHours());
-      setTime(
-        date.toLocaleTimeString("en-US", {
-          hour12: true,
-          hour: "numeric",
-          minute: "numeric",
-        }),
-      );
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <footer className="w-full bg-gradient-to-t from-primary/[1%] to-transparent">
-      <div className="container mx-auto flex flex-row items-center justify-between py-6">
-        <span className="flex flex-row items-center space-x-4">
-          <p className="text-xs text-muted-foreground">
-            Made with ❤️ by{" "}
-            <Link
-              href="https://github.com/Jimwel0406"
-              target="_blank"
-              passHref
-              className="text-foreground transition hover:text-primary"
-            >
-              Jimwel Cruz
-            </Link>
-          </p>
-          <hr className="hidden h-6 border-l border-muted md:flex" />
-          <span className="flex hidden flex-row items-center space-x-2 md:flex">
-            <p className="text-xs text-muted-foreground">Local time:</p>
-            <p className="text-sm font-semibold">{time} UTC+8</p>
-          </span>
+    <footer className="relative bg-background px-3 py-6 sm:px-6 md:px-12">
+      {/* Mobile back to top - fixed at top of footer */}
+      <a
+        href="#home"
+        className="absolute -top-10 left-1/2 z-50 -translate-x-1/2 border border-white/10 bg-[#141414] px-4 py-2 text-xs text-muted-foreground transition-colors hover:text-accent md:hidden"
+      >
+        &uarr; Top
+      </a>
+
+      <div className="container mx-auto flex flex-wrap items-center justify-between gap-4">
+        <span className="text-xs text-muted-foreground">
+          &copy; {new Date().getFullYear()} Jimwel
         </span>
-        <Link
-          href="mailto:jimwelscruz0406@gmail.com"
-          passHref
-          className="text-xs text-muted-foreground hover:text-foreground"
-        >
-          <Button variant={"outline"}>
-            <MailIcon className="h-4 w-4 md:mr-2" />
-            <span className="hidden md:flex">jimwelscruz0406@gmail.com</span>
-          </Button>
-        </Link>
+        <div className="flex items-center gap-6">
+          <a
+            href="https://github.com/Jimwel0406"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground transition-colors hover:text-accent"
+            style={{ fontSize: "0.8rem" }}
+          >
+            GitHub
+          </a>
+          <a
+            href="https://linkedin.com/in/jimwel-cruz"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground transition-colors hover:text-accent"
+            style={{ fontSize: "0.8rem" }}
+          >
+            LinkedIn
+          </a>
+          <a
+            href="#home"
+            className="hidden text-muted-foreground transition-colors hover:text-accent md:inline"
+            style={{ fontSize: "0.8rem" }}
+          >
+            Back to top &uarr;
+          </a>
+        </div>
       </div>
-      <div className="h-1 bg-[radial-gradient(closest-side,#8486ff,#42357d,#5d83ff,transparent)] opacity-50" />
     </footer>
   );
 }
