@@ -20,13 +20,23 @@ import {
 
 const projects = [
   {
+    title: "Vellora",
+    description:
+      "Multi-vendor marketplace for thoughtfully made products. Full-stack build with Next.js, Stripe Connect, real-time notifications, and role-based dashboards.",
+    image: "/assets/projects/vellora.webp",
+    video: "/assets/projects/vellora.mp4",
+    href: "https://vellora-seven.vercel.app/",
+    tags: ["Next.js", "Prisma", "PostgreSQL", "Supabase", "Stripe Connect", "NextAuth"],
+    priority: true,
+  },
+  {
     title: "ModernHaven",
     description:
       "E-commerce store for modern furniture. Full-stack build with Next.js, Stripe payments, and real-time inventory management.",
     image: "/assets/projects/modernhaven.webp",
     video: "/assets/projects/modernhaven.mp4",
     href: "https://modern-haven-nine.vercel.app/",
-    tags: ["Next.js", "Stripe", "PostgreSQL"],
+    tags: ["Next.js", "Shopify", "Tailwind CSS", "AI"],
     priority: true,
   },
   {
@@ -36,7 +46,7 @@ const projects = [
     image: "/assets/projects/contactflow.webp",
     video: "/assets/projects/contactflow.mp4",
     href: "https://contactflow-crm.vercel.app/",
-    tags: ["React", "Node.js", "REST API"],
+    tags: ["Next.js", "Prisma", "PostgreSQL", "Stripe", "NextAuth"],
   },
   {
     title: "Quizipedia",
@@ -44,7 +54,7 @@ const projects = [
       "Interactive trivia and quiz game. Real-time scoring, category filters, and a clean responsive interface.",
     image: "/assets/projects/quizipedia.webp",
     href: "https://quizipedia.epizy.com/",
-    tags: ["JavaScript", "API", "CSS"],
+    tags: ["PHP", "JavaScript", "CSS"],
   },
   {
     title: "Whack-A-Mole",
@@ -68,7 +78,7 @@ const projects = [
       "Relaxing block puzzle game. Canvas-based logic with smooth animations and mobile-first controls.",
     image: "/assets/projects/blockpuzzle.webp",
     href: "https://block-puzzle-board.vercel.app/",
-    tags: ["Canvas", "JavaScript", "Game Dev"],
+    tags: ["React", "JavaScript", "Game Dev"],
   },
 ];
 
