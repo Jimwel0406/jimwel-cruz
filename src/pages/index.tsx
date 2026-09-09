@@ -911,7 +911,6 @@ export default function Home() {
                           muted
                           playsInline
                           preload="none"
-                          poster={project.image}
                           title={`${project.title} — ${project.description}`}
                           className="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
