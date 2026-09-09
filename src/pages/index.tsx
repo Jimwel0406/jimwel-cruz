@@ -900,7 +900,9 @@ export default function Home() {
                       href={project.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative block aspect-video cursor-pointer overflow-hidden bg-[#1c1c1c]"
+                      className={`group relative block cursor-pointer overflow-hidden bg-[#1c1c1c] ${
+                        "video" in project && project.video ? "" : "aspect-video"
+                      }`}
                     >
                       {"video" in project && project.video ? (
                         <video
@@ -911,7 +913,7 @@ export default function Home() {
                           preload="none"
                           poster={project.image}
                           title={`${project.title} — ${project.description}`}
-                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                          className="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
                       ) : (
                         <Image
