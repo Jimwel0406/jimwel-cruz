@@ -20,6 +20,22 @@ import {
 
 const projects = [
   {
+    title: "Marrow",
+    description:
+      "Homepage design study for a Manila streetwear label. Cinematic ink-and-ivory art direction with oversized editorial type, film-grain photography, and a seven-section single-page flow.",
+    video: "/assets/projects/marrow.mp4",
+    href: "https://marrow-silk.vercel.app/",
+    tags: ["Next.js", "Tailwind CSS", "TypeScript", "UI Design"],
+  },
+  {
+    title: "Burger Shop",
+    description:
+      "Homepage design study for a fictional smash-burger restaurant. Dark high-contrast palette, condensed display type, torn-paper details, and full-bleed food photography.",
+    video: "/assets/projects/burgershop.mp4",
+    href: "https://burger-shop-xi.vercel.app/",
+    tags: ["Next.js", "Tailwind CSS", "TypeScript", "UI Design"],
+  },
+  {
     title: "Vellora",
     description:
       "Multi-vendor marketplace for thoughtfully made products. Full-stack build with Next.js, Stripe Connect, real-time notifications, and role-based dashboards.",
@@ -914,7 +930,7 @@ export default function Home() {
                           title={`${project.title} — ${project.description}`}
                           className="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-105"
                         />
-                      ) : (
+                      ) : "image" in project && project.image ? (
                         <Image
                           src={project.image}
                           alt={`${project.title} — ${project.description}`}
@@ -923,7 +939,7 @@ export default function Home() {
                           priority={project.priority === true}
                           className="object-cover transition-transform duration-700 group-hover:scale-105"
                         />
-                      )}
+                      ) : null}
                     </Link>
                   </div>
 
