@@ -118,7 +118,7 @@ export default function Container(props: ContainerProps) {
                   description: meta.description,
                   sameAs: [
                     "https://github.com/Jimwel0406",
-                    "https://linkedin.com/in/jimwel-cruz",
+                    "https://www.facebook.com/jimwel.saraminez.cruz",
                   ],
                   contactPoint: {
                     "@type": "ContactPoint",
@@ -138,7 +138,7 @@ export default function Container(props: ContainerProps) {
                   nationality: "Philippines",
                   sameAs: [
                     "https://github.com/Jimwel0406",
-                    "https://linkedin.com/in/jimwel-cruz",
+                    "https://www.facebook.com/jimwel.saraminez.cruz",
                   ],
                   worksFor: { "@id": `${siteUrl}/#organization` },
                 },

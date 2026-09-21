@@ -24,13 +24,13 @@ export default function Footer() {
             GitHub
           </a>
           <a
-            href="https://linkedin.com/in/jimwel-cruz"
+            href="https://www.facebook.com/jimwel.saraminez.cruz"
             target="_blank"
             rel="noopener noreferrer"
             className="text-muted-foreground transition-colors hover:text-accent"
             style={{ fontSize: "0.8rem" }}
           >
-            LinkedIn
+            Facebook
           </a>
           <a
             href="#home"
