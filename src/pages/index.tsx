@@ -560,9 +560,15 @@ export default function Home() {
               requestAnimationFrame(draw);
 
               const onResize = () => {
+                const prevW = w;
+                const prevH = h;
                 w = canvas.width = canvas.offsetWidth;
                 h = canvas.height = canvas.offsetHeight;
-                stars.forEach((s) => { s.x = Math.random() * w; s.y = Math.random() * h * 0.7; });
+                const sx = w / prevW;
+                const sy = h / prevH;
+                stars.forEach((s) => { s.x *= sx; s.y *= sy; });
+                particles.forEach((p) => { p.x *= sx; p.y *= sy; });
+                fogWisps.forEach((f) => { f.x *= sx; });
               };
               window.addEventListener("resize", onResize);
             }}
