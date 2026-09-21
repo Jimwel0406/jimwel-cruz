@@ -13,9 +13,6 @@ import {
   Sparkles,
   BrainCircuit,
   MessageSquareCode,
-  Briefcase,
-  GraduationCap,
-  Users,
 } from "lucide-react";
 
 const projects = [
@@ -208,19 +205,19 @@ const aiTools = [
   {
     title: "AI-Assisted Development",
     description:
-      "I use AI coding agents and LLM-powered tools to accelerate development — from scaffolding and debugging to code review and architecture decisions. AI doesn't replace my judgment; it amplifies it.",
+      "I use AI tools to speed up coding — writing boilerplate, fixing bugs, and reviewing code. But I always check the output, especially for database queries and anything involving sensitive data.",
     icon: BrainCircuit,
   },
   {
     title: "Vibe Coding",
     description:
-      "Rapidly prototyping ideas by iterating with AI in real-time. I describe what I want, refine the output, and ship faster — turning concepts into working code through natural conversation.",
+      "I describe what I want in plain language, AI generates the code, then I refine it. It helps me turn ideas into working features fast without starting from scratch.",
     icon: MessageSquareCode,
   },
   {
     title: "AI-Augmented Workflow",
     description:
-      "From generating boilerplate to optimizing performance, I integrate AI into every stage of the development lifecycle so I can focus on the creative and strategic parts that matter most.",
+      "AI handles the repetitive parts — generating code, optimizing performance, testing — so I can focus on design, architecture, and making sure everything works correctly.",
     icon: Sparkles,
   },
 ];
@@ -616,8 +613,8 @@ export default function Home() {
               data-reveal
               className="mt-4 max-w-md text-lg font-bold leading-relaxed text-white md:text-xl"
             >
-              Full-stack developer and web team lead.{" "}
-              <span className="sm:whitespace-nowrap">Clean code, bold design, no fluff.</span>
+              Full-stack developer.{" "}
+              <span className="sm:whitespace-nowrap">I build websites that work.</span>
             </p>
           </div>
 
@@ -637,7 +634,6 @@ export default function Home() {
           id="about"
           className="relative overflow-hidden bg-white px-6 py-32 md:px-12"
         >
-          {/* Dot pattern */}
           <div
             className="pointer-events-none absolute inset-0 opacity-100"
             aria-hidden="true"
@@ -648,22 +644,6 @@ export default function Home() {
             }}
           />
 
-          {/* Geometric SVG */}
-          <div
-            className="pointer-events-none absolute -right-[5%] top-[10%] w-[clamp(250px,35vw,500px)] opacity-60"
-            aria-hidden="true"
-          >
-            <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="50" y="50" width="500" height="500" stroke="rgba(10,10,10,0.1)" strokeWidth="1" fill="none" rx="4" />
-              <rect x="100" y="100" width="400" height="400" stroke="rgba(10,10,10,0.06)" strokeWidth="1" fill="none" rx="4" />
-              <line x1="50" y1="50" x2="100" y2="100" stroke="rgba(10,10,10,0.08)" strokeWidth="1" />
-              <line x1="550" y1="50" x2="500" y2="100" stroke="rgba(10,10,10,0.08)" strokeWidth="1" />
-              <line x1="50" y1="550" x2="100" y2="500" stroke="rgba(10,10,10,0.08)" strokeWidth="1" />
-              <line x1="550" y1="550" x2="500" y2="500" stroke="rgba(10,10,10,0.08)" strokeWidth="1" />
-              <circle cx="300" cy="300" r="150" stroke="rgba(10,10,10,0.05)" strokeWidth="1" fill="none" />
-            </svg>
-          </div>
-
           <div className="container relative z-10 mx-auto max-w-6xl text-black">
             <p
               data-reveal
@@ -673,57 +653,83 @@ export default function Home() {
             </p>
 
             <div className="grid gap-12 md:grid-cols-[1fr_0.4fr] md:gap-16">
-              {/* Left — Main editorial block */}
-              <div className="relative">
-                {/* Decorative icons background */}
-                <div className="pointer-events-none absolute -left-20 -top-16 -z-10 opacity-[0.04]" aria-hidden="true">
-                  <Code2 size={140} strokeWidth={1} />
-                </div>
-                <div className="pointer-events-none absolute -right-28 top-8 -z-10 opacity-[0.04]" aria-hidden="true">
-                  <Users size={120} strokeWidth={1} />
-                </div>
-                <div className="pointer-events-none absolute -bottom-10 right-0 -z-10 opacity-[0.04] md:right-20" aria-hidden="true">
-                  <GraduationCap size={90} strokeWidth={1} />
-                </div>
-
+              {/* Left — Headline + Timeline */}
+              <div>
                 <h2
                   data-reveal
                   className="font-display text-[clamp(2rem,4.5vw,3.5rem)] font-bold leading-[1.1] tracking-[-0.03em]"
                 >
-                  I&apos;m a web developer who builds things that work — and a
-                  team lead who makes sure they ship.
+                  I&apos;m a full stack web developer. 3 years in, <span className="inline-block font-bold text-black">still learning.</span>
                 </h2>
 
-                <div data-reveal className="relative mt-10 max-w-xl border-l-[6px] border-accent pl-6">
-                  <p className="font-playfair text-xl font-medium leading-[1.8] text-black/70 md:text-2xl">
-                    I&apos;m Jimwel Cruz. I started at{" "}
-                    <span className="font-bold text-black">Sport Formula</span>{" "}
-                    as a full stack web developer and got promoted to{" "}
-                    <span className="font-bold text-black">
-                      Web Dev Team Lead
-                    </span>{" "}
-                    after a year — because I can build and I can lead.
-                  </p>
-                </div>
-
-                <div data-reveal className="relative mt-16 max-w-xl border-l-[6px] border-black/10 pl-6">
-                  <div className="pointer-events-none absolute -left-14 top-1 -z-10 opacity-[0.06]" aria-hidden="true">
-                    <Briefcase size={40} strokeWidth={1.5} />
+                <div className="mt-12 flex flex-col">
+                  <div
+                    data-reveal
+                    className="group flex flex-col gap-6 border-t-2 border-black py-10 md:flex-row md:items-start md:gap-16"
+                  >
+                    <div className="shrink-0 md:w-48">
+                      <span className="font-display text-sm font-bold uppercase tracking-[0.06em] text-black">
+                        2023
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-display text-2xl font-bold tracking-[-0.02em] text-black md:text-3xl">
+                        Diploma in Information Technology
+                      </h3>
+                    </div>
                   </div>
-                  <p className="font-playfair text-xl font-medium leading-[1.8] text-black/70 md:text-2xl">
-                    Diploma graduate in Information Technology. I don&apos;t come
-                    from a fancy university, but I&apos;ve spent{" "}
-                    <span className="font-bold text-black">
-                      3 years shipping real products
-                    </span>
-                    , managing a team, and solving problems that actually matter
-                    to the business.
-                  </p>
+
+                  <div
+                    data-reveal
+                    className="group flex flex-col gap-6 border-t border-black/10 py-10 md:flex-row md:items-start md:gap-16"
+                  >
+                    <div className="shrink-0 md:w-48">
+                      <span className="font-display text-sm font-bold uppercase tracking-[0.06em] text-black">
+                        2023
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-display text-2xl font-bold tracking-[-0.02em] text-black md:text-3xl">
+                        Full Stack Web Developer
+                      </h3>
+                      <p className="mt-1 text-sm font-bold text-black/55">
+                        Sport Formula
+                      </p>
+                    </div>
+                  </div>
+
+                  <div
+                    data-reveal
+                    className="group flex flex-col gap-6 border-t border-black/10 border-b-2 border-b-black py-10 md:flex-row md:items-start md:gap-16"
+                  >
+                    <div className="shrink-0 md:w-48">
+                      <span className="font-display text-sm font-bold uppercase tracking-[0.06em] text-black">
+                        2024 — Present
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-display text-2xl font-bold tracking-[-0.02em] text-black md:text-3xl">
+                        Web Dev Team Lead
+                      </h3>
+                      <p className="mt-1 text-sm font-bold text-black/55">
+                        Sport Formula
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              {/* Right — Large name statement */}
-              <div className="flex flex-col justify-end gap-8">
+              {/* Right — Photo and details */}
+              <div className="flex flex-col items-center justify-end gap-8 text-center">
+                <div data-reveal className="w-full">
+                  <Image
+                    src="/assets/me.jpg"
+                    alt="Jimwel Cruz"
+                    width={400}
+                    height={500}
+                    className="w-full rounded-sm object-cover"
+                  />
+                </div>
                 <div data-reveal>
                   <span className="block font-display text-sm font-bold uppercase tracking-[0.12em] text-black/50">
                     Based in
@@ -744,148 +750,12 @@ export default function Home() {
                 </div>
                 <div data-reveal>
                   <span className="block font-display text-sm font-bold uppercase tracking-[0.12em] text-black/50">
-                    Current Role
+                    Experience
                   </span>
                   <span className="relative mt-2 inline-block font-display text-2xl font-bold tracking-[-0.02em] text-black">
-                    Team Lead
+                    3 Years
                     <span className="absolute bottom-[0.05em] left-0 right-0 -z-10 h-[0.3em] bg-accent" />
                   </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ============================================
-            TIMELINE
-        ============================================ */}
-        <section
-          className="relative bg-[#f5f5f5] px-6 py-32 md:px-12"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-            backgroundSize: "200px 200px",
-            opacity: 1,
-          }}
-        >
-          <div
-            className="pointer-events-none absolute inset-0 opacity-[0.03]"
-            aria-hidden="true"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-              backgroundSize: "200px 200px",
-            }}
-          />
-          <div className="container mx-auto max-w-5xl">
-            {/* Decorative frame */}
-            <div className="relative border border-black/10 px-6 py-16 md:px-16 md:py-20">
-              {/* Corner ornaments */}
-              <div className="absolute left-4 top-4 h-6 w-6 border-l-2 border-t-2 border-black/20" />
-              <div className="absolute right-4 top-4 h-6 w-6 border-r-2 border-t-2 border-black/20" />
-              <div className="absolute bottom-4 left-4 h-6 w-6 border-b-2 border-l-2 border-black/20" />
-              <div className="absolute bottom-4 right-4 h-6 w-6 border-b-2 border-r-2 border-black/20" />
-
-              {/* Top decorative line */}
-              <div className="absolute left-1/2 top-0 -translate-x-1/2 bg-[#f5f5f5] px-4">
-                <svg width="80" height="12" viewBox="0 0 80 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <line x1="0" y1="6" x2="30" y2="6" stroke="rgba(0,0,0,0.15)" strokeWidth="1" />
-                  <circle cx="40" cy="6" r="3" stroke="rgba(0,0,0,0.2)" strokeWidth="1" fill="none" />
-                  <line x1="50" y1="6" x2="80" y2="6" stroke="rgba(0,0,0,0.15)" strokeWidth="1" />
-                </svg>
-              </div>
-
-              {/* Bottom decorative line */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 bg-[#f5f5f5] px-4">
-                <svg width="80" height="12" viewBox="0 0 80 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <line x1="0" y1="6" x2="30" y2="6" stroke="rgba(0,0,0,0.15)" strokeWidth="1" />
-                  <circle cx="40" cy="6" r="3" stroke="rgba(0,0,0,0.2)" strokeWidth="1" fill="none" />
-                  <line x1="50" y1="6" x2="80" y2="6" stroke="rgba(0,0,0,0.15)" strokeWidth="1" />
-                </svg>
-              </div>
-
-              <p
-                data-reveal
-                className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-black/60"
-              >
-                02 / Journey
-              </p>
-              <h2
-                data-reveal
-                className="mb-20 font-display text-[clamp(2.2rem,5.5vw,4.2rem)] font-bold leading-[0.95] tracking-[-0.04em] text-black"
-              >
-                Experience
-                <br />
-                &amp; Education
-              </h2>
-
-              <div className="flex flex-col">
-                {/* Education */}
-                <div
-                  data-reveal
-                  className="group flex flex-col gap-6 border-t-2 border-black py-10 md:flex-row md:items-start md:gap-16"
-                >
-                  <div className="shrink-0 md:w-48">
-                    <span className="font-display text-sm font-bold uppercase tracking-[0.06em] text-black">
-                      Foundation
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-display text-2xl font-bold tracking-[-0.02em] text-black md:text-3xl">
-                      Diploma in Information Technology
-                    </h3>
-                    <p className="font-playfair mt-4 text-lg font-medium leading-[1.7] text-black/60 md:text-xl">
-                      High school graduate with a focus on IT. The foundation that
-                      started everything.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Sport Formula — Full Stack Developer */}
-                <div
-                  data-reveal
-                  className="group flex flex-col gap-6 border-t border-black/10 py-10 md:flex-row md:items-start md:gap-16"
-                >
-                  <div className="shrink-0 md:w-48">
-                    <span className="font-display text-sm font-bold uppercase tracking-[0.06em] text-black">
-                      2023
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-display text-2xl font-bold tracking-[-0.02em] text-black md:text-3xl">
-                      Full Stack Web Developer
-                    </h3>
-                    <p className="mt-1 text-sm font-bold text-black/55">
-                      Sport Formula
-                    </p>
-                    <p className="font-playfair mt-4 text-lg font-medium leading-[1.7] text-black/60 md:text-xl">
-                      Hired to build and maintain web applications end-to-end.
-                      Frontend, backend, databases — the whole stack.
-                    </p>
-                  </div>
-                </div>
-
-                {/* Sport Formula — Team Lead */}
-                <div
-                  data-reveal
-                  className="group flex flex-col gap-6 border-t border-black/10 border-b-2 border-b-black py-10 md:flex-row md:items-start md:gap-16"
-                >
-                  <div className="shrink-0 md:w-48">
-                    <span className="font-display text-sm font-bold uppercase tracking-[0.06em] text-black">
-                      2024 — Present
-                    </span>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-display text-2xl font-bold tracking-[-0.02em] text-black md:text-3xl">
-                      Web Dev Team Lead
-                    </h3>
-                    <p className="mt-1 text-sm font-bold text-black/55">
-                      Sport Formula
-                    </p>
-                    <p className="font-playfair mt-4 text-lg font-medium leading-[1.7] text-black/60 md:text-xl">
-                      Leading a team of developers. Overseeing website architecture,
-                      code quality, and delivery. Still building — just with more
-                      responsibility.
-                    </p>
-                  </div>
                 </div>
               </div>
             </div>
@@ -901,7 +771,7 @@ export default function Home() {
               data-reveal
               className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-white/60"
             >
-              03 / Work
+              02 / Work
             </p>
             <h2
               data-reveal
@@ -1001,17 +871,18 @@ export default function Home() {
         <section id="skills" className="relative overflow-hidden bg-background px-6 py-32 md:px-12">
           {/* Flowing SVG */}
           <div
-            className="pointer-events-none absolute left-[5%] top-[5%] w-[clamp(80px,12vw,180px)] opacity-80"
+            className="pointer-events-none absolute left-[5%] top-[5%] bottom-0 w-[clamp(80px,12vw,180px)] opacity-80"
             aria-hidden="true"
           >
-            <svg viewBox="0 0 200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg viewBox="0 0 200 1200" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full">
               <path
-                d="M100 0 C100 200, 180 300, 100 400 C20 500, 100 600, 100 800"
+                d="M100 0 C100 200, 180 300, 100 400 C20 500, 100 600, 100 800 C100 900, 180 1000, 100 1200"
                 stroke="rgba(200,255,0,0.1)"
                 strokeWidth="1"
                 fill="none"
               />
               <circle cx="100" cy="400" r="60" stroke="rgba(200,255,0,0.06)" strokeWidth="1" fill="none" />
+              <circle cx="100" cy="900" r="40" stroke="rgba(200,255,0,0.04)" strokeWidth="1" fill="none" />
             </svg>
           </div>
 
@@ -1020,7 +891,7 @@ export default function Home() {
               data-reveal
               className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-foreground"
             >
-              04 / Skills
+              03 / Skills
             </p>
             <h2
               data-reveal
@@ -1098,8 +969,7 @@ export default function Home() {
               data-reveal
               className="mb-16 max-w-lg text-lg font-medium leading-relaxed text-white/70"
             >
-              I leverage AI agents and modern AI-powered tools to write better code, faster.
-              Here&apos;s how AI fits into my workflow.
+              I use AI tools to write code faster. Here&apos;s how I use them in my workflow.
             </p>
 
             <div className="grid gap-6 md:grid-cols-3">
@@ -1174,7 +1044,7 @@ export default function Home() {
               data-reveal
               className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-foreground"
             >
-              05 / Services
+              04 / Services
             </p>
             <h2
               data-reveal
@@ -1214,7 +1084,7 @@ export default function Home() {
               data-reveal
               className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-white/60"
             >
-              06 / Performance
+              05 / Performance
             </p>
             <h2
               data-reveal
@@ -1373,26 +1243,12 @@ export default function Home() {
           className="relative overflow-hidden bg-off-white px-6 py-32 md:px-12"
           style={{ backgroundColor: "#f0f0f0" }}
         >
-          {/* Concentric circles SVG */}
-          <div
-            className="pointer-events-none absolute left-1/2 top-1/2 w-[clamp(400px,60vw,800px)] -translate-x-1/2 -translate-y-1/2 opacity-50"
-            aria-hidden="true"
-          >
-            <svg viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="400" cy="300" r="250" stroke="rgba(10,10,10,0.07)" strokeWidth="1" fill="none" />
-              <circle cx="400" cy="300" r="180" stroke="rgba(10,10,10,0.05)" strokeWidth="1" fill="none" />
-              <circle cx="400" cy="300" r="110" stroke="rgba(10,10,10,0.03)" strokeWidth="1" fill="none" />
-              <line x1="150" y1="300" x2="650" y2="300" stroke="rgba(10,10,10,0.04)" strokeWidth="1" />
-              <line x1="400" y1="50" x2="400" y2="550" stroke="rgba(10,10,10,0.04)" strokeWidth="1" />
-            </svg>
-          </div>
-
           <div className="container relative z-10 mx-auto max-w-4xl text-black">
             <p
               data-reveal
               className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-black/60"
             >
-              07 / Contact
+              06 / Contact
             </p>
             <h2
               data-reveal
