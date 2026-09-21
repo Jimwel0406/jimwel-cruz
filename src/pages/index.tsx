@@ -128,6 +128,22 @@ const skillGroups = [
       "Responsive Design",
     ],
   },
+  {
+    title: "SEO",
+    items: [
+      { label: "SEO", note: "Search Engine Optimization — actual search results." },
+      { label: "AEO", note: "Answer Engine Optimization — getting featured in AI answers." },
+      { label: "GEO", note: "Generative Engine Optimization — being cited by AI engines." },
+      "On-Page SEO / Semantic Markup",
+      "Structured Data (Schema.org / JSON-LD)",
+      "Metadata & Open Graph",
+      "Core Web Vitals Optimization",
+      "Google Search Console",
+      "Bing Webmaster Tools",
+      "Ahrefs Webmaster Tools",
+      "Seobility Ranking Checker",
+    ],
+  },
 ];
 
 const services = [
@@ -1014,21 +1030,32 @@ export default function Home() {
               Work With
             </h2>
 
-            <div className="grid gap-12 md:grid-cols-3 md:gap-16">
+            <div className="grid gap-12 md:grid-cols-2 md:gap-16">
               {skillGroups.map((group) => (
                 <div data-reveal key={group.title}>
                   <h3 className="mb-6 border-b border-accent/15 pb-3 text-xs font-semibold uppercase tracking-[0.1em] text-accent">
                     {group.title}
                   </h3>
                   <ul className="flex flex-col gap-3">
-                    {group.items.map((item) => (
-                      <li
-                        key={item}
-                        className="text-sm font-medium text-white/70 transition-colors hover:text-white"
-                      >
-                        {item}
-                      </li>
-                    ))}
+                    {group.items.map((item) => {
+                      const label = typeof item === "string" ? item : item.label;
+                      const note = typeof item === "string" ? null : item.note;
+                      return (
+                        <li
+                          key={label}
+                          className="text-sm font-medium text-white/70 transition-colors hover:text-white"
+                        >
+                          {note ? (
+                            <span>
+                              <span className="text-white">{label}</span>{" "}
+                              <span className="text-white/40">{note}</span>
+                            </span>
+                          ) : (
+                            label
+                          )}
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               ))}
