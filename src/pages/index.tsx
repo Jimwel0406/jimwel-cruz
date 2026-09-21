@@ -1,5 +1,5 @@
 import Container from "@/components/Container";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
@@ -228,6 +228,7 @@ const aiTools = [
 export default function Home() {
   const yearsExperience = new Date().getFullYear() - START_YEAR;
   const faqs = getFaqs(yearsExperience, projects.length);
+  const [modalImage, setModalImage] = useState<string | null>(null);
 
   // scroll reveal
   useEffect(() => {
@@ -1205,6 +1206,136 @@ export default function Home() {
         </section>
 
         {/* ============================================
+            PERFORMANCE OPTIMIZATION
+        ============================================ */}
+        <section className="bg-[#141414] px-6 pt-32 pb-8 md:px-12 md:pb-16">
+          <div className="container mx-auto">
+            <p
+              data-reveal
+              className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-white/60"
+            >
+              06 / Performance
+            </p>
+            <h2
+              data-reveal
+              className="mb-6 font-display text-[clamp(2.2rem,5.5vw,4.2rem)] font-bold leading-[0.95] tracking-[-0.04em] text-white"
+            >
+              Speed
+              <br />
+              <span className="text-accent">Matters</span>
+            </h2>
+            <p
+              data-reveal
+              className="mb-16 max-w-lg text-lg font-medium leading-relaxed text-white/70"
+            >
+              Optimizing load times, core web vitals, and overall performance to deliver fast, smooth experiences.
+              <br />
+              <span className="text-accent font-bold">Load speed now under 1 second.</span>
+            </p>
+
+            <div className="grid gap-12 md:grid-cols-2">
+              {/* PageSpeed Insights */}
+              <div data-reveal>
+                <h3 className="mb-6 border-b border-white/10 pb-3 text-sm font-semibold uppercase tracking-[0.1em] text-accent">
+                  Google PageSpeed Insights
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="mb-3 text-xs font-bold uppercase tracking-[0.1em] text-white/50">
+                      Before
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setModalImage("/assets/projects/pagespeed-insight-before.jpg")}
+                      className="cursor-zoom-in"
+                    >
+                      <Image
+                        src="/assets/projects/pagespeed-insight-before.jpg"
+                        alt="PageSpeed Insights before optimization"
+                        width={600}
+                        height={400}
+                        className="h-32 md:h-48 w-full border border-white/5 object-cover"
+                        draggable={false}
+                        onContextMenu={(e) => e.preventDefault()}
+                      />
+                    </button>
+                  </div>
+                  <div>
+                    <p className="mb-3 text-xs font-bold uppercase tracking-[0.1em] text-white/50">
+                      After
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setModalImage("/assets/projects/pagespeed-insight-after.jpg")}
+                      className="cursor-zoom-in"
+                    >
+                      <Image
+                        src="/assets/projects/pagespeed-insight-after.jpg"
+                        alt="PageSpeed Insights after optimization"
+                        width={600}
+                        height={400}
+                        className="h-32 md:h-48 w-full border border-white/5 object-cover"
+                        draggable={false}
+                        onContextMenu={(e) => e.preventDefault()}
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Pingdom */}
+              <div data-reveal>
+                <h3 className="mb-6 border-b border-white/10 pb-3 text-sm font-semibold uppercase tracking-[0.1em] text-accent">
+                  Pingdom
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <p className="mb-3 text-xs font-bold uppercase tracking-[0.1em] text-white/50">
+                      Before
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setModalImage("/assets/projects/pingdom-before.jpg")}
+                      className="cursor-zoom-in"
+                    >
+                      <Image
+                        src="/assets/projects/pingdom-before.jpg"
+                        alt="Pingdom before optimization"
+                        width={600}
+                        height={400}
+                        className="h-32 md:h-48 w-full border border-white/5 object-cover"
+                        draggable={false}
+                        onContextMenu={(e) => e.preventDefault()}
+                      />
+                    </button>
+                  </div>
+                  <div>
+                    <p className="mb-3 text-xs font-bold uppercase tracking-[0.1em] text-white/50">
+                      After
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setModalImage("/assets/projects/pingdom-after.jpg")}
+                      className="cursor-zoom-in"
+                    >
+                      <Image
+                        src="/assets/projects/pingdom-after.jpg"
+                        alt="Pingdom after optimization"
+                        width={600}
+                        height={400}
+                        className="h-32 md:h-48 w-full border border-white/5 object-cover"
+                        draggable={false}
+                        onContextMenu={(e) => e.preventDefault()}
+                      />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ============================================
             FAQ
         ============================================ */}
         <section className="bg-[#141414] px-6 py-32 md:px-12">
@@ -1261,7 +1392,7 @@ export default function Home() {
               data-reveal
               className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-black/60"
             >
-              06 / Contact
+              07 / Contact
             </p>
             <h2
               data-reveal
@@ -1297,6 +1428,43 @@ export default function Home() {
           </div>
         </section>
       </Container>
+
+      {/* Image Modal */}
+      {modalImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-6"
+          onClick={() => setModalImage(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setModalImage(null)}
+            className="absolute right-6 top-6 text-white/70 transition-colors hover:text-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+          <Image
+            src={modalImage}
+            alt="Full size"
+            width={1200}
+            height={800}
+            className="max-h-[85vh] w-auto object-contain"
+            draggable={false}
+            onContextMenu={(e) => e.preventDefault()}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </>
   );
 }
