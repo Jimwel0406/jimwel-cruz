@@ -113,7 +113,7 @@ const skillGroups = [
     items: [
       "Node.js / Express",
       "PHP",
-      "PostgreSQL / MongoDB",
+      "PostgreSQL / Supabase",
       "REST / GraphQL APIs",
       "Shopify / Liquid",
     ],
