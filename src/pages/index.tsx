@@ -1030,6 +1030,7 @@ export default function Home() {
         {/* ============================================
             SERVICES
         ============================================ */}
+        {/* [ARCHIVED] SERVICES SECTION
         <section className="bg-background px-6 py-32 md:px-12">
           <div className="container mx-auto">
             <p
@@ -1066,6 +1067,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        */}
 
         {/* ============================================
             PERFORMANCE OPTIMIZATION
@@ -1076,7 +1078,7 @@ export default function Home() {
               data-reveal
               className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-white/60"
             >
-              05 / Performance
+              04 / Performance
             </p>
             <h2
               data-reveal
@@ -1240,7 +1242,7 @@ export default function Home() {
               data-reveal
               className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-black/60"
             >
-              06 / Contact
+              05 / Contact
             </p>
             <h2
               data-reveal
