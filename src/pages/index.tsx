@@ -619,12 +619,6 @@ export default function Home() {
           </div>
 
           {/* Scroll indicator */}
-          <div
-            className="pointer-events-none absolute bottom-8 right-6 md:right-12"
-            aria-hidden="true"
-          >
-            <span className="block h-20 w-px animate-scroll-line bg-gradient-to-b from-accent to-transparent" />
-          </div>
         </section>
 
         {/* ============================================
@@ -659,7 +653,7 @@ export default function Home() {
                   data-reveal
                   className="font-display text-[clamp(2rem,4.5vw,3.5rem)] font-bold leading-[1.1] tracking-[-0.03em]"
                 >
-                  I&apos;m a full stack web developer. 3 years in, <span className="inline-block font-bold text-black">still learning.</span>
+                  I&apos;m a full stack web developer. <span className="inline-block font-bold text-black">3 years in,</span> <span className="inline-block font-bold text-black">still learning.</span>
                 </h2>
 
                 <div className="mt-12 flex flex-col">
@@ -871,7 +865,7 @@ export default function Home() {
         <section id="skills" className="relative overflow-hidden bg-background px-6 py-32 md:px-12">
           {/* Flowing SVG */}
           <div
-            className="pointer-events-none absolute left-[5%] top-[5%] bottom-0 w-[clamp(80px,12vw,180px)] opacity-80"
+            className="pointer-events-none absolute left-[5%] top-[5%] bottom-0 hidden w-[clamp(80px,12vw,180px)] opacity-80 md:block"
             aria-hidden="true"
           >
             <svg viewBox="0 0 200 1200" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full">
