@@ -881,8 +881,6 @@ export default function Home() {
                 strokeWidth="1"
                 fill="none"
               />
-              <circle cx="100" cy="400" r="60" stroke="rgba(200,255,0,0.06)" strokeWidth="1" fill="none" />
-              <circle cx="100" cy="900" r="40" stroke="rgba(200,255,0,0.04)" strokeWidth="1" fill="none" />
             </svg>
           </div>
 
@@ -969,7 +967,7 @@ export default function Home() {
               data-reveal
               className="mb-16 max-w-lg text-lg font-medium leading-relaxed text-white/70"
             >
-              I use AI tools to write code faster. Here&apos;s how I use them in my workflow.
+              I use AI tools to write code faster.<br className="hidden md:block" /> Here&apos;s how I use them in my workflow.
             </p>
 
             <div className="grid gap-6 md:grid-cols-3">
