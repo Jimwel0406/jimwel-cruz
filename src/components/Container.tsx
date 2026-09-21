@@ -27,8 +27,8 @@ export default function Container(props: ContainerProps) {
   const siteUrl = "https://jimwel-cruz.vercel.app";
   const meta = {
     title: "Jimwel Cruz — Web Developer",
-    description:
-      "Full-stack developer and web team lead building performant, accessible digital experiences with React, Next.js, and Node.js.",
+      description:
+      "Full-stack developer with 3 years of experience building performant, accessible websites with React, Next.js, and Node.js.",
     image: `${siteUrl}/icon.jpg`,
     type: "website",
     ...customMeta,
@@ -70,7 +70,7 @@ export default function Container(props: ContainerProps) {
         <meta property="og:image" content={meta.image} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Jimwel Cruz — Web Developer" />
+        <meta property="og:image:alt" content="Jimwel Cruz — Full-Stack Web Developer" />
         <meta property="og:locale" content="en_US" />
         <link
           rel="icon"
@@ -133,7 +133,7 @@ export default function Container(props: ContainerProps) {
                   "@id": `${siteUrl}/#person`,
                   name: "Jimwel Cruz",
                   url: siteUrl,
-                  jobTitle: "Full-Stack Developer and Web Team Lead",
+                  jobTitle: "Full-Stack Web Developer",
                   email: "mailto:jimwelscruz0406@gmail.com",
                   nationality: "Philippines",
                   sameAs: [
