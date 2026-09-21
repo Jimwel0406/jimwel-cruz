@@ -320,7 +320,7 @@ export default function Home() {
         ============================================ */}
         <section
           id="home"
-          className="night-sky relative flex h-[100vh] flex-col justify-end overflow-hidden px-6 pb-24 pt-32 md:px-12 md:pb-32"
+          className="night-sky relative flex h-[100vh] max-h-[75vh] md:max-h-none flex-col justify-end overflow-hidden px-6 pb-24 pt-32 md:px-12 md:pb-32"
         >
           {/* CSS Sky gradient */}
           <div className="sky-gradient absolute inset-0 z-0" aria-hidden="true" />
