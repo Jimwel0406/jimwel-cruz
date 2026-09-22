@@ -938,7 +938,7 @@ export default function Home() {
         {/* ============================================
             AI-ASSISTED DEVELOPMENT
         ============================================ */}
-        <section className="relative overflow-hidden bg-[#141414] px-6 pt-32 pb-8 md:px-12 md:pb-12">
+        <section className="relative overflow-hidden bg-[#141414] px-6 pt-32 pb-16 md:px-12 md:pb-20">
           {/* Subtle grid pattern */}
           <div
             className="pointer-events-none absolute inset-0"
@@ -1040,7 +1040,7 @@ export default function Home() {
         {/* ============================================
             PERFORMANCE OPTIMIZATION
         ============================================ */}
-        <section className="bg-[#141414] px-6 pt-0 pb-8 md:px-12 md:pt-0 md:pb-16">
+        <section className="bg-[#141414] px-6 pt-12 pb-8 md:px-12 md:pt-16 md:pb-16">
           <div className="container mx-auto">
             <p
               data-reveal
