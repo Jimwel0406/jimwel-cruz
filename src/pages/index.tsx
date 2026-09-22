@@ -1040,7 +1040,7 @@ export default function Home() {
         {/* ============================================
             PERFORMANCE OPTIMIZATION
         ============================================ */}
-        <section className="bg-[#141414] px-6 pt-32 pb-8 md:px-12 md:pb-16">
+        <section className="bg-[#141414] px-6 pt-8 pb-8 md:px-12 md:pt-10 md:pb-16">
           <div className="container mx-auto">
             <p
               data-reveal
