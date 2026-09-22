@@ -47,6 +47,34 @@ export default function Container(props: ContainerProps) {
     return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
 
+  // fade-to-dark transition when navigating to Contact
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href !== "#contact") return;
+    e.preventDefault();
+    setIsOpen(false);
+
+    const overlay = document.getElementById("page-transition");
+    const target = document.querySelector(href);
+    if (!overlay || !target) return;
+
+    const root = document.documentElement;
+    const prevScrollBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+
+    overlay.classList.add("opacity-100");
+
+    window.setTimeout(() => {
+      const top = target.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top, behavior: "auto" });
+      history.replaceState(null, "", "#contact");
+      root.style.scrollBehavior = prevScrollBehavior;
+
+      window.setTimeout(() => {
+        overlay.classList.remove("opacity-100");
+      }, 80);
+    }, 700);
+  };
+
   return (
     <>
       <Head>
@@ -148,6 +176,13 @@ export default function Container(props: ContainerProps) {
         />
       </Head>
 
+      {/* Page transition overlay (Contact nav) */}
+      <div
+        id="page-transition"
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-[100] bg-[#0a0a0a] opacity-0 transition-opacity duration-700 ease-in-out"
+      />
+
       {/* Skip link */}
       <a href="#main" className="skip-link">
         Skip to main content
@@ -174,6 +209,7 @@ export default function Container(props: ContainerProps) {
             <li key={link.href}>
               <a
                 href={link.href}
+                onClick={(e) => handleNavClick(e, link.href)}
                 className={cn(
                   "text-sm font-medium uppercase tracking-[0.06em] transition-colors duration-200",
                   link.href === "#contact"
@@ -225,7 +261,10 @@ export default function Container(props: ContainerProps) {
             <li key={link.href}>
               <a
                 href={link.href}
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => {
+                  handleNavClick(e, link.href);
+                  setIsOpen(false);
+                }}
                 className="font-display text-3xl font-semibold tracking-tight text-white transition-colors hover:text-accent"
               >
                 {link.text}
