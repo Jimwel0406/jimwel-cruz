@@ -620,7 +620,7 @@ export default function Home() {
               className="mt-4 max-w-md text-lg font-bold leading-relaxed text-white md:text-xl"
             >
               Full-stack developer.{" "}
-              <span className="sm:whitespace-nowrap">I build websites that work.</span>
+              <span className="inline-block whitespace-nowrap">I build websites that work.</span>
             </p>
           </div>
 
@@ -727,7 +727,9 @@ export default function Home() {
                     alt="Jimwel Cruz"
                     width={400}
                     height={500}
-                    className="w-full rounded-sm object-cover"
+                    draggable={false}
+                    onContextMenu={(e) => e.preventDefault()}
+                    className="w-full rounded-sm object-cover select-none"
                   />
                 </div>
                 <div data-reveal>
@@ -990,46 +992,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-
-        {/* ============================================
-            STATS
-        ============================================ */}
-        <section className="relative overflow-hidden bg-[#1c1c1c] px-6 py-32 md:px-12">
-          {/* Grid background */}
-          <div
-            className="pointer-events-none absolute inset-0"
-            aria-hidden="true"
-            style={{
-              backgroundImage:
-                "linear-gradient(rgba(200,255,0,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(200,255,0,0.03) 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          />
-
-          <div className="container relative z-10 mx-auto grid grid-cols-2 gap-12 md:grid-cols-4">
-            {[
-              {
-                number: `${new Date().getFullYear() - START_YEAR}+`,
-                label: "Years Building",
-              },
-              {
-                number: `${projects.length}+`,
-                label: "Projects Shipped",
-              },
-              { number: "10+", label: "Technologies" },
-              { number: "100%", label: "Responsive" },
-            ].map((stat) => (
-              <div data-reveal key={stat.label} className="flex flex-col gap-2">
-                <span className="font-display text-[clamp(2.8rem,7vw,5.5rem)] font-bold leading-none tracking-[-0.04em] text-accent">
-                  {stat.number}
-                </span>
-                <span className="text-[0.75rem] font-bold uppercase tracking-[0.08em] text-white/60">
-                  {stat.label}
-                </span>
-              </div>
-            ))}
           </div>
         </section>
 
