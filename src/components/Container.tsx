@@ -61,7 +61,7 @@ export default function Container(props: ContainerProps) {
     const prevScrollBehavior = root.style.scrollBehavior;
     root.style.scrollBehavior = "auto";
 
-    overlay.classList.add("opacity-100");
+    overlay.style.opacity = "1";
 
     window.setTimeout(() => {
       const top = target.getBoundingClientRect().top + window.scrollY;
@@ -70,7 +70,7 @@ export default function Container(props: ContainerProps) {
       root.style.scrollBehavior = prevScrollBehavior;
 
       window.setTimeout(() => {
-        overlay.classList.remove("opacity-100");
+        overlay.style.opacity = "0";
       }, 80);
     }, 700);
   };
