@@ -3,7 +3,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import "@/styles/globals.css";
 
-import { Space_Grotesk, Inter } from "next/font/google";
+import { Space_Grotesk, Inter, Noto_Serif } from "next/font/google";
 
 const spaceGrotesk = Space_Grotesk({
   display: "swap",
@@ -19,9 +19,16 @@ const inter = Inter({
   weight: ["400", "500", "600"],
 });
 
+const notoSerif = Noto_Serif({
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  weight: ["400", "500", "600", "700"],
+});
+
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <div className={`${spaceGrotesk.variable} ${inter.variable} font-body`}>
+    <div className={`${spaceGrotesk.variable} ${inter.variable} ${notoSerif.variable} font-body`}>
       <Component {...pageProps} />
       <SpeedInsights />
     </div>
