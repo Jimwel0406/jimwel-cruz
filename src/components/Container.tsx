@@ -62,6 +62,7 @@ export default function Container(props: ContainerProps) {
     root.style.scrollBehavior = "auto";
 
     overlay.style.opacity = "1";
+    root.classList.add("is-page-fading");
 
     window.setTimeout(() => {
       const top = target.getBoundingClientRect().top + window.scrollY;
@@ -71,6 +72,7 @@ export default function Container(props: ContainerProps) {
 
       window.setTimeout(() => {
         overlay.style.opacity = "0";
+        root.classList.remove("is-page-fading");
       }, 80);
     }, 700);
   };

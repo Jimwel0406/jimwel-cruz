@@ -68,9 +68,18 @@
   ::-webkit-scrollbar-thumb {
     @apply bg-muted rounded-full;
     background: hsl(var(--primary));
+    transition: background 0.7s ease-in-out;
   }
   ::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--primary));
+  }
+  html.is-page-fading ::-webkit-scrollbar-thumb,
+  html.is-page-fading::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+  html.is-page-fading ::-webkit-scrollbar-thumb:hover,
+  html.is-page-fading::-webkit-scrollbar-thumb:hover {
+    background: transparent;
   }
 }
 
