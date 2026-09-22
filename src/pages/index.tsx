@@ -234,20 +234,25 @@ export default function Home() {
     if ("IntersectionObserver" in window) {
       const observer = new IntersectionObserver(
         (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("is-visible");
-              observer.unobserve(entry.target);
-            }
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort(
+              (a, b) =>
+                a.boundingClientRect.top - b.boundingClientRect.top
+            );
+
+          visible.forEach((entry, idx) => {
+            (entry.target as HTMLElement).style.transitionDelay = `${
+              Math.min(idx, 5) * 0.08
+            }s`;
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
           });
         },
         { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
       );
 
-      els.forEach((el, i) => {
-        (el as HTMLElement).style.transitionDelay = `${(i % 4) * 0.08}s`;
-        observer.observe(el);
-      });
+      els.forEach((el) => observer.observe(el));
     } else {
       els.forEach((el) => el.classList.add("is-visible"));
     }
