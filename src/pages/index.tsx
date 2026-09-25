@@ -24,14 +24,15 @@ const projects = [
     href: "https://marrow-silk.vercel.app/",
     tags: ["Next.js", "Tailwind CSS", "TypeScript", "UI Design"],
   },
-  {
-    title: "Burger Shop",
-    description:
-      "Homepage design study for a fictional smash-burger restaurant. Dark high-contrast palette, condensed display type, torn-paper details, and full-bleed food photography.",
-    video: "/assets/projects/burgershop.mp4",
-    href: "https://burger-shop-xi.vercel.app/",
-    tags: ["Next.js", "Tailwind CSS", "TypeScript", "UI Design"],
-  },
+  // Hidden for now — restore by removing the comment markers
+  // {
+  //   title: "Burger Shop",
+  //   description:
+  //     "Homepage design study for a fictional smash-burger restaurant. Dark high-contrast palette, condensed display type, torn-paper details, and full-bleed food photography.",
+  //   video: "/assets/projects/burgershop.mp4",
+  //   href: "https://burger-shop-xi.vercel.app/",
+  //   tags: ["Next.js", "Tailwind CSS", "TypeScript", "UI Design"],
+  // },
   {
     title: "Vellora",
     description:
