@@ -70,30 +70,31 @@ const projects = [
     href: "https://quizipedia.epizy.com/",
     tags: ["PHP", "JavaScript", "CSS"],
   },
-  {
-    title: "Whack-A-Mole",
-    description:
-      "Classic arcade-style whack-a-mole game. Vanilla HTML/CSS/JS with score tracking and responsive controls.",
-    image: "/assets/projects/whackamole.webp",
-    href: "/projects/mole-bash",
-    tags: ["HTML", "CSS", "JavaScript"],
-  },
-  {
-    title: "Calculator",
-    description:
-      "Modern and responsive calculator app. Clean UI with keyboard support and arithmetic operations.",
-    image: "/assets/projects/calculator.webp",
-    href: "/projects/calculator",
-    tags: ["HTML", "CSS", "JavaScript"],
-  },
-  {
-    title: "Block Puzzle",
-    description:
-      "Relaxing block puzzle game. Canvas-based logic with smooth animations and mobile-first controls.",
-    image: "/assets/projects/blockpuzzle.webp",
-    href: "https://block-puzzle-board.vercel.app/",
-    tags: ["React", "JavaScript", "Game Dev"],
-  },
+  // Hidden for now — restore by removing the comment markers
+  // {
+  //   title: "Whack-A-Mole",
+  //   description:
+  //     "Classic arcade-style whack-a-mole game. Vanilla HTML/CSS/JS with score tracking and responsive controls.",
+  //   image: "/assets/projects/whackamole.webp",
+  //   href: "/projects/mole-bash",
+  //   tags: ["HTML", "CSS", "JavaScript"],
+  // },
+  // {
+  //   title: "Calculator",
+  //   description:
+  //     "Modern and responsive calculator app. Clean UI with keyboard support and arithmetic operations.",
+  //   image: "/assets/projects/calculator.webp",
+  //   href: "/projects/calculator",
+  //   tags: ["HTML", "CSS", "JavaScript"],
+  // },
+  // {
+  //   title: "Block Puzzle",
+  //   description:
+  //     "Relaxing block puzzle game. Canvas-based logic with smooth animations and mobile-first controls.",
+  //   image: "/assets/projects/blockpuzzle.webp",
+  //   href: "https://block-puzzle-board.vercel.app/",
+  //   tags: ["React", "JavaScript", "Game Dev"],
+  // },
 ];
 
 const skillGroups = [
