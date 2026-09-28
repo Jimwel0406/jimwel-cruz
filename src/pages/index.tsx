@@ -114,6 +114,8 @@ const skillGroups = [
       "PostgreSQL / Supabase",
       "REST / GraphQL APIs",
       "Shopify / Liquid",
+      "Klaviyo (Email Marketing)",
+      "External App Integration",
     ],
   },
   {
