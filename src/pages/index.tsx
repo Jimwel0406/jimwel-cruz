@@ -25,7 +25,7 @@ const projects = [
     tags: ["Next.js", "Tailwind CSS", "TypeScript", "UI Design"],
   },
   {
-    title: "FoxHound Bee Co.",
+    title: "FoxHound Bee",
     description:
       "Homepage design study for a fictional apiary. Warm cream-and-ember paper palette, a rationed orange accent, a hexagonal comb grid, and a hand-drawn icon sprite.",
     video: "/assets/projects/foxhoundbee.mp4",
