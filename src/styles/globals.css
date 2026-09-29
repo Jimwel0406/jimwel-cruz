@@ -25,6 +25,9 @@
     --accent: 82 100% 50%;
     --accent-foreground: 0 0% 4%;
 
+    /* softened lime for large surfaces — neon accent glares at full-bleed size */
+    --plane: 96 73% 68%;            /* #9fe870 softer lime plane */
+
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 94%;
 
@@ -152,20 +155,6 @@ body::after {
   );
 }
 
-/* nebula — soft colored clouds in the sky */
-.nebula {
-  background:
-    radial-gradient(ellipse at 20% 30%, rgba(80,40,120,0.12) 0%, transparent 50%),
-    radial-gradient(ellipse at 75% 20%, rgba(30,60,120,0.1) 0%, transparent 45%),
-    radial-gradient(ellipse at 50% 60%, rgba(20,80,60,0.06) 0%, transparent 40%);
-}
-
-/* cloud haze — thin wispy layers near horizon */
-.cloud-haze {
-  background:
-    linear-gradient(180deg, transparent 60%, rgba(15,15,30,0.5) 85%, rgba(10,10,20,0.8) 100%);
-}
-
 /* forest silhouette */
 .forest-silhouette {
   pointer-events: none;
@@ -191,6 +180,17 @@ body::after {
   flex: 0 0 auto;
   height: 1.15em;
   line-height: 1.15;
+}
+
+/* outlined display type — thinner stroke on mobile so it stays a hairline */
+.text-stroke {
+  -webkit-text-stroke: 1px #c8ff00;
+}
+
+@media (min-width: 768px) {
+  .text-stroke {
+    -webkit-text-stroke: 1.5px #c8ff00;
+  }
 }
 
 @keyframes word-scroll {

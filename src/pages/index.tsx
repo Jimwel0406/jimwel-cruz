@@ -1,10 +1,13 @@
+import CloudLayer from "@/components/CloudLayer";
 import Container from "@/components/Container";
+import ForestSilhouette from "@/components/ForestSilhouette";
 import MeteorLayer from "@/components/MeteorLayer";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import {
+  ArrowUpRight,
   Code2,
   Frame,
   Eye,
@@ -53,11 +56,11 @@ const projects = [
   {
     title: "Vellora",
     description:
-      "Multi-vendor marketplace for thoughtfully made products. Full-stack build with Next.js, Stripe Connect, real-time notifications, and role-based dashboards.",
+      "Multi-vendor marketplace for thoughtfully made products. Full-stack build with Next.js, Stripe, real-time notifications, and role-based dashboards.",
     image: "/assets/projects/vellora.webp",
     video: "/assets/projects/vellora.mp4",
     href: "https://vellora-seven.vercel.app/",
-    tags: ["Next.js", "Prisma", "PostgreSQL", "Supabase", "Stripe Connect", "NextAuth"],
+    tags: ["Next.js", "Prisma", "Supabase", "Stripe", "NextAuth"],
     priority: true,
   },
   {
@@ -77,16 +80,17 @@ const projects = [
     image: "/assets/projects/contactflow.webp",
     video: "/assets/projects/contactflow.mp4",
     href: "https://contactflow-crm.vercel.app/",
-    tags: ["Next.js", "Prisma", "PostgreSQL", "Stripe", "NextAuth"],
+    tags: ["Next.js", "Prisma", "Stripe", "NextAuth"],
   },
-  {
-    title: "Quizipedia",
-    description:
-      "Interactive trivia and quiz game. Real-time scoring, category filters, and a clean responsive interface.",
-    image: "/assets/projects/quizipedia.webp",
-    href: "https://quizipedia.epizy.com/",
-    tags: ["PHP", "JavaScript", "CSS"],
-  },
+  // Hidden for now — restore by removing the comment markers
+  // {
+  //   title: "Quizipedia",
+  //   description:
+  //     "Interactive trivia and quiz game. Real-time scoring, category filters, and a clean responsive interface.",
+  //   image: "/assets/projects/quizipedia.webp",
+  //   href: "https://quizipedia.epizy.com/",
+  //   tags: ["PHP", "JavaScript", "CSS"],
+  // },
   // Hidden for now — restore by removing the comment markers
   // {
   //   title: "Whack-A-Mole",
@@ -129,8 +133,8 @@ const skillGroups = [
     items: [
       "Node.js / Express",
       "PHP",
-      "PostgreSQL / Supabase",
-      "REST / GraphQL APIs",
+      "Supabase",
+      "REST APIs",
       "Shopify / Liquid",
       "Klaviyo (Email Marketing)",
       "External App Integration",
@@ -139,9 +143,8 @@ const skillGroups = [
   {
     title: "Tools & DevOps",
     items: [
-      "Git / GitHub Actions",
-      "Vercel / Netlify",
-      "CI/CD Pipelines",
+      "Git / GitHub",
+      "Vercel",
       "Performance Optimization",
       "Responsive Design",
     ],
@@ -159,7 +162,6 @@ const skillGroups = [
       "Google Search Console",
       "Bing Webmaster Tools",
       "Ahrefs Webmaster Tools",
-      "Seobility Ranking Checker",
     ],
   },
 ];
@@ -205,18 +207,18 @@ const services = [
 
 const getFaqs = (years: number, projectCount: number) => [
   {
-    question: "What services does Jimwel Cruz offer?",
+    question: "What kind of work do you do?",
     answer:
       "Full-stack development, e-commerce development, UI implementation, performance optimization, accessibility audits, and responsive design — from React and Next.js front-ends to Node.js, PHP, and Shopify back-ends.",
   },
   {
-    question: "Is Jimwel available for freelance work?",
+    question: "Are you free for freelance work?",
     answer:
-      "Yes. Jimwel is currently available for freelance work and open to discussing new opportunities. The fastest way to get a reply is an email to jimwelscruz0406@gmail.com.",
+      "Yes. I'm currently available for freelance work and open to discussing new opportunities. The fastest way to get a reply is an email to jimwelscruz0406@gmail.com.",
   },
   {
-    question: "How much experience does Jimwel have?",
-    answer: `Over ${years} years as a full-stack developer and web team lead, delivering ${projectCount}+ products from ideation and wireframing through prototyping to final delivery while mentoring teammates along the way.`,
+    question: "How long have you been at this?",
+    answer: `Over ${years} years as a full-stack developer, delivering ${projectCount}+ products from ideation and wireframing through prototyping to final delivery.`,
   },
 ];
 
@@ -243,9 +245,24 @@ const aiTools = [
   },
 ];
 
+const timeline = [
+  {
+    year: "2023",
+    entries: [
+      { title: "Full Stack Web Developer", org: "Sport Formula", latest: true },
+      { title: "Diploma in Information Technology", org: "", latest: false },
+    ],
+  },
+];
+
 export default function Home() {
   const yearsExperience = new Date().getFullYear() - START_YEAR;
   const faqs = getFaqs(yearsExperience, projects.length);
+  const stats = [
+    { value: yearsExperience.toString().padStart(2, "0"), label: "Years of experience" },
+    { value: projects.length.toString(), label: "Projects shipped" },
+    { value: "PH", label: "Based in the Philippines" },
+  ];
   const [modalImage, setModalImage] = useState<string | null>(null);
 
   // scroll reveal
@@ -351,11 +368,8 @@ export default function Home() {
           {/* CSS Sky gradient */}
           <div className="sky-gradient absolute inset-0 z-0" aria-hidden="true" />
 
-          {/* CSS Nebula */}
-          <div className="nebula absolute inset-0 z-0" aria-hidden="true" />
-
-          {/* CSS Cloud haze */}
-          <div className="cloud-haze absolute inset-0 z-0" aria-hidden="true" />
+          {/* Canvas — Clouds, Nebula wash, Horizon haze */}
+          <CloudLayer />
 
           {/* Canvas — Stars, Trails, Glow, Particles */}
           <canvas
@@ -394,45 +408,6 @@ export default function Home() {
                 });
               }
 
-              // --- Fog wisps — organic multi-blob clouds ---
-              const fogWisps: {
-                x: number;
-                y: number;
-                baseWidth: number;
-                baseHeight: number;
-                speed: number;
-                opacity: number;
-                phase: number;
-                blobs: { ox: number; oy: number; rw: number; rh: number; alpha: number }[];
-              }[] = [];
-              const FOG_COUNT = 10;
-              for (let i = 0; i < FOG_COUNT; i++) {
-                const bw = 180 + Math.random() * 350;
-                const bh = 25 + Math.random() * 40;
-                // each cloud is 4-7 overlapping blobs for organic shape
-                const blobCount = 4 + Math.floor(Math.random() * 4);
-                const blobs = [];
-                for (let b = 0; b < blobCount; b++) {
-                  blobs.push({
-                    ox: (Math.random() - 0.5) * bw * 0.7,
-                    oy: (Math.random() - 0.5) * bh * 0.8,
-                    rw: bw * (0.3 + Math.random() * 0.4),
-                    rh: bh * (0.5 + Math.random() * 0.6),
-                    alpha: 0.4 + Math.random() * 0.5,
-                  });
-                }
-                fogWisps.push({
-                  x: Math.random() * w,
-                  y: h * 0.72 + Math.random() * h * 0.22,
-                  baseWidth: bw,
-                  baseHeight: bh,
-                  speed: 0.15 + Math.random() * 0.3,
-                  opacity: 0.025 + Math.random() * 0.04,
-                  phase: Math.random() * Math.PI * 2,
-                  blobs,
-                });
-              }
-
               let time = 0;
 
               const draw = () => {
@@ -463,33 +438,6 @@ export default function Home() {
                   ctx.fill();
                 }
 
-                // Draw fog wisps — overlapping organic blobs
-                for (const f of fogWisps) {
-                  f.x += f.speed;
-                  f.phase += 0.004;
-                  if (f.x - f.baseWidth > w) f.x = -f.baseWidth;
-
-                  const yDrift = Math.sin(f.phase) * 6;
-                  const currentOpacity = f.opacity * (0.6 + Math.sin(f.phase * 0.5) * 0.4);
-
-                  for (const blob of f.blobs) {
-                    const bx = f.x + blob.ox + Math.sin(f.phase + blob.ox) * 4;
-                    const by = f.y + yDrift + blob.oy + Math.cos(f.phase * 0.7 + blob.oy) * 3;
-                    const blobAlpha = currentOpacity * blob.alpha;
-
-                    const grd = ctx.createRadialGradient(bx, by, 0, bx, by, blob.rw / 2);
-                    grd.addColorStop(0, `rgba(160,170,200,${blobAlpha})`);
-                    grd.addColorStop(0.3, `rgba(140,150,185,${blobAlpha * 0.7})`);
-                    grd.addColorStop(0.6, `rgba(120,130,170,${blobAlpha * 0.3})`);
-                    grd.addColorStop(1, `rgba(100,110,150,0)`);
-
-                    ctx.beginPath();
-                    ctx.ellipse(bx, by, blob.rw / 2, blob.rh / 2, 0, 0, Math.PI * 2);
-                    ctx.fillStyle = grd;
-                    ctx.fill();
-                  }
-                }
-
                 requestAnimationFrame(draw);
               };
 
@@ -504,31 +452,19 @@ export default function Home() {
                 const sy = h / prevH;
                 stars.forEach((s) => { s.x *= sx; s.y *= sy; });
                 particles.forEach((p) => { p.x *= sx; p.y *= sy; });
-                fogWisps.forEach((f) => { f.x *= sx; });
               };
               window.addEventListener("resize", onResize);
             }}
             className="pointer-events-none absolute inset-0 z-[1] h-full w-full"
           />
 
-          {/* WebGL — 3D shooting stars */}
+          {/* WebGL — 3D shooting stars + sky light */}
           <MeteorLayer />
 
           {/* Forest silhouette */}
-          <div className="forest-silhouette absolute bottom-0 left-0 right-0 z-[2]" aria-hidden="true">
-            <svg viewBox="0 0 1440 200" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full" preserveAspectRatio="none">
-              <path d="M0 200V120L30 110L60 125L90 95L120 115L150 80L180 100L210 70L240 90L270 60L300 85L330 55L360 75L390 50L420 70L450 45L480 65L510 40L540 60L570 35L600 55L630 42L660 58L690 38L720 52L750 35L780 50L810 30L840 48L870 28L900 45L930 32L960 50L990 35L1020 52L1050 30L1080 48L1110 25L1140 42L1170 30L1200 48L1230 35L1260 55L1290 40L1320 60L1350 45L1380 65L1410 50L1440 70V200H0Z" fill="#050508"/>
-              <path d="M0 200V140L40 132L80 145L120 120L160 138L200 105L240 125L280 95L320 115L360 85L400 108L440 78L480 100L520 72L560 92L600 65L640 85L680 60L720 80L760 55L800 75L840 50L880 70L920 48L960 68L1000 45L1040 65L1080 42L1120 62L1160 40L1200 58L1240 38L1280 55L1320 42L1360 60L1400 48L1440 65V200H0Z" fill="#080810"/>
-            </svg>
-          </div>
+          <ForestSilhouette />
 
           <div className="container relative z-10 mx-auto max-w-5xl">
-            <p
-              data-reveal
-              className="mb-6 text-xs font-medium uppercase tracking-[0.15em] text-accent"
-            >
-              Web Developer
-            </p>
             <h1
               data-reveal
               className="font-display text-[clamp(2.8rem,9vw,7.5rem)] font-bold leading-[0.92] tracking-[-0.04em]"
@@ -548,19 +484,6 @@ export default function Home() {
               </span>
               <span className="block">experiences.</span>
             </h1>
-            <p
-              data-reveal
-              className="mt-4 font-display text-lg font-medium tracking-tight text-white/80"
-            >
-              Jimwel Cruz
-            </p>
-            <p
-              data-reveal
-              className="mt-4 max-w-md text-lg font-bold leading-relaxed text-white md:text-xl"
-            >
-              Full-stack developer.{" "}
-              <span className="inline-block whitespace-nowrap">I build websites that work.</span>
-            </p>
           </div>
 
           {/* Scroll indicator */}
@@ -569,136 +492,132 @@ export default function Home() {
         {/* ============================================
             ABOUT
         ============================================ */}
-        <section
-          id="about"
-          className="relative overflow-hidden bg-white px-6 py-32 md:px-12"
-        >
-          <div
-            className="pointer-events-none absolute inset-0 opacity-100"
-            aria-hidden="true"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle, rgba(10,10,10,0.06) 1px, transparent 1px)",
-              backgroundSize: "24px 24px",
-            }}
-          />
+        <section id="about" className="relative overflow-hidden bg-white text-black">
+          {/* Colour event — full-bleed accent plane */}
+          <div data-nav-theme="light" className="bg-plane">
+            <div className="container mx-auto max-w-6xl px-6 pb-16 pt-20 md:px-12 md:pb-24 md:pt-24">
+              <h2
+                data-reveal
+                className="max-w-[15ch] font-display text-[clamp(2.75rem,8vw,6.5rem)] font-medium leading-[0.95] tracking-[-0.04em]"
+              >
+                I&apos;m a full stack web developer.
+              </h2>
 
-          <div className="container relative z-10 mx-auto max-w-6xl text-black">
-            <p
+              <div
+                data-reveal
+                className="mt-14 border-t border-black/30 pt-8"
+              >
+                <p className="font-display text-2xl font-medium leading-[1.15] tracking-[-0.02em] md:text-3xl">
+                  3 years in, still learning.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Experience — full-bleed portrait owns the right, ruled ledger on the left */}
+          <div data-nav-theme="light" className="relative overflow-hidden">
+            <div
               data-reveal
-              className="mb-8 text-sm font-bold uppercase tracking-[0.1em] text-black/60"
+              className="relative h-[26rem] w-full sm:h-[30rem] md:absolute md:inset-y-0 md:right-0 md:h-auto md:w-[50vw] md:max-w-[44rem]"
             >
-              01 / About
-            </p>
+              <Image
+                src="/assets/me.jpg"
+                alt="Jimwel Cruz"
+                fill
+                sizes="(max-width: 768px) 100vw, 44rem"
+                draggable={false}
+                onContextMenu={(e) => e.preventDefault()}
+                className="select-none object-cover object-[50%_22%]"
+              />
+              <div
+                className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent p-6 md:p-8"
+                aria-hidden="true"
+              >
+                <p className="font-body text-xs font-medium tracking-[0.08em] text-white">
+                  Jimwel Cruz
+                </p>
+                <p className="mt-1 font-body text-xs tracking-[0.08em] text-white/70">
+                  Full Stack Developer
+                </p>
+              </div>
+            </div>
 
-            <div className="grid gap-12 md:grid-cols-[1fr_0.4fr] md:gap-16">
-              {/* Left — Headline + Timeline */}
-              <div>
-                <h2
+            <div className="container relative mx-auto max-w-6xl px-6 py-20 md:px-12 md:py-28">
+              <div className="md:max-w-[32rem]">
+                <h3
                   data-reveal
-                  className="font-display text-[clamp(2rem,4.5vw,3.5rem)] font-bold leading-[1.1] tracking-[-0.03em]"
+                  className="border-b-2 border-black pb-6 font-display text-3xl font-medium tracking-[-0.03em] md:text-5xl"
                 >
-                  I&apos;m a full stack web developer. <span className="inline-block font-bold text-black">3 years in,</span> <span className="inline-block font-bold text-black">still learning.</span>
-                </h2>
+                  Experience
+                </h3>
 
-                <div className="mt-12 flex flex-col">
+                {timeline.map((group) => (
                   <div
+                    key={group.year}
                     data-reveal
-                    className="group flex flex-col gap-6 border-t-2 border-black py-10 md:flex-row md:items-start md:gap-16"
+                    className="border-b border-black/10 py-10 md:py-12"
                   >
-                    <div className="shrink-0 md:w-48">
-                      <span className="font-display text-sm font-bold uppercase tracking-[0.06em] text-black">
-                        2023
+                    {/* Year rail — demoted from the oversized numeral */}
+                    <div className="flex items-center gap-4">
+                      <span className="font-display text-sm font-semibold tabular-nums tracking-[0.16em] text-black/70">
+                        {group.year}
                       </span>
+                      <span
+                        className="h-px flex-1 bg-black/15"
+                        aria-hidden="true"
+                      />
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-display text-2xl font-bold tracking-[-0.02em] text-black md:text-3xl">
-                        Diploma in Information Technology
-                      </h3>
+
+                    <div className="mt-7 divide-y divide-black/15">
+                      {group.entries.map((entry) => (
+                        <div
+                          key={entry.title}
+                          className="relative py-6 pl-4 first:pt-0 last:pb-0"
+                        >
+                          {entry.latest ? (
+                            <span
+                              className="absolute inset-y-0 left-0 w-0.5 bg-accent"
+                              aria-hidden="true"
+                            />
+                          ) : null}
+                          <h4 className="font-playfair text-2xl font-medium leading-[1.12] tracking-[-0.01em] md:text-[1.6rem]">
+                            {entry.title}
+                          </h4>
+                          {entry.org ? (
+                            <p className="mt-2 font-body text-sm text-black/50">
+                              {entry.org}
+                            </p>
+                          ) : null}
+                        </div>
+                      ))}
                     </div>
                   </div>
-
-                  <div
-                    data-reveal
-                    className="group flex flex-col gap-6 border-t border-black/10 py-10 md:flex-row md:items-start md:gap-16"
-                  >
-                    <div className="shrink-0 md:w-48">
-                      <span className="font-display text-sm font-bold uppercase tracking-[0.06em] text-black">
-                        2023
-                      </span>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-display text-2xl font-bold tracking-[-0.02em] text-black md:text-3xl">
-                        Full Stack Web Developer
-                      </h3>
-                      <p className="mt-1 text-sm font-bold text-black/55">
-                        Sport Formula
-                      </p>
-                    </div>
-                  </div>
-
-                  <div
-                    data-reveal
-                    className="group flex flex-col gap-6 border-t border-black/10 border-b-2 border-b-black py-10 md:flex-row md:items-start md:gap-16"
-                  >
-                    <div className="shrink-0 md:w-48">
-                      <span className="font-display text-sm font-bold uppercase tracking-[0.06em] text-black">
-                        2024 — Present
-                      </span>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-display text-2xl font-bold tracking-[-0.02em] text-black md:text-3xl">
-                        Web Dev Team Lead
-                      </h3>
-                      <p className="mt-1 text-sm font-bold text-black/55">
-                        Sport Formula
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                ))}
               </div>
+            </div>
+          </div>
 
-              {/* Right — Photo and details */}
-              <div className="flex flex-col items-center justify-end gap-8 text-center">
-                <div data-reveal className="w-full">
-                  <Image
-                    src="/assets/me.jpg"
-                    alt="Jimwel Cruz"
-                    width={400}
-                    height={500}
-                    draggable={false}
-                    onContextMenu={(e) => e.preventDefault()}
-                    className="w-full rounded-sm object-cover select-none"
-                  />
+          {/* Dark stat band with inner glow */}
+          <div
+            data-nav-theme="dark"
+            className="relative"
+            style={{
+              backgroundColor: "#0a0a0a",
+              backgroundImage:
+                "radial-gradient(125% 150% at 50% 118%, rgba(200,255,0,0.22), rgba(200,255,0,0) 58%)",
+            }}
+          >
+            <div className="container mx-auto grid max-w-6xl grid-cols-1 divide-y divide-white/10 px-6 md:grid-cols-3 md:divide-x md:divide-y-0 md:px-12">
+              {stats.map((stat) => (
+                <div key={stat.label} data-reveal className="py-12 md:px-10 md:py-16">
+                  <p className="font-display text-5xl font-medium leading-none tracking-[-0.03em] text-accent md:text-6xl">
+                    {stat.value}
+                  </p>
+                  <p className="mt-5 font-body text-xs font-bold uppercase tracking-[0.1em] text-white/55">
+                    {stat.label}
+                  </p>
                 </div>
-                <div data-reveal>
-                  <span className="block font-display text-sm font-bold uppercase tracking-[0.12em] text-black/50">
-                    Based in
-                  </span>
-                  <span className="relative mt-2 inline-block font-display text-2xl font-bold tracking-[-0.02em] text-black">
-                    The Philippines
-                    <span className="absolute bottom-[0.05em] left-0 right-0 -z-10 h-[0.3em] bg-accent" />
-                  </span>
-                </div>
-                <div data-reveal>
-                  <span className="block font-display text-sm font-bold uppercase tracking-[0.12em] text-black/50">
-                    Focus
-                  </span>
-                  <span className="relative mt-2 inline-block font-display text-2xl font-bold tracking-[-0.02em] text-black">
-                    Full Stack Web Dev
-                    <span className="absolute bottom-[0.05em] left-0 right-0 -z-10 h-[0.3em] bg-accent" />
-                  </span>
-                </div>
-                <div data-reveal>
-                  <span className="block font-display text-sm font-bold uppercase tracking-[0.12em] text-black/50">
-                    Experience
-                  </span>
-                  <span className="relative mt-2 inline-block font-display text-2xl font-bold tracking-[-0.02em] text-black">
-                    3 Years
-                    <span className="absolute bottom-[0.05em] left-0 right-0 -z-10 h-[0.3em] bg-accent" />
-                  </span>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
@@ -706,179 +625,234 @@ export default function Home() {
         {/* ============================================
             WORK
         ============================================ */}
-        <section id="work" className="bg-[#141414] px-6 py-32 md:px-12">
-          <div className="container mx-auto">
-            <p
-              data-reveal
-              className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-white/60"
-            >
-              02 / Work
-            </p>
-            <h2
-              data-reveal
-              className="mb-20 font-display text-[clamp(2.2rem,6vw,5rem)] font-bold leading-[0.95] tracking-[-0.04em] text-white"
-            >
-              Selected
-              <br />
+        <section
+          id="work"
+          data-nav-theme="dark"
+          className="relative overflow-hidden bg-[#141414] pt-24 md:pt-32"
+        >
+          {/* Inner glow — keeps the dark band from reading as a hole */}
+          <div
+            className="pointer-events-none absolute inset-x-0 top-0 h-[60%]"
+            aria-hidden="true"
+            style={{
+              backgroundImage:
+                "radial-gradient(120% 100% at 50% 0%, rgba(200,255,0,0.09), rgba(200,255,0,0) 65%)",
+            }}
+          />
+
+          <h2
+            data-reveal
+            className="relative px-6 font-display text-[clamp(2.75rem,9vw,6rem)] font-medium leading-[0.9] tracking-[-0.04em] text-white md:px-12"
+          >
+            Selected
+            <br />
+            <span className="text-transparent text-stroke">
               Projects
-            </h2>
+            </span>
+          </h2>
 
-            <div className="flex flex-col gap-24">
-              {projects.map((project, i) => (
-                <article
-                  key={project.title}
-                  data-reveal
-                  className={`grid gap-8 md:gap-16 ${
-                    i % 2 === 0
-                      ? "md:grid-cols-[1.2fr_1fr]"
-                      : "md:grid-cols-[1fr_1.2fr]"
-                  } items-center`}
+          {/* Full-bleed uniform media wall — 0 gap, hairline dividers */}
+          <div className="relative mt-16 grid grid-cols-1 border-t border-white/10 md:mt-20 md:grid-cols-2">
+            {projects.map((project, i) => (
+              <article
+                key={project.title}
+                data-reveal
+                className={`group relative h-[26rem] overflow-hidden border-b border-white/10 sm:h-[28rem] md:h-[clamp(22rem,34vw,30rem)] ${
+                  i % 2 === 0 ? "md:border-r" : ""
+                }`}
+              >
+                <Link
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${project.title} — open the live site`}
+                  className="absolute inset-0 block"
                 >
-                  {/* Image / Video */}
-                  <div
-                    className={`overflow-hidden rounded ${
-                      i % 2 !== 0 ? "md:order-2" : ""
-                    }`}
-                  >
-                    <Link
-                      href={project.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`group relative block cursor-pointer overflow-hidden bg-[#1c1c1c] ${
-                        "video" in project && project.video ? "" : "aspect-video"
-                      }`}
-                    >
-                      {"video" in project && project.video ? (
-                        <video
-                          src={project.video}
-                          loop
-                          muted
-                          playsInline
-                          preload="none"
-                          title={`${project.title} — ${project.description}`}
-                          className="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                      ) : "image" in project && project.image ? (
-                        <Image
-                          src={project.image}
-                          alt={`${project.title} — ${project.description}`}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 50vw"
-                          priority={project.priority === true}
-                          className="object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-                      ) : null}
-                    </Link>
-                  </div>
+                  {"video" in project && project.video ? (
+                    <video
+                      src={project.video}
+                      poster={
+                        "image" in project && project.image
+                          ? project.image
+                          : undefined
+                      }
+                      loop
+                      muted
+                      playsInline
+                      preload="none"
+                      title={`${project.title} — ${project.description}`}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-[1.04]"
+                    />
+                  ) : "image" in project && project.image ? (
+                    <Image
+                      src={project.image}
+                      alt={`${project.title} — ${project.description}`}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      priority={project.priority === true}
+                      className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.04]"
+                    />
+                  ) : null}
 
-                  {/* Info */}
+                  {/* Scrims — bottom for copy, top for the index numeral */}
                   <div
-                    className={`relative py-4 ${
-                      i % 2 !== 0 ? "md:order-1" : ""
-                    }`}
-                  >
-                    <span
-                      className="pointer-events-none absolute -top-6 -left-2 font-display text-[clamp(4rem,8vw,7rem)] font-bold leading-none text-white/[0.04]"
-                      aria-hidden="true"
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <h3 className="relative z-10 font-display text-[clamp(1.4rem,2.5vw,1.8rem)] font-bold tracking-[-0.02em] text-white">
-                      {project.title}
-                    </h3>
-                    <p className="relative z-10 mt-3 max-w-md text-sm font-medium leading-relaxed text-white/70">
-                      {project.description}
-                    </p>
-                    <div className="relative z-10 mt-5 flex flex-wrap gap-2">
-                      {project.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="border border-accent/20 px-3 py-1 text-[0.65rem] font-medium uppercase tracking-[0.06em] text-accent"
-                        >
-                          {tag}
-                        </span>
-                      ))}
+                    className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/15"
+                    aria-hidden="true"
+                  />
+                  <div
+                    className="absolute inset-x-0 top-0 h-2/5 bg-gradient-to-b from-black/55 to-transparent"
+                    aria-hidden="true"
+                  />
+
+                  <div className="relative flex h-full flex-col justify-between p-6 md:p-8">
+                    <div className="flex items-start justify-end">
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="h-6 w-6 text-accent transition-transform duration-200 ease-out group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                      />
+                    </div>
+
+                    <div>
+                      <h3 className="font-display text-[clamp(1.75rem,2.6vw,2.5rem)] font-medium leading-[1.05] tracking-[-0.03em] text-white">
+                        {project.title}
+                      </h3>
+                      <p className="mt-3 max-w-md font-body text-base leading-relaxed text-white/75">
+                        {project.description}
+                      </p>
+                      <ul className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2">
+                        {project.tags.map((tag, ti) => (
+                          <li
+                            key={tag}
+                            className="flex items-center gap-3 font-body text-[11px] font-semibold uppercase tracking-[0.2em] text-accent/90"
+                          >
+                            {ti > 0 ? (
+                              <span
+                                className="h-3 w-px bg-accent/40"
+                                aria-hidden="true"
+                              />
+                            ) : null}
+                            {tag}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
-                </article>
-              ))}
-            </div>
+                </Link>
+              </article>
+            ))}
           </div>
         </section>
 
         {/* ============================================
             SKILLS
         ============================================ */}
-        <section id="skills" className="relative overflow-hidden bg-background px-6 py-32 md:px-12">
-          {/* Flowing SVG */}
+        <section
+          id="skills"
+          data-nav-theme="dark"
+          className="relative overflow-hidden"
+          style={{
+            backgroundColor: "#0d1000",
+            backgroundImage:
+              "radial-gradient(130% 120% at 12% 0%, rgba(200,255,0,0.14), rgba(200,255,0,0) 58%)",
+          }}
+        >
+          {/* Second glow — keeps the tinted field from reading as a flat hole */}
           <div
-            className="pointer-events-none absolute left-[5%] top-[5%] bottom-0 hidden w-[clamp(80px,12vw,180px)] opacity-80 md:block"
+            className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2"
             aria-hidden="true"
+            style={{
+              backgroundImage:
+                "radial-gradient(80% 120% at 88% 100%, rgba(159,232,112,0.12), rgba(159,232,112,0) 62%)",
+            }}
+          />
+
+          {/* Dominant — the headline at section scale, no eyebrow, no subhead */}
+          <h2
+            data-reveal
+            className="relative px-6 pt-24 font-display text-[clamp(2.75rem,10vw,7.5rem)] font-medium leading-[0.9] tracking-[-0.04em] text-white md:px-12 md:pt-32"
           >
-            <svg viewBox="0 0 200 1200" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-full">
-              <path
-                d="M100 0 C100 200, 180 300, 100 400 C20 500, 100 600, 100 800 C100 900, 180 1000, 100 1200"
-                stroke="rgba(200,255,0,0.1)"
-                strokeWidth="1"
-                fill="none"
-              />
-            </svg>
-          </div>
-
-          <div className="container relative z-10 mx-auto">
-            <p
-              data-reveal
-              className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-foreground"
-            >
-              03 / Skills
-            </p>
-            <h2
-              data-reveal
-              className="mb-16 font-display text-[clamp(2.2rem,5.5vw,4.2rem)] font-bold leading-[0.95] tracking-[-0.04em]"
-            >
-              What I
-              <br />
+            What I
+            <br />
+            <span className="text-transparent text-stroke">
               Work With
-            </h2>
+            </span>
+          </h2>
 
-            <div className="grid gap-12 md:grid-cols-2 md:gap-16">
-              {skillGroups.map((group) => (
-                <div data-reveal key={group.title}>
-                  <h3 className="mb-6 border-b border-accent/15 pb-3 text-xs font-semibold uppercase tracking-[0.1em] text-accent">
-                    {group.title}
-                  </h3>
-                  <ul className="flex flex-col gap-3">
-                    {group.items.map((item) => {
-                      const label = typeof item === "string" ? item : item.label;
-                      const note = typeof item === "string" ? null : item.note;
-                      return (
-                        <li
-                          key={label}
-                          className="text-sm font-medium text-white/70 transition-colors hover:text-white"
-                        >
-                          {note ? (
-                            <span>
-                              <span className="text-white">{label}</span>{" "}
-                              <span className="text-white/40">{note}</span>
-                            </span>
-                          ) : (
-                            label
-                          )}
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
+          {/* Full-bleed capability wall — 4-up, 0 gap, hairline dividers, one hue per cell */}
+          <div className="relative mt-16 grid grid-cols-1 border-t border-white/10 md:mt-20 md:grid-cols-4 md:items-start">
+            {/* Full-height column rules — panels hug their own content, rules run the whole wall */}
+            <div
+              className="pointer-events-none absolute inset-0 hidden md:block"
+              aria-hidden="true"
+            >
+              {[25, 50, 75].map((left) => (
+                <span
+                  key={left}
+                  className="absolute inset-y-0 w-px bg-white/10"
+                  style={{ left: `${left}%` }}
+                />
               ))}
             </div>
+
+            {skillGroups.map((group, i) => {
+              const hue = i % 2 === 0 ? "#c8ff00" : "#9fe870";
+              return (
+                <div
+                  key={group.title}
+                  data-reveal
+                  className="relative border-b border-white/10 p-6 md:border-b-0 md:p-8"
+                >
+                  {/* Per-cell hue tint */}
+                  <div
+                    className="pointer-events-none absolute inset-0"
+                    aria-hidden="true"
+                    style={{
+                      backgroundImage: `linear-gradient(180deg, ${hue}16, ${hue}00 44%)`,
+                    }}
+                  />
+
+                  <div className="relative flex h-full flex-col">
+                    <h3 className="font-display text-2xl font-medium leading-[1.1] tracking-[-0.02em] text-white md:text-[1.75rem]">
+                      {group.title}
+                    </h3>
+
+                    <ul className="mt-6 divide-y divide-white/10 border-t border-white/10">
+                      {group.items.map((item) => {
+                        const label =
+                          typeof item === "string" ? item : item.label;
+                        const note = typeof item === "string" ? null : item.note;
+                        return (
+                          <li
+                            key={label}
+                            className="py-3 font-body text-[0.95rem] font-medium leading-snug text-white/75 transition-colors hover:text-white"
+                          >
+                            {note ? (
+                              <span>
+                                <span className="text-white">{label}</span>{" "}
+                                <span className="text-white/40">{note}</span>
+                              </span>
+                            ) : (
+                              label
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
         {/* ============================================
             AI-ASSISTED DEVELOPMENT
         ============================================ */}
-        <section className="relative overflow-hidden bg-[#141414] px-6 pt-32 pb-16 md:px-12 md:pb-20">
-          {/* Subtle grid pattern */}
+        <section
+          data-nav-theme="dark"
+          className="relative overflow-hidden bg-[#141414]"
+        >
+          {/* Faint grid pattern */}
           <div
             className="pointer-events-none absolute inset-0"
             aria-hidden="true"
@@ -889,48 +863,59 @@ export default function Home() {
             }}
           />
 
-          <div className="container relative z-10 mx-auto">
-            <p
-              data-reveal
-              className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-white/60"
-            >
-              AI &amp; Tools
-            </p>
-            <h2
-              data-reveal
-              className="mb-6 font-display text-[clamp(2.2rem,5.5vw,4.2rem)] font-bold leading-[0.95] tracking-[-0.04em] text-white"
-            >
-              Smarter With
-              <br />
-              <span className="text-accent">AI</span>
-            </h2>
-            <p
-              data-reveal
-              className="mb-16 max-w-lg text-lg font-medium leading-relaxed text-white/70"
-            >
-              I use AI tools to write code faster.<br className="hidden md:block" /> Here&apos;s how I use them in my workflow.
-            </p>
+          {/* Dominant — headline only, no eyebrow, no supporting copy */}
+          <h2
+            data-reveal
+            className="relative px-6 pt-20 font-display text-[clamp(2.5rem,9vw,6.5rem)] font-medium leading-[0.9] tracking-[-0.04em] text-white md:px-12 md:pt-24"
+          >
+            Smarter With
+            <br />
+            <span className="text-transparent text-stroke">
+              AI
+            </span>
+          </h2>
 
-            <div className="grid gap-6 md:grid-cols-3">
-              {aiTools.map((tool) => (
+          {/* Full-bleed tool wall — 3-up, 0 gap, hairline rules, one hue per cell */}
+          <div className="relative mt-12 grid grid-cols-1 border-y border-white/10 md:mt-14 md:grid-cols-3 md:items-start">
+            {/* Full-height column rules — cells hug their own content */}
+            <div
+              className="pointer-events-none absolute inset-0 hidden md:block"
+              aria-hidden="true"
+            >
+              {[33.3333, 66.6666].map((left) => (
+                <span
+                  key={left}
+                  className="absolute inset-y-0 w-px bg-white/10"
+                  style={{ left: `${left}%` }}
+                />
+              ))}
+            </div>
+
+            {aiTools.map((tool, i) => {
+              const hue = i % 2 === 0 ? "#c8ff00" : "#9fe870";
+              return (
                 <div
                   data-reveal
                   key={tool.title}
-                  className="group border border-white/5 bg-white/[0.02] p-8 transition-colors hover:border-accent/30"
+                  className="group relative border-b border-white/10 p-6 last:border-b-0 md:border-b-0 md:p-8"
+                  style={{
+                    backgroundImage: `linear-gradient(180deg, ${hue}16, ${hue}00 44%)`,
+                  }}
                 >
                   <tool.icon
-                    className="mb-5 text-accent transition-transform group-hover:scale-110"
+                    className="mb-5 transition-transform group-hover:scale-110"
+                    style={{ color: hue }}
                     size={22}
                   />
-                  <h3 className="font-display text-base font-semibold tracking-tight text-white">
+                  <h3 className="font-display text-2xl font-medium leading-[1.1] tracking-[-0.02em] text-white md:text-[1.75rem]">
                     {tool.title}
                   </h3>
-                  <p className="mt-3 text-sm font-medium leading-relaxed text-white/70">
+                  <p className="mt-4 font-body text-[0.95rem] font-medium leading-snug text-white/70">
                     {tool.description}
                   </p>
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </section>
 
@@ -979,160 +964,176 @@ export default function Home() {
         {/* ============================================
             PERFORMANCE OPTIMIZATION
         ============================================ */}
-        <section className="bg-[#141414] px-6 pt-12 pb-8 md:px-12 md:pt-16 md:pb-16">
-          <div className="container mx-auto">
-            <p
-              data-reveal
-              className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-white/60"
-            >
-              04 / Performance
-            </p>
-            <h2
-              data-reveal
-              className="mb-6 font-display text-[clamp(2.2rem,5.5vw,4.2rem)] font-bold leading-[0.95] tracking-[-0.04em] text-white"
-            >
-              Speed
-              <br />
-              <span className="text-accent">Matters</span>
-            </h2>
-            <p
-              data-reveal
-              className="mb-16 max-w-lg text-lg font-medium leading-relaxed text-white/70"
-            >
-              Optimizing load times, core web vitals, and overall performance to deliver fast, smooth experiences.
-              <br />
-              <span className="text-accent font-bold">Load speed now under 1 second.</span>
-            </p>
+        <section className="relative overflow-hidden bg-[#141414]">
+          {/* Dominant — headline only, no eyebrow */}
+          <h2
+            data-reveal
+            className="px-6 pt-20 font-display text-[clamp(2.5rem,9vw,6.5rem)] font-medium leading-[0.9] tracking-[-0.04em] text-white md:px-12 md:pt-24"
+          >
+            Speed
+            <br />
+            <span className="text-transparent text-stroke">
+              Matters
+            </span>
+          </h2>
 
-            <div className="grid gap-12 md:grid-cols-2">
-              {/* PageSpeed Insights */}
-              <div data-reveal>
-                <h3 className="mb-6 border-b border-white/10 pb-3 text-sm font-semibold uppercase tracking-[0.1em] text-accent">
-                  Google PageSpeed Insights
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="mb-3 text-xs font-bold uppercase tracking-[0.1em] text-white/50">
-                      Before
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => setModalImage("/assets/projects/pagespeed-insight-before.jpg")}
-                      className="cursor-zoom-in"
-                    >
-                      <Image
-                        src="/assets/projects/pagespeed-insight-before.jpg"
-                        alt="PageSpeed Insights before optimization"
-                        width={600}
-                        height={400}
-                        className="h-32 md:h-48 w-full border border-white/5 object-cover"
-                        draggable={false}
-                        onContextMenu={(e) => e.preventDefault()}
-                      />
-                    </button>
-                  </div>
-                  <div>
-                    <p className="mb-3 text-xs font-bold uppercase tracking-[0.1em] text-white/50">
-                      After
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => setModalImage("/assets/projects/pagespeed-insight-after.jpg")}
-                      className="cursor-zoom-in"
-                    >
-                      <Image
-                        src="/assets/projects/pagespeed-insight-after.jpg"
-                        alt="PageSpeed Insights after optimization"
-                        width={600}
-                        height={400}
-                        className="h-32 md:h-48 w-full border border-white/5 object-cover"
-                        draggable={false}
-                        onContextMenu={(e) => e.preventDefault()}
-                      />
-                    </button>
-                  </div>
-                </div>
-              </div>
+          <p
+            data-reveal
+            className="mt-6 max-w-lg px-6 font-body text-base font-medium leading-relaxed text-white/70 md:px-12 md:text-lg"
+          >
+            Optimizing load times, core web vitals, and overall performance to deliver fast, smooth experiences.{" "}
+            <span className="font-bold text-accent">
+              Load speed now under 1 second.
+            </span>
+          </p>
 
-              {/* Pingdom */}
-              <div data-reveal>
-                <h3 className="mb-6 border-b border-white/10 pb-3 text-sm font-semibold uppercase tracking-[0.1em] text-accent">
-                  Pingdom
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="mb-3 text-xs font-bold uppercase tracking-[0.1em] text-white/50">
-                      Before
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => setModalImage("/assets/projects/pingdom-before.jpg")}
-                      className="cursor-zoom-in"
-                    >
-                      <Image
-                        src="/assets/projects/pingdom-before.jpg"
-                        alt="Pingdom before optimization"
-                        width={600}
-                        height={400}
-                        className="h-32 md:h-48 w-full border border-white/5 object-cover"
-                        draggable={false}
-                        onContextMenu={(e) => e.preventDefault()}
-                      />
-                    </button>
-                  </div>
-                  <div>
-                    <p className="mb-3 text-xs font-bold uppercase tracking-[0.1em] text-white/50">
-                      After
-                    </p>
-                    <button
-                      type="button"
-                      onClick={() => setModalImage("/assets/projects/pingdom-after.jpg")}
-                      className="cursor-zoom-in"
-                    >
-                      <Image
-                        src="/assets/projects/pingdom-after.jpg"
-                        alt="Pingdom after optimization"
-                        width={600}
-                        height={400}
-                        className="h-32 md:h-48 w-full border border-white/5 object-cover"
-                        draggable={false}
-                        onContextMenu={(e) => e.preventDefault()}
-                      />
-                    </button>
-                  </div>
-                </div>
-              </div>
+          {/* Full-bleed audit wall — 2-up, 0 gap, hairline rules, one hue per cell */}
+          <div className="relative mt-12 grid grid-cols-1 border-y border-white/10 md:mt-14 md:grid-cols-2">
+            <div
+              className="pointer-events-none absolute inset-0 hidden md:block"
+              aria-hidden="true"
+            >
+              <span
+                className="absolute inset-y-0 w-px bg-white/10"
+                style={{ left: "50%" }}
+              />
             </div>
+
+            {[
+              {
+                label: "Google PageSpeed Insights",
+                before: "/assets/projects/pagespeed-insight-before.jpg",
+                after: "/assets/projects/pagespeed-insight-after.jpg",
+                altBefore: "PageSpeed Insights before optimization",
+                altAfter: "PageSpeed Insights after optimization",
+              },
+              {
+                label: "Pingdom",
+                before: "/assets/projects/pingdom-before.jpg",
+                after: "/assets/projects/pingdom-after.jpg",
+                altBefore: "Pingdom before optimization",
+                altAfter: "Pingdom after optimization",
+              },
+            ].map((audit, i) => {
+              const hue = i % 2 === 0 ? "#c8ff00" : "#9fe870";
+              return (
+                <div
+                  data-reveal
+                  key={audit.label}
+                  className="relative border-b border-white/10 p-6 last:border-b-0 md:border-b-0 md:p-8"
+                  style={{
+                    backgroundImage: `linear-gradient(180deg, ${hue}16, ${hue}00 44%)`,
+                  }}
+                >
+                  <h3 className="mb-6 font-display text-2xl font-medium leading-[1.1] tracking-[-0.02em] text-white md:text-[1.75rem]">
+                    {audit.label}
+                  </h3>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="mb-3 text-xs font-bold uppercase tracking-[0.1em] text-white/40">
+                        Before
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setModalImage(audit.before)}
+                        className="cursor-zoom-in"
+                      >
+                        <Image
+                          src={audit.before}
+                          alt={audit.altBefore}
+                          width={600}
+                          height={400}
+                          className="h-32 w-full border border-white/10 object-cover md:h-48"
+                          draggable={false}
+                          onContextMenu={(e) => e.preventDefault()}
+                        />
+                      </button>
+                    </div>
+                    <div>
+                      <p
+                        className="mb-3 text-xs font-bold uppercase tracking-[0.1em]"
+                        style={{ color: hue }}
+                      >
+                        After
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => setModalImage(audit.after)}
+                        className="cursor-zoom-in"
+                      >
+                        <Image
+                          src={audit.after}
+                          alt={audit.altAfter}
+                          width={600}
+                          height={400}
+                          className="h-32 w-full border object-cover md:h-48"
+                          style={{ borderColor: `${hue}66` }}
+                          draggable={false}
+                          onContextMenu={(e) => e.preventDefault()}
+                        />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
         {/* ============================================
             FAQ
         ============================================ */}
-        <section className="bg-[#141414] px-6 py-32 md:px-12">
-          <div className="container mx-auto max-w-3xl">
-            <h2
-              data-reveal
-              className="mb-12 font-display text-[clamp(1.8rem,4vw,3rem)] font-bold tracking-[-0.03em] text-white"
-            >
-              Frequently asked questions.
-            </h2>
-            <div className="flex flex-col gap-4">
-              {faqs.map((faq) => (
+        <section className="relative overflow-hidden bg-[#141414]">
+          {/* Dominant — headline only, no eyebrow */}
+          <h2
+            data-reveal
+            className="px-6 pt-20 font-display text-[clamp(2.25rem,7.5vw,6rem)] font-medium leading-[0.9] tracking-[-0.04em] text-white md:px-12 md:pt-24"
+          >
+            Things people
+            <br />
+            <span className="text-transparent text-stroke">
+              ask me.
+            </span>
+          </h2>
+
+          {/* Full-bleed list — hairline rows, one hue per row */}
+          <div className="relative mt-12 border-y border-white/10 md:mt-14">
+            {faqs.map((faq, i) => {
+              const hue = i % 2 === 0 ? "#c8ff00" : "#9fe870";
+              return (
                 <details
                   data-reveal
                   key={faq.question}
-                  className="group border border-white/5 bg-white/[0.02] p-6"
+                  className="group relative border-b border-white/10 last:border-b-0 [&[open]_svg]:rotate-45"
+                  style={{
+                    backgroundImage: `linear-gradient(90deg, ${hue}14, ${hue}00 38%)`,
+                  }}
                 >
-                  <summary className="cursor-pointer text-base font-medium tracking-tight text-white outline-none">
-                    {faq.question}
+                  <summary className="flex cursor-pointer list-none items-start justify-between gap-6 px-6 py-6 outline-none [&::-webkit-details-marker]:hidden md:px-12 md:py-7">
+                    <span className="max-w-3xl font-display text-xl font-medium leading-snug tracking-[-0.02em] text-white md:text-2xl">
+                      {faq.question}
+                    </span>
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      className="mt-1 h-5 w-5 shrink-0 transition-transform duration-300"
+                      style={{ color: hue }}
+                      aria-hidden="true"
+                    >
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
                   </summary>
-                  <p className="mt-3 text-sm font-medium leading-relaxed text-white/70">
-                    {faq.answer}
-                  </p>
+                  <div className="px-6 pb-8 md:px-12">
+                    <p className="max-w-3xl font-body text-base font-medium leading-relaxed text-white/70">
+                      {faq.answer}
+                    </p>
+                  </div>
                 </details>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </section>
 
@@ -1141,46 +1142,43 @@ export default function Home() {
         ============================================ */}
         <section
           id="contact"
-          className="relative overflow-hidden bg-off-white px-6 py-32 md:px-12"
+          className="relative overflow-hidden"
           style={{ backgroundColor: "#f0f0f0" }}
         >
-          <div className="container relative z-10 mx-auto max-w-4xl text-black">
-            <p
-              data-reveal
-              className="mb-4 text-sm font-bold uppercase tracking-[0.1em] text-black/60"
-            >
-              05 / Contact
-            </p>
+          <div
+            data-nav-theme="light"
+            className="pb-24 pt-28 text-black md:pb-32 md:pt-40"
+          >
+            {/* Dominant — headline only, no eyebrow */}
             <h2
               data-reveal
-              className="font-display text-[clamp(2.2rem,6.5vw,5rem)] font-bold leading-[0.95] tracking-[-0.04em]"
+              className="isolate px-6 font-display text-[clamp(2.75rem,10vw,7.5rem)] font-medium leading-[0.9] tracking-[-0.04em] md:px-12"
             >
               Let&apos;s build
               <br />
               something{" "}
               <span className="relative inline-block">
                 great.
-                <span className="absolute bottom-[0.1em] left-0 right-0 -z-10 h-[0.35em] bg-accent" />
+                <span
+                  className="absolute inset-x-0 bottom-[0.14em] -z-10 h-[0.3em] bg-accent"
+                  aria-hidden="true"
+                />
               </span>
             </h2>
+
+            {/* Full-bleed CTA row — inverts on hover */}
             <Link
               data-reveal
               href="mailto:jimwelscruz0406@gmail.com"
-              className="mt-10 inline-flex items-center gap-2 border-2 border-black px-4 py-2.5 text-xs font-semibold transition-colors hover:bg-black hover:text-[#f0f0f0] sm:gap-3 sm:px-8 sm:py-4 sm:text-base"
+              className="group mt-14 flex items-center justify-between gap-4 border-y border-black/15 px-6 py-7 transition-colors hover:bg-black hover:text-[#f0f0f0] md:mt-16 md:gap-8 md:px-12 md:py-9"
             >
-              <span className="whitespace-nowrap">
+              <span className="font-display text-lg font-medium tracking-[-0.02em] sm:text-2xl md:text-3xl">
                 jimwelscruz0406@gmail.com
               </span>
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className="h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
+              <ArrowUpRight
+                className="h-6 w-6 shrink-0 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 md:h-8 md:w-8"
+                aria-hidden="true"
+              />
             </Link>
           </div>
         </section>

@@ -10,7 +10,7 @@ type Meteor = {
   dir: Vector3;
   speed: number;
   age: number;
-  maxAge: number;
+  slot: number;
   alpha: number;
   length: number;
 };
@@ -44,8 +44,64 @@ const FRAGMENT_SHADER = /* glsl */ `
   }
 `;
 
+const SKY_LIGHT_VERTEX = /* glsl */ `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = vec4(position.xy, 0.0, 1.0);
+  }
+`;
+
+// Atmospheric light cast by the falling stars. Each star is a point light in the
+// scene; its view-space depth sets how much sky it spills across, so the glow
+// swells as a star falls toward the camera. Drawn additively, so overlapping
+// light accumulates, and rendered behind the streaks.
+const SKY_LIGHT_FRAGMENT = /* glsl */ `
+  varying vec2 vUv;
+  uniform float uAspect;
+  uniform vec3 uCoreColor;
+  uniform vec3 uWideColor;
+  uniform vec2 uL0;
+  uniform vec2 uL1;
+  uniform vec2 uL2;
+  uniform vec2 uL3;
+  uniform vec4 uP0;
+  uniform vec4 uP1;
+  uniform vec4 uP2;
+  uniform vec4 uP3;
+
+  void addLight(vec2 source, vec4 light, inout float core, inout float wide) {
+    if (light.y <= 0.0) return;
+    float t = length(vec2((vUv.x - source.x) * uAspect, vUv.y - source.y)) / max(light.x, 0.0001);
+    core += light.y * exp(-t * t * 1.4);
+    wide += light.y * exp(-t * t * 0.09);
+  }
+
+  void main() {
+    float core = 0.0;
+    float wide = 0.0;
+    addLight(uL0, uP0, core, wide);
+    addLight(uL1, uP1, core, wide);
+    addLight(uL2, uP2, core, wide);
+    addLight(uL3, uP3, core, wide);
+
+    float alpha = clamp((core * 0.5 + wide * 0.2) * 0.62, 0.0, 1.0);
+    float hot = core / (core + wide + 0.0001);
+    gl_FragColor = vec4(mix(uWideColor, uCoreColor, clamp(hot * 1.4, 0.0, 1.0)), alpha);
+  }
+`;
+
 const FOV = 52;
 const MAX_METEORS = 4;
+
+// World-space radius of a star's atmospheric light, and how sharply its
+// brightness leans toward the camera as it approaches.
+const SKY_LIGHT_RADIUS = 3.4;
+const SKY_LIGHT_NEAR_GAIN = 26;
+const SKY_LIGHT_DECAY = 0.9;
+const SKY_LIGHT_BLOOM = 0.35;
+const SKY_LIGHT_MIN = 0.004;
+const METEOR_FADE_IN = 0.45;
 
 const smoothstep = (edge0: number, edge1: number, x: number) => {
   const t = Math.min(1, Math.max(0, (x - edge0) / (edge1 - edge0)));
@@ -100,10 +156,10 @@ export default function MeteorLayer() {
       const glowCtx = glowCanvas.getContext("2d");
       if (glowCtx) {
         const grd = glowCtx.createRadialGradient(64, 64, 0, 64, 64, 64);
-        grd.addColorStop(0, "rgba(255,255,255,1)");
-        grd.addColorStop(0.16, "rgba(255,255,255,0.82)");
-        grd.addColorStop(0.4, "rgba(200,255,0,0.32)");
-        grd.addColorStop(1, "rgba(200,255,0,0)");
+        grd.addColorStop(0, "rgba(232,255,148,1)");
+        grd.addColorStop(0.16, "rgba(214,255,64,0.82)");
+        grd.addColorStop(0.4, "rgba(176,240,32,0.32)");
+        grd.addColorStop(1, "rgba(150,220,16,0)");
         glowCtx.fillStyle = grd;
         glowCtx.fillRect(0, 0, 128, 128);
       }
@@ -129,6 +185,47 @@ export default function MeteorLayer() {
           blending: THREE.AdditiveBlending,
         });
 
+      const skyLightGeometry = new THREE.PlaneGeometry(2, 2);
+      const lightSource = [
+        new THREE.Vector2(),
+        new THREE.Vector2(),
+        new THREE.Vector2(),
+        new THREE.Vector2(),
+      ];
+      const lightParams = [
+        new THREE.Vector4(),
+        new THREE.Vector4(),
+        new THREE.Vector4(),
+        new THREE.Vector4(),
+      ];
+      const lightLevel: number[] = [0, 0, 0, 0];
+      const lightSpread: number[] = [0, 0, 0, 0];
+      const skyLightMaterial = new THREE.ShaderMaterial({
+        vertexShader: SKY_LIGHT_VERTEX,
+        fragmentShader: SKY_LIGHT_FRAGMENT,
+        uniforms: {
+          uAspect: { value: 1 },
+          uCoreColor: { value: new THREE.Color(0.62, 0.94, 0.4) },
+          uWideColor: { value: new THREE.Color(0.18, 0.5, 0.2) },
+          uL0: { value: lightSource[0] },
+          uL1: { value: lightSource[1] },
+          uL2: { value: lightSource[2] },
+          uL3: { value: lightSource[3] },
+          uP0: { value: lightParams[0] },
+          uP1: { value: lightParams[1] },
+          uP2: { value: lightParams[2] },
+          uP3: { value: lightParams[3] },
+        },
+        transparent: true,
+        depthWrite: false,
+        depthTest: false,
+        blending: THREE.AdditiveBlending,
+      });
+      const skyLight = new THREE.Mesh(skyLightGeometry, skyLightMaterial);
+      skyLight.frustumCulled = false;
+      skyLight.renderOrder = -1;
+      scene.add(skyLight);
+
       const meteors: Meteor[] = [];
       let spawnAt = 0.4;
       let elapsed = 0;
@@ -139,6 +236,7 @@ export default function MeteorLayer() {
         renderer.setSize(w, h, false);
         camera.aspect = w / h;
         camera.updateProjectionMatrix();
+        skyLightMaterial.uniforms.uAspect!.value = camera.aspect;
       };
 
       const spawn = () => {
@@ -148,11 +246,12 @@ export default function MeteorLayer() {
         const dir = new THREE.Vector3(
           0.5 + Math.random() * 0.3,
           -(0.78 + Math.random() * 0.34),
-          0.16 + Math.random() * 0.28
+          0.08 + Math.random() * 0.18
         ).normalize();
         const scale = Math.abs(z) / 40;
         const speed = (14 + Math.random() * 9) * scale;
         const length = Math.max(3, speed * 0.5);
+        const slot = Math.max(0, lightLevel.indexOf(Math.min(...lightLevel)));
 
         const core = makeRibbon(1);
         const halo = makeRibbon(0.22);
@@ -180,14 +279,14 @@ export default function MeteorLayer() {
           halo,
           sprite,
           pos: new THREE.Vector3(
-            (Math.random() * 2 - 1) * halfW * 0.72,
+            (Math.random() * 1.75 - 1) * halfW * 0.8,
             halfH * (1.04 + Math.random() * 0.22),
             z
           ),
           dir,
           speed,
           age: 0,
-          maxAge: 4.2 + Math.random() * 1.6,
+          slot,
           alpha: 0.85 + Math.random() * 0.15,
           length,
         });
@@ -215,12 +314,16 @@ export default function MeteorLayer() {
       const basis = new THREE.Matrix4();
       const timer = new THREE.Timer();
 
+      const scratch = new THREE.Vector3();
+
       const frame = () => {
         timer.update();
         const dt = Math.min(Math.max(timer.getDelta(), 0), 0.05);
         elapsed += dt;
 
         if (elapsed > spawnAt && meteors.length < MAX_METEORS) spawn();
+
+        const fedLight = [false, false, false, false];
 
         for (let i = meteors.length - 1; i >= 0; i--) {
           const meteor = meteors[i];
@@ -230,10 +333,20 @@ export default function MeteorLayer() {
           meteor.pos.addScaledVector(meteor.dir, meteor.speed * dt);
 
           const depth = Math.abs(meteor.pos.z);
-          const fadeIn = Math.min(1, meteor.age / 0.28);
-          const fadeOut = 1 - smoothstep(0.62, 1, meteor.age / meteor.maxAge);
-          const near = smoothstep(4, 11, depth);
-          const opacity = meteor.alpha * fadeIn * fadeOut * near;
+          const fadeIn = smoothstep(0, 1, meteor.age / METEOR_FADE_IN);
+          const near = smoothstep(2.5, 6.5, depth);
+          const opacity = meteor.alpha * fadeIn * near;
+
+          const source = lightSource[meteor.slot];
+          if (source) {
+            scratch.copy(meteor.pos).project(camera);
+            const spread = SKY_LIGHT_RADIUS / (2 * tanHalfFov * Math.max(depth, 3));
+            const gain = Math.min(1.35, Math.max(0.3, SKY_LIGHT_NEAR_GAIN / Math.max(depth, 3)));
+            source.set(scratch.x * 0.5 + 0.5, scratch.y * 0.5 + 0.5);
+            lightSpread[meteor.slot] = spread;
+            lightLevel[meteor.slot] = opacity * gain;
+            fedLight[meteor.slot] = true;
+          }
 
           const width = halfHeightAt(depth) * 2 * 0.014;
           const pulse = 1 + Math.sin(meteor.age * 7) * 0.16;
@@ -257,9 +370,21 @@ export default function MeteorLayer() {
           meteor.sprite.scale.set(headSize, headSize, 1);
           meteor.sprite.material.opacity = Math.min(1, opacity * 1.25);
 
-          const below = meteor.pos.y < -halfHeightAt(depth) * 1.3;
+          const halfH = halfHeightAt(depth);
+          const below = meteor.pos.y < -halfH * 1.3;
+          const aside = Math.abs(meteor.pos.x) > halfWidthAt(depth) * 1.25;
           const passed = meteor.pos.z > -3.5;
-          if (meteor.age > meteor.maxAge || below || passed) disposeMeteor(i);
+          if (below || aside || passed) disposeMeteor(i);
+        }
+
+        const lightDecay = Math.exp(-dt / SKY_LIGHT_DECAY);
+        for (let i = 0; i < lightParams.length; i++) {
+          if (!fedLight[i]) {
+            const level = (lightLevel[i] ?? 0) * lightDecay;
+            lightLevel[i] = level < SKY_LIGHT_MIN ? 0 : level;
+            lightSpread[i] = (lightSpread[i] ?? 0) * (1 + dt * SKY_LIGHT_BLOOM);
+          }
+          lightParams[i]?.set(lightSpread[i] ?? 0, lightLevel[i] ?? 0, 0, 0);
         }
 
         camera.rotation.y = Math.sin(elapsed * 0.06) * 0.022;
@@ -319,6 +444,8 @@ export default function MeteorLayer() {
         document.removeEventListener("visibilitychange", onVisibility);
         while (meteors.length) disposeMeteor(0);
         ribbonPlane.dispose();
+        skyLightGeometry.dispose();
+        skyLightMaterial.dispose();
         glowTexture.dispose();
         renderer.dispose();
         canvas.remove();
@@ -336,7 +463,7 @@ export default function MeteorLayer() {
   return (
     <div
       ref={hostRef}
-      className="pointer-events-none absolute inset-0 z-[1]"
+      className="pointer-events-none absolute inset-0 z-0"
       aria-hidden="true"
     />
   );

@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Footer from "@/components/Footer";
 import { useRouter } from "next/router";
 
@@ -21,6 +21,9 @@ const navLinks = [
 
 export default function Container(props: ContainerProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [navTheme, setNavTheme] = useState<"blend" | "light" | "dark">("blend");
+  const navRef = useRef<HTMLElement | null>(null);
+  const navOnLight = navTheme === "light" && !isOpen;
 
   const { children, ...customMeta } = props;
   const router = useRouter();
@@ -46,6 +49,47 @@ export default function Container(props: ContainerProps) {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
+
+  // swap nav colouring when it sits over an explicitly themed band
+  // (mix-blend-difference inverts to odd hues over light surfaces)
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      const x = window.innerWidth / 2;
+      const y = nav.getBoundingClientRect().height / 2;
+      let theme: "blend" | "light" | "dark" = "blend";
+
+      for (const el of document.elementsFromPoint(x, y)) {
+        if (nav.contains(el)) continue;
+        const band = el.closest<HTMLElement>("[data-nav-theme]");
+        if (band) {
+          theme = band.dataset.navTheme === "dark" ? "dark" : "light";
+          break;
+        }
+      }
+
+      setNavTheme(theme);
+    };
+
+    const schedule = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, []);
 
   // fade-to-dark transition when navigating to Contact
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -192,14 +236,22 @@ export default function Container(props: ContainerProps) {
 
       {/* Navigation */}
       <nav
+        ref={navRef}
         className={cn(
           "fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-5 md:px-12",
-          isOpen ? "bg-[#0a0a0a]" : "mix-blend-difference"
+          isOpen
+            ? "bg-[#0a0a0a]"
+            : navTheme === "blend"
+              ? "mix-blend-difference"
+              : ""
         )}
       >
         <Link
           href="/"
-          className="font-display font-bold tracking-tight text-white"
+          className={cn(
+            "font-display font-bold tracking-tight",
+            navOnLight ? "text-black" : "text-white"
+          )}
           style={{ fontSize: "clamp(1.5rem, 3vw, 2rem)" }}
         >
           J.
@@ -214,9 +266,11 @@ export default function Container(props: ContainerProps) {
                 onClick={(e) => handleNavClick(e, link.href)}
                 className={cn(
                   "text-sm font-medium uppercase tracking-[0.06em] transition-colors duration-200",
-                  link.href === "#contact"
-                    ? "text-accent"
-                    : "text-white hover:text-accent"
+                  navOnLight
+                    ? "text-black hover:text-black/60"
+                    : link.href === "#contact"
+                      ? "text-accent hover:text-accent/80"
+                      : "text-white hover:text-accent"
                 )}
               >
                 {link.text}
@@ -235,13 +289,15 @@ export default function Container(props: ContainerProps) {
         >
           <span
             className={cn(
-              "block h-[2px] w-7 bg-white transition-transform duration-300",
+              "block h-[2px] w-7 transition-transform duration-300",
+              isOpen || !navOnLight ? "bg-white" : "bg-black",
               isOpen && "translate-y-[4px] rotate-45"
             )}
           />
           <span
             className={cn(
-              "block h-[2px] w-7 bg-white transition-transform duration-300",
+              "block h-[2px] w-7 transition-transform duration-300",
+              isOpen || !navOnLight ? "bg-white" : "bg-black",
               isOpen && "-translate-y-[4px] -rotate-45"
             )}
           />
