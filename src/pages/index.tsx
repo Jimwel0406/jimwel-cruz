@@ -19,10 +19,26 @@ const projects = [
   {
     title: "Marrow",
     description:
-      "Homepage design study for a Manila streetwear label. Cinematic ink-and-ivory art direction with oversized editorial type, film-grain photography, and a seven-section single-page flow.",
+      "Homepage design study for a streetwear label. Cinematic ink-and-ivory art direction with oversized editorial type, film-grain photography, and a seven-section single-page flow.",
     video: "/assets/projects/marrow.mp4",
     href: "https://marrow-silk.vercel.app/",
     tags: ["Next.js", "Tailwind CSS", "TypeScript", "UI Design"],
+  },
+  {
+    title: "FoxHound Bee Co.",
+    description:
+      "Homepage design study for a fictional apiary. Warm cream-and-ember paper palette, a rationed orange accent, a hexagonal comb grid, and a hand-drawn icon sprite.",
+    video: "/assets/projects/foxhoundbee.mp4",
+    href: "https://foxhound-bee.vercel.app/",
+    tags: ["Next.js", "React", "CSS", "UI Design"],
+  },
+  {
+    title: "crumb.",
+    description:
+      "Homepage design study for a fictional cupcake shop. Cream-and-dough palette, hand-drawn ink outlines, scalloped section seams, and a real-time 3D hero.",
+    video: "/assets/projects/crumb.mp4",
+    href: "https://crumb-drab.vercel.app/",
+    tags: ["Next.js", "Three.js", "React Three Fiber", "UI Design"],
   },
   // Hidden for now — restore by removing the comment markers
   // {
