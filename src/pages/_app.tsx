@@ -1,5 +1,6 @@
 import { type AppType } from "next/dist/shared/lib/utils";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { ReactLenis } from "lenis/react";
 
 import "@/styles/globals.css";
 
@@ -28,10 +29,12 @@ const notoSerif = Noto_Serif({
 
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
-    <div className={`${spaceGrotesk.variable} ${inter.variable} ${notoSerif.variable} font-body`}>
-      <Component {...pageProps} />
-      <SpeedInsights />
-    </div>
+    <ReactLenis root options={{ autoRaf: true, lerp: 0.08 }}>
+      <div className={`${spaceGrotesk.variable} ${inter.variable} ${notoSerif.variable} font-body`}>
+        <Component {...pageProps} />
+        <SpeedInsights />
+      </div>
+    </ReactLenis>
   );
 };
 

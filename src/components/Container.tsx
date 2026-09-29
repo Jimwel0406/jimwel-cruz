@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { useState, useEffect, useRef } from "react";
 import Footer from "@/components/Footer";
 import { useRouter } from "next/router";
+import { useLenis } from "lenis/react";
 
 type ContainerProps = {
   children: React.ReactNode;
@@ -24,6 +25,7 @@ export default function Container(props: ContainerProps) {
   const [navTheme, setNavTheme] = useState<"blend" | "light" | "dark">("blend");
   const navRef = useRef<HTMLElement | null>(null);
   const transitionTimers = useRef<number[]>([]);
+  const lenis = useLenis();
   const navOnLight = navTheme === "light" && !isOpen;
 
   const { children, ...customMeta } = props;
@@ -119,7 +121,8 @@ export default function Container(props: ContainerProps) {
 
     const scrollTimer = window.setTimeout(() => {
       const top = target.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top, behavior: "auto" });
+      if (lenis) lenis.scrollTo(top, { immediate: true, force: true });
+      else window.scrollTo({ top, behavior: "auto" });
       history.replaceState(null, "", href);
       root.style.scrollBehavior = "";
 

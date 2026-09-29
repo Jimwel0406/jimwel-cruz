@@ -166,8 +166,10 @@ body::after {
   display: inline-block;
   overflow: hidden;
   vertical-align: bottom;
-  height: 1.15em;
-  line-height: 1.15;
+  height: 1.3em;
+  line-height: 1.3;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 0.15em);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 0.15em);
 }
 
 .word-cycle-inner {
@@ -178,8 +180,8 @@ body::after {
 
 .word-cycle-item {
   flex: 0 0 auto;
-  height: 1.15em;
-  line-height: 1.15;
+  height: 1.3em;
+  line-height: 1.3;
 }
 
 /* outlined display type — thinner stroke on mobile so it stays a hairline */
@@ -195,9 +197,28 @@ body::after {
 
 @keyframes word-scroll {
   0%, 15%   { transform: translateY(0); }
-  20%, 35%  { transform: translateY(-1.15em); }
-  40%, 55%  { transform: translateY(-2.3em); }
-  60%, 75%  { transform: translateY(-3.45em); }
-  80%, 95%  { transform: translateY(-4.6em); }
+  20%, 35%  { transform: translateY(-1.3em); }
+  40%, 55%  { transform: translateY(-2.6em); }
+  60%, 75%  { transform: translateY(-3.9em); }
+  80%, 95%  { transform: translateY(-5.2em); }
   100%      { transform: translateY(0); }
+}
+
+/* Lenis — inertial glide instead of native jumps.
+   Keeps `html { scroll-behavior: smooth }` as the no-JS / reduced-motion fallback. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
