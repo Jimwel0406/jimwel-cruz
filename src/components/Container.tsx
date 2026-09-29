@@ -23,6 +23,7 @@ export default function Container(props: ContainerProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [navTheme, setNavTheme] = useState<"blend" | "light" | "dark">("blend");
   const navRef = useRef<HTMLElement | null>(null);
+  const transitionTimers = useRef<number[]>([]);
   const navOnLight = navTheme === "light" && !isOpen;
 
   const { children, ...customMeta } = props;
@@ -91,9 +92,14 @@ export default function Container(props: ContainerProps) {
     };
   }, []);
 
-  // fade-to-dark transition when navigating to Contact
+  // drop pending transition timers if we unmount mid-fade
+  useEffect(() => {
+    const timers = transitionTimers.current;
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
+  // fade-to-dark transition shared by every section link
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href !== "#contact") return;
     e.preventDefault();
     setIsOpen(false);
 
@@ -101,24 +107,29 @@ export default function Container(props: ContainerProps) {
     const target = document.querySelector(href);
     if (!overlay || !target) return;
 
+    // cancel any fade still in flight so only the latest click lands
+    transitionTimers.current.forEach(clearTimeout);
+    transitionTimers.current = [];
+
     const root = document.documentElement;
-    const prevScrollBehavior = root.style.scrollBehavior;
     root.style.scrollBehavior = "auto";
 
     overlay.style.opacity = "1";
     root.classList.add("is-page-fading");
 
-    window.setTimeout(() => {
+    const scrollTimer = window.setTimeout(() => {
       const top = target.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({ top, behavior: "auto" });
-      history.replaceState(null, "", "#contact");
-      root.style.scrollBehavior = prevScrollBehavior;
+      history.replaceState(null, "", href);
+      root.style.scrollBehavior = "";
 
-      window.setTimeout(() => {
+      const fadeTimer = window.setTimeout(() => {
         overlay.style.opacity = "0";
         root.classList.remove("is-page-fading");
       }, 80);
+      transitionTimers.current.push(fadeTimer);
     }, 700);
+    transitionTimers.current.push(scrollTimer);
   };
 
   return (
@@ -222,7 +233,7 @@ export default function Container(props: ContainerProps) {
         />
       </Head>
 
-      {/* Page transition overlay (Contact nav) */}
+      {/* Page transition overlay (section nav) */}
       <div
         id="page-transition"
         aria-hidden="true"
@@ -268,9 +279,7 @@ export default function Container(props: ContainerProps) {
                   "text-sm font-medium uppercase tracking-[0.06em] transition-colors duration-200",
                   navOnLight
                     ? "text-black hover:text-black/60"
-                    : link.href === "#contact"
-                      ? "text-accent hover:text-accent/80"
-                      : "text-white hover:text-accent"
+                    : "text-white hover:text-accent"
                 )}
               >
                 {link.text}
