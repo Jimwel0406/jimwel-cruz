@@ -1,4 +1,5 @@
 import Container from "@/components/Container";
+import MeteorLayer from "@/components/MeteorLayer";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
@@ -356,7 +357,7 @@ export default function Home() {
           {/* CSS Cloud haze */}
           <div className="cloud-haze absolute inset-0 z-0" aria-hidden="true" />
 
-          {/* Canvas — Stars, Meteors, Trails, Glow, Particles */}
+          {/* Canvas — Stars, Trails, Glow, Particles */}
           <canvas
             ref={(canvas) => {
               if (!canvas) return;
@@ -392,18 +393,6 @@ export default function Home() {
                   alpha: Math.random() * 0.15 + 0.03,
                 });
               }
-
-              // --- Meteors ---
-              const meteors: {
-                x: number;
-                y: number;
-                speed: number;
-                angle: number;
-                opacity: number;
-                life: number;
-                maxLife: number;
-                trail: { x: number; y: number }[];
-              }[] = [];
 
               // --- Fog wisps — organic multi-blob clouds ---
               const fogWisps: {
@@ -444,27 +433,6 @@ export default function Home() {
                 });
               }
 
-              let nextSpawnAt = 60 + Math.random() * 120;
-              const spawnMeteor = () => {
-                const angle = (Math.PI / 180) * (25 + Math.random() * 20);
-                const maxLife = 80 + Math.random() * 60;
-                meteors.push({
-                  x: Math.random() * w * 0.7 + w * 0.1,
-                  y: -10,
-                  speed: 8 + Math.random() * 6,
-                  angle,
-                  opacity: 0.8 + Math.random() * 0.2,
-                  life: 0,
-                  maxLife,
-                  trail: [],
-                });
-                // random delay: sometimes quick burst, sometimes long quiet pause
-                const roll = Math.random();
-                if (roll < 0.15) nextSpawnAt = time + 30 + Math.random() * 60;   // quick double
-                else if (roll < 0.5) nextSpawnAt = time + 120 + Math.random() * 180; // normal
-                else nextSpawnAt = time + 360 + Math.random() * 540;               // long pause
-              };
-
               let time = 0;
 
               const draw = () => {
@@ -493,63 +461,6 @@ export default function Home() {
                   ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
                   ctx.fillStyle = `rgba(200,255,0,${p.alpha})`;
                   ctx.fill();
-                }
-
-                // Spawn meteors
-                if (time > nextSpawnAt && meteors.length < 5) {
-                  spawnMeteor();
-                }
-
-                // Draw meteors
-                for (let i = meteors.length - 1; i >= 0; i--) {
-                  const m = meteors[i];
-                  if (!m) continue;
-                  m.x += Math.cos(m.angle) * m.speed;
-                  m.y += Math.sin(m.angle) * m.speed;
-                  m.life++;
-
-                  const lifeRatio = m.life / m.maxLife;
-                  const fade = lifeRatio < 0.1 ? lifeRatio / 0.1 : lifeRatio > 0.8 ? (1 - lifeRatio) / 0.2 : 1;
-                  const currentOpacity = m.opacity * fade;
-
-                  m.trail.push({ x: m.x, y: m.y });
-                  if (m.trail.length > 40) m.trail.shift();
-
-                  // Trail
-                  for (let t = 0; t < m.trail.length; t++) {
-                    const p = m.trail[t];
-                    if (!p) continue;
-                    const progress = t / m.trail.length;
-                    const trailAlpha = progress * currentOpacity * 0.5;
-                    const size = progress * 2;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(200,255,0,${trailAlpha})`;
-                    ctx.fill();
-                  }
-
-                  // Glow — pulsing scale in/out
-                  const pulse = Math.sin(m.life * 0.15) * 0.35 + 1;
-                  const glowR = 14 * pulse;
-                  const grd = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, glowR);
-                  grd.addColorStop(0, `rgba(255,255,255,${currentOpacity})`);
-                  grd.addColorStop(0.3, `rgba(200,255,0,${currentOpacity * 0.5})`);
-                  grd.addColorStop(1, "rgba(200,255,0,0)");
-                  ctx.beginPath();
-                  ctx.arc(m.x, m.y, glowR, 0, Math.PI * 2);
-                  ctx.fillStyle = grd;
-                  ctx.fill();
-
-                  // Head — pulsing scale in/out
-                  const headR = 2 * pulse;
-                  ctx.beginPath();
-                  ctx.arc(m.x, m.y, headR, 0, Math.PI * 2);
-                  ctx.fillStyle = `rgba(255,255,255,${currentOpacity})`;
-                  ctx.fill();
-
-                  if (m.life > m.maxLife || m.x > w + 100 || m.y > h + 100) {
-                    meteors.splice(i, 1);
-                  }
                 }
 
                 // Draw fog wisps — overlapping organic blobs
@@ -599,6 +510,9 @@ export default function Home() {
             }}
             className="pointer-events-none absolute inset-0 z-[1] h-full w-full"
           />
+
+          {/* WebGL — 3D shooting stars */}
+          <MeteorLayer />
 
           {/* Forest silhouette */}
           <div className="forest-silhouette absolute bottom-0 left-0 right-0 z-[2]" aria-hidden="true">
