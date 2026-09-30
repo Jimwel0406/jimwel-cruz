@@ -498,6 +498,7 @@ export default function Home() {
             <div className="container mx-auto max-w-6xl px-6 pb-16 pt-20 md:px-12 md:pb-24 md:pt-24">
               <h2
                 data-reveal
+                data-reveal-now
                 className="max-w-[15ch] font-display text-[clamp(2.75rem,8vw,6.5rem)] font-medium leading-[0.95] tracking-[-0.04em]"
               >
                 I&apos;m a full stack web developer.
@@ -505,6 +506,7 @@ export default function Home() {
 
               <div
                 data-reveal
+                data-reveal-now
                 className="mt-14 border-t border-black/30 pt-8"
               >
                 <p className="font-display text-2xl font-medium leading-[1.15] tracking-[-0.02em] md:text-3xl">

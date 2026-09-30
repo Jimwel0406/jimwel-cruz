@@ -98,6 +98,15 @@
   transform: translateY(0);
 }
 
+/* intro copy is shown without waiting for the scroll trigger on mobile */
+@media (max-width: 767px) {
+  [data-reveal][data-reveal-now] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
