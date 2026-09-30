@@ -122,8 +122,8 @@ const skillGroups = [
   {
     title: "Frontend",
     items: [
-      "HTML / Semantic Markup",
-      "CSS / Sass / Tailwind",
+      "HTML",
+      "CSS / Tailwind",
       "JavaScript / TypeScript",
       "React / Next.js",
     ],
@@ -131,7 +131,7 @@ const skillGroups = [
   {
     title: "Backend",
     items: [
-      "Node.js / Express",
+      "Node.js",
       "PHP",
       "Supabase",
       "REST APIs",
@@ -141,7 +141,7 @@ const skillGroups = [
     ],
   },
   {
-    title: "Tools & DevOps",
+    title: "Tools",
     items: [
       "Git / GitHub",
       "Vercel",
