@@ -50,6 +50,30 @@ From generating boilerplate to optimizing performance, integrating AI into every
 
 ## Selected Work
 
+### Marrow — Streetwear Label Design Study
+
+https://marrow-silk.vercel.app/
+
+Homepage design study for a streetwear label. Cinematic ink-and-ivory art direction with oversized editorial type, film-grain photography, and a seven-section single-page flow.
+
+### FoxHound Bee — Apiary Design Study
+
+https://foxhound-bee.vercel.app/
+
+Homepage design study for a fictional apiary. Warm cream-and-ember paper palette, a rationed orange accent, a hexagonal comb grid, and a hand-drawn icon sprite.
+
+### crumb. — Cupcake Shop Design Study
+
+https://crumb-drab.vercel.app/
+
+Homepage design study for a fictional cupcake shop. Cream-and-dough palette, hand-drawn ink outlines, scalloped section seams, and a real-time 3D hero.
+
+### Vellora — Multi-Vendor Marketplace
+
+https://vellora-seven.vercel.app/
+
+Multi-vendor marketplace for thoughtfully made products. Full-stack build with Next.js, Stripe, real-time notifications, and role-based dashboards.
+
 ### ModernHaven — E-commerce Store for Modern Furniture
 
 https://modern-haven-nine.vercel.app/
@@ -62,24 +86,12 @@ https://contactflow-crm.vercel.app/
 
 A CRM platform for managing customer interactions, showcasing data modeling, list and detail views, and interaction tracking in a full-stack application.
 
-### Whack-A-Mole — Classic Arcade Game
-
-A classic arcade-style whack-a-mole game built as a personal project.
-
-### Calculator — Modern Calculator App
-
-A modern, responsive calculator application built as a personal project.
-
-### Block Puzzle — Relaxing Puzzle Game
-
-A relaxing block puzzle game built as a personal project.
-
 ## Technology Stack
 
-- Frontend: React, Next.js, TypeScript, Tailwind CSS
-- Backend: Node.js, PHP, MongoDB
-- E-commerce: Shopify
-- Tools: Git, Vercel
+- Frontend: HTML, CSS / Tailwind, JavaScript / TypeScript, React / Next.js
+- Backend: Node.js, PHP, Supabase, REST APIs, Shopify / Liquid, Klaviyo, External App Integration
+- Tools: Git / GitHub, Vercel, Performance Optimization, Responsive Design
+- SEO: SEO / AEO / GEO, On-Page SEO, Structured Data, Core Web Vitals, Google Search Console, Ahrefs Webmaster Tools
 
 ## FAQ
 

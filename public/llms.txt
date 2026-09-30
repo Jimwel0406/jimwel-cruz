@@ -8,7 +8,7 @@
 
 ## Services
 
-- Full-Stack Development: [Building complete, production-ready web applications](https://jimwel-cruz.vercel.app/#services) from database to user interface.
+- Full-Stack Development: [Building complete, production-ready web applications](https://jimwel-cruz.vercel.app/#skills) from database to user interface.
 - E-commerce Development: Creating Shopify and custom online stores that convert visitors into customers.
 - UI Implementation: Turning designs into pixel-perfect, responsive interfaces using modern frameworks.
 - Performance Optimization: Improving load times and Lighthouse scores for a faster, smoother experience.
@@ -23,11 +23,12 @@
 
 ## Selected Work
 
+- [Marrow](https://marrow-silk.vercel.app/) — Homepage design study for a streetwear label.
+- [FoxHound Bee](https://foxhound-bee.vercel.app/) — Homepage design study for a fictional apiary.
+- [crumb.](https://crumb-drab.vercel.app/) — Homepage design study for a fictional cupcake shop.
+- [Vellora](https://vellora-seven.vercel.app/) — Multi-vendor marketplace for thoughtfully made products.
 - [ModernHaven](https://modern-haven-nine.vercel.app/) — E-commerce store for modern furniture.
 - [ContactFlow](https://contactflow-crm.vercel.app/) — CRM platform for managing customer interactions.
-- Whack-A-Mole: Classic arcade-style whack-a-mole game.
-- Calculator: Modern and responsive calculator app.
-- Block Puzzle: Relaxing block puzzle game.
 
 ## FAQ
 
