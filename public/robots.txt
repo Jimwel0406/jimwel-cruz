@@ -1,42 +1,44 @@
 # *
 User-agent: *
 Allow: /
+Disallow: /api/
 Disallow: /_next/
 
-# GPTBot
+# AI crawlers
 User-agent: GPTBot
 Allow: /
 
-# ClaudeBot
-User-agent: ClaudeBot
-Allow: /
-
-# PerplexityBot
-User-agent: PerplexityBot
-Allow: /
-
-# Google-Extended
-User-agent: Google-Extended
-Allow: /
-
-# OAI-SearchBot
 User-agent: OAI-SearchBot
 Allow: /
 
-# ChatGPT-User
 User-agent: ChatGPT-User
 Allow: /
 
-# CCBot
-User-agent: CCBot
+User-agent: ClaudeBot
 Allow: /
 
-# Applebot-Extended
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
 User-agent: Applebot-Extended
 Allow: /
 
-# cohere-ai
+User-agent: CCBot
+Allow: /
+
 User-agent: cohere-ai
+Allow: /
+
+User-agent: meta-externalagent
 Allow: /
 
 # Host

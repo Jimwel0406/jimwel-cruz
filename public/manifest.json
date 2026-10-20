@@ -1,13 +1,21 @@
 {
+    "id": "/",
+    "lang": "en",
+    "dir": "ltr",
+    "name": "Jimwel Cruz",
+    "short_name": "Jimwel",
+    "description": "Full-stack developer in the Philippines building fast, accessible web apps and e-commerce stores.",
+    "categories": [
+        "portfolio",
+        "developer",
+        "business"
+    ],
     "theme_color": "#0a0a0a",
     "background_color": "#0a0a0a",
     "display": "standalone",
     "orientation": "portrait",
     "scope": "/",
     "start_url": "/",
-    "name": "Jimwel Cruz",
-    "short_name": "Jimwel",
-    "description": "Full-stack developer based in the Philippines.",
     "icons": [
         {
             "src": "/icon-192x192.png",
@@ -33,6 +41,5 @@
             "type": "image/png",
             "purpose": "maskable any"
         }
-    ],
-    "splash_pages": null
+    ]
 }

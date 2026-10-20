@@ -21,6 +21,7 @@ import {
   Wrench,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { SITE } from "@/lib/seo";
 
 const projects = [
   {
@@ -353,24 +354,36 @@ export default function Home() {
               "@context": "https://schema.org",
               "@graph": [
                 {
-                  "@type": "BreadcrumbList",
-                  itemListElement: [
-                    {
-                      "@type": "ListItem",
-                      position: 1,
-                      name: "Home",
-                      item: "https://jimwel-cruz.vercel.app/",
-                    },
-                  ],
-                },
-                {
                   "@type": "FAQPage",
+                  "@id": `${SITE.url}/#faq`,
+                  url: `${SITE.url}/#faq`,
+                  inLanguage: "en",
                   mainEntity: faqs.map((faq) => ({
                     "@type": "Question",
                     name: faq.question,
                     acceptedAnswer: {
                       "@type": "Answer",
                       text: faq.answer,
+                    },
+                  })),
+                },
+                {
+                  "@type": "ItemList",
+                  "@id": `${SITE.url}/#work`,
+                  name: "Selected work",
+                  numberOfItems: projects.length,
+                  itemListOrder: "https://schema.org/ItemListOrderAscending",
+                  itemListElement: projects.map((project, index) => ({
+                    "@type": "ListItem",
+                    position: index + 1,
+                    item: {
+                      "@type": "CreativeWork",
+                      name: project.title,
+                      description: project.description,
+                      url: project.href,
+                      keywords: project.tags.join(", "),
+                      creator: { "@id": `${SITE.url}/#person` },
+                      inLanguage: "en",
                     },
                   })),
                 },

@@ -6,8 +6,12 @@
   <link rel="self" href="https://jimwel-cruz.vercel.app/feed.xml"/>
   <updated>2026-09-30T00:00:00Z</updated>
   <id>https://jimwel-cruz.vercel.app/</id>
+  <icon>https://jimwel-cruz.vercel.app/icon-512x512.png</icon>
+  <logo>https://jimwel-cruz.vercel.app/icon-512x512.png</logo>
+  <rights>© 2026 Jimwel Cruz</rights>
   <author>
     <name>Jimwel Cruz</name>
+    <uri>https://jimwel-cruz.vercel.app/</uri>
     <email>jimwelscruz0406@gmail.com</email>
   </author>
   <entry>

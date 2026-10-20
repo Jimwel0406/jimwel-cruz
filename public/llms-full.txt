@@ -4,15 +4,22 @@
 
 ## Profile
 
-Jimwel Cruz is a full-stack developer based in the Philippines. He has been building production web applications since 2023, working across the full stack from database design and API development to polished, responsive user interfaces. He helps clients take products from ideation and wireframing through prototyping to final delivery.
+Jimwel Cruz is a full-stack web developer based in the Philippines. He has been building production web applications since 2023, working across the full stack — database design and API development through polished, responsive user interfaces.
 
 His focus is on performant, user-friendly digital experiences: fast load times, accessible markup, clean interfaces, and conversion-focused e-commerce flows. He is available for freelance work and open to discussing new opportunities.
+
+## Key Pages
+
+- About: https://jimwel-cruz.vercel.app/#about — background, work history, and stack.
+- Work: https://jimwel-cruz.vercel.app/#work — six selected builds.
+- FAQ: https://jimwel-cruz.vercel.app/#faq — services, availability, and experience.
+- Contact: https://jimwel-cruz.vercel.app/#contact — project inquiry form.
 
 ## Services
 
 ### Full-Stack Development
 
-Building complete, production-ready web applications from database to user interface. This includes designing database schemas, building RESTful APIs, implementing authentication and authorization, and delivering responsive front-ends with React and Next.js.
+Building complete, production-ready web applications from database to interface. This includes designing database schemas, building RESTful APIs, implementing authentication and authorization, and delivering responsive front ends with React and Next.js.
 
 ### E-commerce Development
 
@@ -38,15 +45,15 @@ Designing websites that look and perform equally well on all devices and screen 
 
 ### AI-Assisted Development
 
-Using AI coding agents and LLM-powered tools to accelerate development — from scaffolding and debugging to code review and architecture decisions. AI doesn't replace judgment; it amplifies it.
+Using AI coding agents and LLM-powered tools to accelerate development — from scaffolding and debugging to code review and architecture decisions. AI does not replace judgment; it amplifies it.
 
 ### Vibe Coding
 
-Rapidly prototyping ideas by iterating with AI in real-time. Describing what you want, refining the output, and shipping faster — turning concepts into working code through natural conversation.
+Rapidly prototyping ideas by iterating with AI in real time. Describing what you want, refining the output, and shipping faster — turning concepts into working code through natural conversation.
 
 ### AI-Augmented Workflow
 
-From generating boilerplate to optimizing performance, integrating AI into every stage of the development lifecycle so you can focus on the creative and strategic parts that matter most.
+From generating boilerplate to optimizing performance, integrating AI into every stage of the development lifecycle so the creative and strategic parts get the attention they need.
 
 ## Selected Work
 
@@ -88,27 +95,35 @@ A CRM platform for managing customer interactions, showcasing data modeling, lis
 
 ## Technology Stack
 
-- Frontend: HTML, CSS / Tailwind, JavaScript / TypeScript, React / Next.js
-- Backend: Node.js, PHP, Supabase, REST APIs, Shopify / Liquid, Klaviyo, External App Integration
-- Tools: Git / GitHub, Vercel, Performance Optimization, Responsive Design
-- SEO: SEO / AEO / GEO, On-Page SEO, Structured Data, Core Web Vitals, Google Search Console, Ahrefs Webmaster Tools
+- Frontend: HTML, CSS / Tailwind CSS, JavaScript / TypeScript, React / Next.js
+- Backend: Node.js, PHP, Supabase, REST APIs, Shopify / Liquid, Klaviyo, external app integration
+- Tools: Git / GitHub, Vercel, performance optimization, responsive design
+- Search: SEO / AEO / GEO, on-page SEO, structured data, Core Web Vitals, Google Search Console, Ahrefs Webmaster Tools
 
 ## FAQ
 
-### What kind of work does Jimwel do?
+### What kind of work does Jimwel Cruz do?
 
-Full-stack development, e-commerce development, UI implementation, performance optimization, accessibility audits, and responsive design — from React and Next.js front-ends to Node.js, PHP, and Shopify back-ends.
+Full-stack development, e-commerce development, UI implementation, performance optimization, accessibility audits, and responsive design — from React and Next.js front ends to Node.js, PHP, and Shopify back ends.
 
-### Is Jimwel free for freelance work?
+### Is Jimwel Cruz available for freelance work?
 
-Yes. Jimwel is currently available for freelance work and open to discussing new opportunities. The fastest way to get a reply is an email to jimwelscruz0406@gmail.com.
+Yes. Jimwel is currently available for freelance work and open to discussing new opportunities.
 
-### How long has Jimwel been at this?
+### How long has Jimwel Cruz been a developer?
 
-Over three years as a full-stack developer, delivering multiple products from ideation and wireframing through prototyping to final delivery.
+Over three years as a full-stack developer, building production web applications since 2023.
 
 ## Contact
 
 - Email: [jimwelscruz0406@gmail.com](mailto:jimwelscruz0406@gmail.com)
 - GitHub: [github.com/Jimwel0406](https://github.com/Jimwel0406)
 - Portfolio: [jimwel-cruz.vercel.app](https://jimwel-cruz.vercel.app/)
+
+## Machine-readable
+
+- Sitemap: https://jimwel-cruz.vercel.app/sitemap.xml
+- RSS Feed: https://jimwel-cruz.vercel.app/feed.xml
+- AI Summary: https://jimwel-cruz.vercel.app/ai/summary.json
+- AI FAQ: https://jimwel-cruz.vercel.app/ai/faq.json
+- AI Services: https://jimwel-cruz.vercel.app/ai/service.json

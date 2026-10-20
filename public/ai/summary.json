@@ -1,23 +1,57 @@
 {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": "https://jimwel-cruz.vercel.app/#person",
   "name": "Jimwel Cruz",
-  "url": "https://jimwel-cruz.vercel.app",
-  "description": "Full-stack developer based in the Philippines, building performant, user-friendly digital experiences with React, Next.js, Node.js, PHP, and Shopify since 2023.",
-  "summary": "Jimwel Cruz is a full-stack developer based in the Philippines. Since 2023 he has built e-commerce stores, CRM platforms, and interactive web apps with React, Next.js, Node.js, PHP, and Shopify, taking products from ideation and wireframing through prototyping to final delivery. He also leverages AI-assisted development and vibe coding to accelerate his workflow.",
-  "services": [
-    "Full-Stack Development",
-    "E-commerce Development",
-    "UI Implementation",
-    "Performance Optimization",
-    "Accessibility Audits",
-    "Responsive Design"
+  "givenName": "Jimwel",
+  "familyName": "Cruz",
+  "url": "https://jimwel-cruz.vercel.app/",
+  "image": "https://jimwel-cruz.vercel.app/assets/me.jpg",
+  "jobTitle": "Full-Stack Web Developer",
+  "description": "Full-stack developer based in the Philippines, building production web applications and e-commerce stores with React, Next.js, Node.js, PHP, and Shopify since 2023.",
+  "email": "mailto:jimwelscruz0406@gmail.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "PH"
+  },
+  "nationality": {
+    "@type": "Country",
+    "name": "Philippines"
+  },
+  "sameAs": [
+    "https://github.com/Jimwel0406",
+    "https://www.facebook.com/jimwel.saraminez.cruz"
   ],
-  "aiTools": [
-    "AI-Assisted Development",
-    "Vibe Coding",
-    "AI-Augmented Workflow"
+  "knowsAbout": [
+    "Full-stack development",
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Node.js",
+    "PHP",
+    "Shopify",
+    "Tailwind CSS",
+    "Supabase",
+    "Prisma",
+    "Stripe",
+    "E-commerce development",
+    "Web performance",
+    "Web accessibility",
+    "Technical SEO",
+    "Answer Engine Optimization",
+    "Generative Engine Optimization"
   ],
-  "contact": {
-    "email": "jimwelscruz0406@gmail.com",
-    "github": "https://github.com/Jimwel0406"
+  "hasOccupation": {
+    "@type": "Occupation",
+    "name": "Full-Stack Web Developer",
+    "occupationLocation": {
+      "@type": "Country",
+      "name": "Philippines"
+    },
+    "skills": "React, Next.js, TypeScript, Node.js, PHP, Shopify, Tailwind CSS, Supabase, Prisma, Stripe"
+  },
+  "seeks": {
+    "@type": "Demand",
+    "name": "Freelance projects and full-time web development roles"
   }
 }

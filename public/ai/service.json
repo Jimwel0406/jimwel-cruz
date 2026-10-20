@@ -1,39 +1,78 @@
 {
-  "name": "Jimwel Cruz",
-  "url": "https://jimwel-cruz.vercel.app",
-  "provider": "Jimwel Cruz",
-  "capabilities": [
-    "Full-Stack Development",
-    "E-commerce Development",
-    "UI Implementation",
-    "Performance Optimization",
-    "Accessibility Audits",
-    "Responsive Design"
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "@id": "https://jimwel-cruz.vercel.app/#service",
+  "name": "Jimwel Cruz — Full-Stack Web Development",
+  "url": "https://jimwel-cruz.vercel.app/",
+  "description": "Full-stack web development, e-commerce builds, UI implementation, performance optimization, accessibility audits, and responsive design.",
+  "email": "mailto:jimwelscruz0406@gmail.com",
+  "provider": {
+    "@type": "Person",
+    "@id": "https://jimwel-cruz.vercel.app/#person",
+    "name": "Jimwel Cruz",
+    "url": "https://jimwel-cruz.vercel.app/"
+  },
+  "areaServed": {
+    "@type": "Place",
+    "name": "Worldwide"
+  },
+  "availableLanguage": "English",
+  "sameAs": [
+    "https://github.com/Jimwel0406",
+    "https://www.facebook.com/jimwel.saraminez.cruz"
   ],
-  "services": [
-    {
-      "name": "Full-Stack Development",
-      "description": "Building complete, production-ready web applications from database to user interface."
-    },
-    {
-      "name": "E-commerce Development",
-      "description": "Creating Shopify and custom online stores that convert visitors into customers."
-    },
-    {
-      "name": "UI Implementation",
-      "description": "Turning designs into pixel-perfect, responsive interfaces using modern frameworks."
-    },
-    {
-      "name": "Performance Optimization",
-      "description": "Improving load times and Lighthouse scores for a faster, smoother experience."
-    },
-    {
-      "name": "Accessibility Audits",
-      "description": "Reviewing and fixing usability so everyone can navigate and use your website."
-    },
-    {
-      "name": "Responsive Design",
-      "description": "Designing websites that look and perform equally well on all devices and screen sizes."
-    }
-  ]
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Web development services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Full-Stack Development",
+          "description": "Production-ready web applications from database to interface: schema design, APIs, authentication, and responsive React front ends."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "E-commerce Development",
+          "description": "Shopify and custom storefronts with product catalog architecture, cart and checkout flows, payment integration, and performance tuning."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "UI Implementation",
+          "description": "Pixel-accurate, responsive interfaces built from design files, with reusable component systems that hold up at every breakpoint."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Performance Optimization",
+          "description": "Core Web Vitals tuning through code splitting, image optimization, caching, and bundle analysis for faster load times."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Accessibility Audits",
+          "description": "WCAG-oriented reviews of keyboard navigation, screen-reader support, contrast, and focus management, with fixes implemented."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Responsive Design",
+          "description": "Mobile-first layouts that preserve content and interaction quality from 320px phones to 4K monitors."
+        }
+      }
+    ]
+  }
 }

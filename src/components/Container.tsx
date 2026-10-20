@@ -1,5 +1,6 @@
-import Head from "next/head";
 import Link from "next/link";
+import Seo from "@/components/Seo";
+import { SITE, siteGraph } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import { useState, useEffect, useRef } from "react";
 import Footer from "@/components/Footer";
@@ -27,17 +28,8 @@ export default function Container(props: ContainerProps) {
   const lenis = useLenis();
   const navOnLight = navTheme === "light" && !isOpen;
 
-  const { children, ...customMeta } = props;
+  const { children, title, description } = props;
   const router = useRouter();
-  const siteUrl = "https://jimwel-cruz.vercel.app";
-  const meta = {
-    title: "Jimwel Cruz — Web Developer",
-      description:
-      "Full-stack developer with 3 years of experience building performant, accessible websites with React, Next.js, and Node.js.",
-    image: `${siteUrl}/icon.jpg`,
-    type: "website",
-    ...customMeta,
-  };
 
   // close menu on route change
   useEffect(() => {
@@ -136,104 +128,11 @@ export default function Container(props: ContainerProps) {
 
   return (
     <>
-      <Head>
-        <title>{meta.title}</title>
-        <meta
-          name="google-site-verification"
-          content="1NOtgswhSvGsOmHvaKS5oIdgFU2gaz81xG8E3EBK0GM"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="robots" content="follow, index" />
-        <meta name="theme-color" content="#0a0a0a" />
-        <meta content={meta.description} name="description" />
-        <meta property="og:url" content={`https://jimwel-cruz.vercel.app${router.asPath}`} />
-        <link rel="canonical" href={`https://jimwel-cruz.vercel.app${router.asPath}`} />
-        <link rel="alternate" hrefLang="en" href={`https://jimwel-cruz.vercel.app${router.asPath}`} />
-        <link rel="alternate" hrefLang="x-default" href="https://jimwel-cruz.vercel.app" />
-        <meta property="og:type" content={meta.type} />
-        <meta property="og:site_name" content="Jimwel Cruz" />
-        <meta property="og:description" content={meta.description} />
-        <meta property="og:title" content={meta.title} />
-        <meta property="og:image" content={meta.image} />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content="Jimwel Cruz — Full-Stack Web Developer" />
-        <meta property="og:locale" content="en_US" />
-        <link
-          rel="icon"
-          href="/favicon-with-bg.ico"
-          media="(prefers-color-scheme: light)"
-        />
-        <link
-          rel="icon"
-          href="/favicon-without-bg.ico"
-          media="(prefers-color-scheme: dark)"
-        />
-        <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icon-192x192.png" />
-        <link
-          rel="alternate"
-          type="application/rss+xml"
-          title="Jimwel Cruz"
-          href={`${siteUrl}/feed.xml`}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@graph": [
-                {
-                  "@type": "WebSite",
-                  "@id": `${siteUrl}/#website`,
-                  name: meta.title,
-                  url: siteUrl,
-                  description: meta.description,
-                  inLanguage: "en",
-                  publisher: { "@id": `${siteUrl}/#organization` },
-                },
-                {
-                  "@type": "Organization",
-                  "@id": `${siteUrl}/#organization`,
-                  name: "Jimwel Cruz",
-                  url: siteUrl,
-                  logo: {
-                    "@type": "ImageObject",
-                    url: `${siteUrl}/assets/logo.webp`,
-                  },
-                  image: `${siteUrl}/assets/logo.webp`,
-                  description: meta.description,
-                  sameAs: [
-                    "https://github.com/Jimwel0406",
-                    "https://www.facebook.com/jimwel.saraminez.cruz",
-                  ],
-                  contactPoint: {
-                    "@type": "ContactPoint",
-                    email: "jimwelscruz0406@gmail.com",
-                    url: `${siteUrl}/#contact`,
-                    contactType: "sales",
-                    availableLanguage: "English",
-                  },
-                },
-                {
-                  "@type": "Person",
-                  "@id": `${siteUrl}/#person`,
-                  name: "Jimwel Cruz",
-                  url: siteUrl,
-                  jobTitle: "Full-Stack Web Developer",
-                  email: "mailto:jimwelscruz0406@gmail.com",
-                  nationality: "Philippines",
-                  sameAs: [
-                    "https://github.com/Jimwel0406",
-                    "https://www.facebook.com/jimwel.saraminez.cruz",
-                  ],
-                  worksFor: { "@id": `${siteUrl}/#organization` },
-                },
-              ],
-            }).replace(/</g, "\\u003c"),
-          }}
-        />
-      </Head>
+      <Seo
+        title={title ?? SITE.title}
+        description={description ?? SITE.description}
+        jsonLd={siteGraph}
+      />
 
       {/* Page transition overlay (section nav) */}
       <div
