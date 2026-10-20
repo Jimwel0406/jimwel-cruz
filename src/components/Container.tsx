@@ -16,7 +16,6 @@ type ContainerProps = {
 const navLinks = [
   { href: "#about", text: "About" },
   { href: "#work", text: "Work" },
-  { href: "#skills", text: "Skills" },
   { href: "#contact", text: "Contact" },
 ];
 

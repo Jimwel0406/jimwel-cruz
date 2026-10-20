@@ -13,8 +13,8 @@
     --popover: 0 0% 8%;
     --popover-foreground: 0 0% 94%;
 
-    --primary: 82 100% 50%;         /* #c8ff00 acid green */
-    --primary-foreground: 0 0% 4%;  /* dark text on accent */
+    --primary: 0 0% 94%;            /* #f0f0f0 off-white */
+    --primary-foreground: 0 0% 4%;  /* dark text on primary */
 
     --secondary: 0 0% 55%;          /* #8c8c8c muted */
     --secondary-foreground: 0 0% 94%;
@@ -22,18 +22,18 @@
     --muted: 0 0% 12%;              /* #1e1e1e */
     --muted-foreground: 0 0% 50%;   /* #808080 */
 
-    --accent: 82 100% 50%;
+    --accent: 0 0% 94%;
     --accent-foreground: 0 0% 4%;
 
-    /* softened lime for large surfaces — neon accent glares at full-bleed size */
-    --plane: 96 73% 68%;            /* #9fe870 softer lime plane */
+    /* muted charcoal for large surfaces — keeps full-bleed blocks quiet */
+    --plane: 0 0% 8%;               /* #141414 charcoal plane */
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 94%;
 
     --border: 0 0% 14%;
     --input: 0 0% 14%;
-    --ring: 82 100% 50%;
+    --ring: 0 0% 94%;
 
     --radius: 3px;
   }
@@ -170,47 +170,15 @@ body::after {
   line-height: 0;
 }
 
-/* word cycle */
-.word-cycle {
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: bottom;
-  height: 1.3em;
-  line-height: 1.3;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 0.15em);
-  mask-image: linear-gradient(to bottom, transparent 0, #000 0.15em);
-}
-
-.word-cycle-inner {
-  display: flex;
-  flex-direction: column;
-  animation: word-scroll 10s ease-in-out infinite;
-}
-
-.word-cycle-item {
-  flex: 0 0 auto;
-  height: 1.3em;
-  line-height: 1.3;
-}
-
 /* outlined display type — thinner stroke on mobile so it stays a hairline */
 .text-stroke {
-  -webkit-text-stroke: 1px #c8ff00;
+  -webkit-text-stroke: 1px #f0f0f0;
 }
 
 @media (min-width: 768px) {
   .text-stroke {
-    -webkit-text-stroke: 1.5px #c8ff00;
+    -webkit-text-stroke: 1.5px #f0f0f0;
   }
-}
-
-@keyframes word-scroll {
-  0%, 15%   { transform: translateY(0); }
-  20%, 35%  { transform: translateY(-1.3em); }
-  40%, 55%  { transform: translateY(-2.6em); }
-  60%, 75%  { transform: translateY(-3.9em); }
-  80%, 95%  { transform: translateY(-5.2em); }
-  100%      { transform: translateY(0); }
 }
 
 /* Lenis — inertial glide instead of native jumps.

@@ -156,10 +156,10 @@ export default function MeteorLayer() {
       const glowCtx = glowCanvas.getContext("2d");
       if (glowCtx) {
         const grd = glowCtx.createRadialGradient(64, 64, 0, 64, 64, 64);
-        grd.addColorStop(0, "rgba(232,255,148,1)");
-        grd.addColorStop(0.16, "rgba(214,255,64,0.82)");
-        grd.addColorStop(0.4, "rgba(176,240,32,0.32)");
-        grd.addColorStop(1, "rgba(150,220,16,0)");
+        grd.addColorStop(0, "rgba(255,255,255,1)");
+        grd.addColorStop(0.16, "rgba(226,238,255,0.82)");
+        grd.addColorStop(0.4, "rgba(186,204,236,0.32)");
+        grd.addColorStop(1, "rgba(150,172,214,0)");
         glowCtx.fillStyle = grd;
         glowCtx.fillRect(0, 0, 128, 128);
       }
@@ -167,7 +167,7 @@ export default function MeteorLayer() {
       glowTexture.colorSpace = THREE.SRGBColorSpace;
 
       const ribbonPlane = new THREE.PlaneGeometry(1, 1);
-      const accent = new THREE.Color(0xc8ff00);
+      const accent = new THREE.Color(0xf0f0f0);
       const makeRibbon = (opacity: number) =>
         new THREE.ShaderMaterial({
           vertexShader: VERTEX_SHADER,
@@ -205,8 +205,8 @@ export default function MeteorLayer() {
         fragmentShader: SKY_LIGHT_FRAGMENT,
         uniforms: {
           uAspect: { value: 1 },
-          uCoreColor: { value: new THREE.Color(0.62, 0.94, 0.4) },
-          uWideColor: { value: new THREE.Color(0.18, 0.5, 0.2) },
+          uCoreColor: { value: new THREE.Color(0.94, 0.95, 1) },
+          uWideColor: { value: new THREE.Color(0.34, 0.4, 0.54) },
           uL0: { value: lightSource[0] },
           uL1: { value: lightSource[1] },
           uL2: { value: lightSource[2] },
