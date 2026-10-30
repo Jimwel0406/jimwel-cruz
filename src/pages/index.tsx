@@ -432,7 +432,7 @@ export default function Home() {
               className="mt-6 max-w-[880px] text-[18px] font-medium leading-[30px] text-muted-foreground md:text-[24px] md:leading-[42px]"
             >
               A full stack web developer based in the Philippines — building fast, accessible
-              websites and web apps with React, Next.js and Node.js.
+              websites and web apps with Shopify, Next.js and Node.js.
             </p>
           </div>
 
