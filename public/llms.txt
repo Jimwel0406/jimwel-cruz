@@ -30,9 +30,9 @@
 
 ## Selected Work
 
-- [Marrow](https://marrow-silk.vercel.app/) — Homepage design study for a streetwear label, with cinematic ink-and-ivory art direction.
-- [FoxHound Bee](https://foxhound-bee.vercel.app/) — Homepage design study for a fictional apiary, with a cream-and-ember palette and hexagonal comb grid.
-- [crumb.](https://crumb-drab.vercel.app/) — Homepage design study for a fictional cupcake shop, with hand-drawn outlines and a real-time 3D hero.
+- [Marrow](https://marrow-silk.vercel.app/) — A streetwear label in ink and ivory, with oversized editorial type.
+- [FoxHound Bee](https://foxhound-bee.vercel.app/) — A honey brand in warm cream and ember, with a hexagonal comb grid.
+- [crumb.](https://crumb-drab.vercel.app/) — A cupcake shop in cream and dough, with hand-drawn outlines and a real-time 3D hero.
 - [Vellora](https://vellora-seven.vercel.app/) — Multi-vendor marketplace with Stripe, real-time notifications, and role-based dashboards.
 - [ModernHaven](https://modern-haven-nine.vercel.app/) — E-commerce store for modern furniture with Stripe payments and real-time inventory.
 - [ContactFlow](https://contactflow-crm.vercel.app/) — CRM platform for managing customer interactions, with role-based access and analytics.

@@ -27,7 +27,7 @@ const projects = [
   {
     title: "Marrow",
     description:
-      "Homepage design study for a streetwear label. Cinematic ink-and-ivory art direction with oversized editorial type, film-grain photography, and a seven-section single-page flow.",
+      "A streetwear label in ink and ivory. Oversized editorial type, film-grain photography, and a seven-section flow that reads like a lookbook.",
     video: "/assets/projects/marrow.mp4",
     href: "https://marrow-silk.vercel.app/",
     tags: ["Next.js", "Tailwind CSS", "TypeScript", "UI Design"],
@@ -35,7 +35,7 @@ const projects = [
   {
     title: "FoxHound Bee",
     description:
-      "Homepage design study for a fictional apiary. Warm cream-and-ember paper palette, a rationed orange accent, a hexagonal comb grid, and a hand-drawn icon sprite.",
+      "A honey brand in warm cream and ember. A hexagonal comb grid, hand-drawn icons, and a single orange accent used sparingly.",
     video: "/assets/projects/foxhoundbee.mp4",
     href: "https://foxhound-bee.vercel.app/",
     tags: ["Next.js", "React", "CSS", "UI Design"],
@@ -43,7 +43,7 @@ const projects = [
   {
     title: "crumb.",
     description:
-      "Homepage design study for a fictional cupcake shop. Cream-and-dough palette, hand-drawn ink outlines, scalloped section seams, and a real-time 3D hero.",
+      "A cupcake shop in cream and dough. Hand-drawn ink outlines, scalloped section seams, and a real-time 3D hero.",
     video: "/assets/projects/crumb.mp4",
     href: "https://crumb-drab.vercel.app/",
     tags: ["Next.js", "Three.js", "React Three Fiber", "UI Design"],
@@ -52,7 +52,7 @@ const projects = [
   // {
   //   title: "Burger Shop",
   //   description:
-  //     "Homepage design study for a fictional smash-burger restaurant. Dark high-contrast palette, condensed display type, torn-paper details, and full-bleed food photography.",
+  //     "A smash-burger restaurant in dark, high contrast. Condensed display type, torn-paper details, and full-bleed food photography.",
   //   video: "/assets/projects/burgershop.mp4",
   //   href: "https://burger-shop-xi.vercel.app/",
   //   tags: ["Next.js", "Tailwind CSS", "TypeScript", "UI Design"],

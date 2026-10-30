@@ -57,23 +57,23 @@ From generating boilerplate to optimizing performance, integrating AI into every
 
 ## Selected Work
 
-### Marrow — Streetwear Label Design Study
+### Marrow — Streetwear Label
 
 https://marrow-silk.vercel.app/
 
-Homepage design study for a streetwear label. Cinematic ink-and-ivory art direction with oversized editorial type, film-grain photography, and a seven-section single-page flow.
+A streetwear label in ink and ivory. Oversized editorial type, film-grain photography, and a seven-section flow that reads like a lookbook.
 
-### FoxHound Bee — Apiary Design Study
+### FoxHound Bee — Honey Brand
 
 https://foxhound-bee.vercel.app/
 
-Homepage design study for a fictional apiary. Warm cream-and-ember paper palette, a rationed orange accent, a hexagonal comb grid, and a hand-drawn icon sprite.
+A honey brand in warm cream and ember. A hexagonal comb grid, hand-drawn icons, and a single orange accent used sparingly.
 
-### crumb. — Cupcake Shop Design Study
+### crumb. — Cupcake Shop
 
 https://crumb-drab.vercel.app/
 
-Homepage design study for a fictional cupcake shop. Cream-and-dough palette, hand-drawn ink outlines, scalloped section seams, and a real-time 3D hero.
+A cupcake shop in cream and dough. Hand-drawn ink outlines, scalloped section seams, and a real-time 3D hero.
 
 ### Vellora — Multi-Vendor Marketplace
 
