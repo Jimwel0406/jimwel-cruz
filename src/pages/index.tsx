@@ -1,26 +1,18 @@
 import Container from "@/components/Container";
 import ContactSection from "@/components/ContactSection";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import {
-  ArrowLeft,
-  ArrowRight,
   ArrowUpRight,
-  Briefcase,
   Code2,
   Eye,
   Frame,
   Gauge,
-  GraduationCap,
   MonitorSmartphone,
-  Search,
-  Server,
   ShoppingCart,
-  Wrench,
 } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 import { SITE } from "@/lib/seo";
 
 const projects = [
@@ -140,6 +132,7 @@ const skillGroups = [
       "Supabase",
       "REST APIs",
       "Shopify / Liquid",
+      "ReCharge (Product Subscription)",
       "Klaviyo (Email Marketing)",
       "External App Integration",
     ],
@@ -152,6 +145,7 @@ const skillGroups = [
       "Performance Optimization",
       "Responsive Design",
       "AI Agent Tools (Claude, OpenCode)",
+      "Google Apps Script",
     ],
   },
   {
@@ -220,6 +214,8 @@ const getFaqs = (years: number) => [
     question: "Are you free for freelance work?",
     answer:
       "Yes. I'm currently available for freelance work and open to discussing new opportunities.",
+    // short enough to sit on one line on wide desktops
+    oneLine: true,
   },
   {
     question: "How long have you been at this?",
@@ -229,66 +225,30 @@ const getFaqs = (years: number) => [
 
 const START_YEAR = 2023;
 
-type ExperienceCard = {
-  icon: LucideIcon;
-  badge: string;
-  title: string;
-  items: string[];
-  date: string;
-};
-
-const skillGroupIcons: Record<string, LucideIcon> = {
-  Frontend: Code2,
-  Backend: Server,
-  Tools: Wrench,
-  SEO: Search,
-};
-
-const experience: ExperienceCard[] = [
+// Work timeline: the role and the diploma, shown on the ledger spine.
+const timeline = [
   {
-    icon: Briefcase,
+    when: "Sport Formula · 2023 — Present",
     badge: "Current",
     title: "Full Stack Web Developer",
     items: ["Frontend", "Backend", "Tools", "SEO"],
-    date: "Sport Formula · 2023 — Present",
   },
   {
-    icon: GraduationCap,
+    when: "",
     badge: "Diploma",
     title: "Diploma in Information Technology",
-    items: [],
-    date: "",
+    items: [] as string[],
   },
-  ...skillGroups.map((group) => ({
-    icon: skillGroupIcons[group.title] ?? Code2,
-    badge: `${group.items.length} skills`,
-    title: group.title,
-    items: group.items.map((item) =>
-      typeof item === "string" ? item : item.label
-    ),
-    date: "",
-  })),
 ];
+
+const skillLabel = (item: (typeof skillGroups)[number]["items"][number]) =>
+  typeof item === "string" ? item : item.label;
 
 export default function Home() {
   const yearsExperience = new Date().getFullYear() - START_YEAR;
   const faqs = getFaqs(yearsExperience);
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const railRef = useRef<HTMLDivElement>(null);
-
-  const scrollRail = (dir: number) => {
-    const el = railRef.current;
-    if (!el) return;
-    const firstCard = el.firstElementChild as HTMLElement | null;
-    const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
-    // Step one whole card so mandatory snapping doesn't drag it back.
-    const step = firstCard
-      ? firstCard.getBoundingClientRect().width + gap
-      : el.clientWidth * 0.42;
-    el.scrollBy({ left: dir * step, behavior: "smooth" });
-  };
-
   // scroll reveal
   useEffect(() => {
     const els = document.querySelectorAll("[data-reveal]");
@@ -399,16 +359,38 @@ export default function Home() {
         ============================================ */}
         <section
           id="home"
-          className="relative flex flex-col items-center justify-center bg-background px-4 py-[86px] md:px-12 md:py-[200px]"
+          className="relative flex flex-col justify-center bg-background px-6 pb-[96px] pt-[120px] md:px-12 md:pb-[140px] md:pt-[160px]"
         >
-          <div className="flex w-full max-w-[66.5rem] flex-col items-center text-center">
-            <div data-reveal className="mb-6 md:mb-11">
-              <div className="relative h-[180px] w-[180px] overflow-hidden rounded-full md:h-[240px] md:w-[240px]">
+          {/* Headline on the left, tall portrait on the right inside a hairline frame */}
+          <div className="mx-auto grid w-full max-w-[84rem] grid-cols-1 gap-14 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] md:items-center md:gap-20">
+            <div>
+              <h1
+                data-reveal
+                className="font-display text-[42px] font-medium leading-[1.1] tracking-[-0.03em] text-foreground md:text-[clamp(2.5rem,6.6vw,6rem)] md:leading-[1.04]"
+              >
+                I&apos;m Jimwel,
+                <br />
+                and I build
+                <br />
+                <span className="font-playfair italic">web applications.</span>
+              </h1>
+
+              <p
+                data-reveal
+                className="mt-8 max-w-[44ch] font-body text-[18px] leading-[1.6] text-foreground/80 md:text-[20px]"
+              >
+                A full stack web developer based in the Philippines — building fast, accessible
+                websites and web apps with Shopify, Next.js and Node.js.
+              </p>
+            </div>
+
+            <div data-reveal className="relative w-full md:max-w-[440px] md:justify-self-end">
+              <div className="relative z-[1] aspect-[3/4] overflow-hidden rounded-[4px] bg-card">
                 <Image
                   src="/assets/me.jpg"
                   alt="Jimwel Cruz"
                   fill
-                  sizes="(min-width: 768px) 360px, 270px"
+                  sizes="(min-width: 768px) 440px, 100vw"
                   quality={90}
                   priority
                   draggable={false}
@@ -416,167 +398,93 @@ export default function Home() {
                   className="select-none object-cover"
                 />
               </div>
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -bottom-6 -left-6 right-6 top-6 hidden rounded-[4px] border border-foreground/25 md:block"
+              />
             </div>
-
-            <h1
-              data-reveal
-              className="font-display text-[42px] font-medium leading-[54px] text-foreground md:text-[90px] md:leading-[104px]"
-            >
-              I&apos;m Jimwel, and I build{" "}
-              <br className="hidden md:inline" />
-              web applications.
-            </h1>
-
-            <p
-              data-reveal
-              className="mt-6 max-w-[880px] text-[18px] font-medium leading-[30px] text-muted-foreground md:text-[24px] md:leading-[42px]"
-            >
-              A full stack web developer based in the Philippines — building fast, accessible
-              websites and web apps with Shopify, Next.js and Node.js.
-            </p>
           </div>
-
-          {/* Scroll indicator */}
         </section>
 
         {/* ============================================
             ABOUT
         ============================================ */}
         <section id="about" className="relative overflow-hidden bg-white text-black">
-          {/* Experience — title + counters beside a card slider */}
+          {/* Experience — title and counters, then a ledger timeline and skill rows */}
           <div
             data-nav-theme="dark"
             className="relative overflow-hidden bg-background text-foreground"
           >
             <div className="container relative mx-auto max-w-6xl px-6 pb-[86px] pt-20 md:px-12 md:pb-[140px]">
-              <div className="grid grid-cols-1 gap-[30px] md:gap-[50px] xl:grid-cols-[minmax(350px,0.25fr)_1fr] xl:gap-[100px]">
-                {/* Left: heading, intro, counters */}
-                <div
-                  data-reveal
-                  className="flex flex-col justify-between gap-12"
-                >
-                  <div className="flex flex-col gap-5">
-                    <h2 className="font-display text-[36px] font-semibold leading-[1.3] tracking-[-0.02em] md:text-[56px]">
-                      Work experience
-                    </h2>
-                  </div>
+              <div
+                data-reveal
+                className="flex flex-col gap-10 md:flex-row md:items-end md:justify-between"
+              >
+                <h2 className="font-display text-[36px] font-semibold leading-[1.3] tracking-[-0.02em] md:text-[56px]">
+                  Work experience
+                </h2>
 
-                  <div className="flex flex-col gap-[15px] sm:flex-row sm:gap-10 xl:justify-between">
-                    <div>
-                      <h3 className="font-display text-[26px] font-semibold leading-[1.3] md:text-[30px] xl:text-[42px]">
-                        {yearsExperience.toString().padStart(2, "0")}
-                      </h3>
-                      <div className="font-body text-[16px] leading-[1.4] md:text-[18px]">
-                        Years experience
-                      </div>
+                <div className="flex shrink-0 gap-10 sm:gap-16">
+                  <div>
+                    <h3 className="font-display text-[30px] font-semibold leading-[1.3] md:text-[42px]">
+                      {yearsExperience.toString().padStart(2, "0")}
+                    </h3>
+                    <div className="font-body text-[16px] leading-[1.4] text-foreground/80 md:text-[18px]">
+                      Years experience
                     </div>
-                    <div>
-                      <h3 className="font-display text-[26px] font-semibold leading-[1.3] md:text-[30px] xl:text-[42px]">
-                        {projects.length.toString().padStart(2, "0")}
-                      </h3>
-                      <div className="font-body text-[16px] leading-[1.4] md:text-[18px]">
-                        Projects shipped
-                      </div>
+                  </div>
+                  <div>
+                    <h3 className="font-display text-[30px] font-semibold leading-[1.3] md:text-[42px]">
+                      {projects.length.toString().padStart(2, "0")}
+                    </h3>
+                    <div className="font-body text-[16px] leading-[1.4] text-foreground/80 md:text-[18px]">
+                      Projects shipped
                     </div>
                   </div>
                 </div>
+              </div>
 
-                {/* Right: slider */}
-                <div data-reveal className="relative min-w-0">
+              {/* Timeline: a hairline spine draws down as the entries arrive */}
+              <ol data-reveal className="ledger-spine mt-20 md:mt-28">
+                {timeline.map((entry) => (
+                  <li key={entry.title} data-reveal className="ledger-entry relative pb-16 last:pb-0 md:pb-20">
+                    {entry.when ? (
+                      <p className="font-body text-[16px] leading-[1.4] text-foreground/80">
+                        {entry.when}
+                      </p>
+                    ) : null}
+                    <span className="mt-3 inline-block rounded-[10px] border border-foreground/25 px-[10px] py-[4px] font-body text-[16px] leading-[1.2] text-foreground/80">
+                      {entry.badge}
+                    </span>
+                    <h4 className="mt-4 font-display text-[28px] font-semibold leading-[1.2] tracking-[-0.01em] md:text-[44px]">
+                      {entry.title}
+                    </h4>
+                    {entry.items.length > 0 ? (
+                      <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-body text-[18px] leading-[1.4]">
+                        {entry.items.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </li>
+                ))}
+              </ol>
+
+              {/* Skill groups as a ruled table */}
+              <div data-reveal className="mt-14 border-t border-foreground/25 md:mt-20">
+                {skillGroups.map((group) => (
                   <div
-                    ref={railRef}
-                    className="flex snap-x snap-mandatory items-stretch gap-[30px] overflow-x-auto pb-1 xl:gap-[50px] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                    key={group.title}
+                    className="grid gap-2 border-b border-foreground/25 py-6 md:grid-cols-[240px_1fr] md:gap-8"
                   >
-                    {experience.map((card) => {
-                      const Icon = card.icon;
-                      return (
-                        <article
-                          key={card.title}
-                          className="flex w-[85%] shrink-0 snap-start flex-col bg-card p-[15px] text-foreground sm:w-[360px] md:w-[420px] xl:w-[470px] xl:p-[50px]"
-                        >
-                          <div className="mb-[15px] flex items-center justify-between gap-4 xl:mb-[50px]">
-                            <Icon
-                              className="h-6 w-6 xl:h-[30px] xl:w-[30px]"
-                              aria-hidden="true"
-                            />
-                            <span className="rounded-[10px] border border-foreground/25 px-[6px] py-[4px] font-body text-[12px] leading-[1em] text-foreground/80">
-                              {card.badge}
-                            </span>
-                          </div>
-
-                          <h4 className="mb-[20px] font-display text-[20px] font-semibold leading-[1.3] xl:mb-[30px] xl:text-[36px]">
-                            {card.title}
-                          </h4>
-
-                          {card.items.length > 0 ? (
-                            <ul className="mb-[30px] list-disc pl-10 font-body text-[16px] leading-[1.4] xl:mb-[50px] xl:text-[18px]">
-                              {card.items.map((item) => (
-                                <li key={item} className="mb-[10px] last:mb-0">
-                                  {item}
-                                </li>
-                              ))}
-                            </ul>
-                          ) : null}
-
-                          {card.date ? (
-                            <div className="mt-auto font-body text-[16px] leading-[1.4] xl:text-[18px]">
-                              {card.date}
-                            </div>
-                          ) : null}
-                        </article>
-                      );
-                    })}
+                    <h4 className="font-display text-[22px] font-medium leading-[1.3]">
+                      {group.title}
+                    </h4>
+                    <p className="font-body text-[18px] leading-[1.5]">
+                      {group.items.map(skillLabel).join(" · ")}
+                    </p>
                   </div>
-
-                  <button
-                    type="button"
-                    onClick={() => scrollRail(-1)}
-                    aria-label="Previous experience"
-                    className="absolute -left-5 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 rotate-45 items-center justify-center border border-foreground/30 bg-card text-foreground transition-colors hover:bg-foreground hover:text-background md:flex"
-                  >
-                    <ArrowLeft
-                      className="h-5 w-5 -rotate-45"
-                      aria-hidden="true"
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => scrollRail(1)}
-                    aria-label="Next experience"
-                    className="absolute -right-5 top-1/2 z-10 hidden h-10 w-10 -translate-y-1/2 rotate-45 items-center justify-center border border-foreground/30 bg-card text-foreground transition-colors hover:bg-foreground hover:text-background md:flex"
-                  >
-                    <ArrowRight
-                      className="h-5 w-5 -rotate-45"
-                      aria-hidden="true"
-                    />
-                  </button>
-
-                  {/* Mobile controls — same rotated-square arrows, below the rail */}
-                  <div className="mt-6 flex items-center gap-6 md:hidden">
-                    <button
-                      type="button"
-                      onClick={() => scrollRail(-1)}
-                      aria-label="Previous experience"
-                      className="flex h-11 w-11 rotate-45 items-center justify-center border border-foreground/30 bg-card text-foreground transition-colors active:bg-foreground active:text-background"
-                    >
-                      <ArrowLeft
-                        className="h-5 w-5 -rotate-45"
-                        aria-hidden="true"
-                      />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollRail(1)}
-                      aria-label="Next experience"
-                      className="flex h-11 w-11 rotate-45 items-center justify-center border border-foreground/30 bg-card text-foreground transition-colors active:bg-foreground active:text-background"
-                    >
-                      <ArrowRight
-                        className="h-5 w-5 -rotate-45"
-                        aria-hidden="true"
-                      />
-                    </button>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -589,17 +497,18 @@ export default function Home() {
         <section
           id="work"
           data-nav-theme="dark"
-          className="relative overflow-hidden bg-background pt-24 pb-4 md:pt-32 md:pb-8"
+          className="relative overflow-x-clip bg-background pt-24 pb-4 md:pt-32 md:pb-8"
         >
+          {/* Stacked cards: each project sticks at the top, and the next slides over it */}
           <div className="mx-auto w-full max-w-[84rem] px-6 md:px-12">
             <h2
               data-reveal
-              className="mx-auto max-w-[22ch] text-center font-display text-[44px] uppercase leading-[1.05] tracking-[-0.02em] text-foreground sm:text-[54px] xl:text-[80px]"
+              className="font-display text-[44px] uppercase leading-[1.02] tracking-[-0.02em] text-foreground sm:text-[54px] xl:text-[80px]"
             >
               Some of my recent work
             </h2>
 
-            <div className="mt-14 flex flex-col gap-[50px] md:mt-20 md:gap-[80px] xl:gap-[120px]">
+            <div className="mt-14 md:mt-20">
               {projects.map((project, i) => {
                 const media =
                   "video" in project && project.video ? (
@@ -622,62 +531,46 @@ export default function Home() {
                       src={project.image}
                       alt={`${project.title} — ${project.description}`}
                       fill
-                      sizes="(max-width: 1024px) 100vw, 60vw"
+                      sizes="(max-width: 1024px) 100vw, 75vw"
                       priority={project.priority === true}
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                     />
                   ) : null;
 
                 return (
-                  <article
+                  <Link
                     key={project.title}
-                    data-reveal
-                    className="grid grid-cols-1 gap-2 lg:grid-cols-[1fr_1.75fr]"
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`${project.title} — open the live site`}
+                    style={{ top: `calc(96px + ${i} * 18px)` }}
+                    className="group sticky mx-auto mb-7 block h-[min(74vh,620px)] max-w-[75rem] overflow-hidden rounded-[20px] bg-card shadow-[0_-24px_48px_rgba(0,0,0,0.55)]"
                   >
-                    {/* Dark info card */}
-                    <div className="flex flex-col justify-between gap-6 rounded-2xl bg-card p-6 md:p-8">
-                      <span className="flex h-[50px] w-[50px] items-center justify-center rounded-full border border-foreground/30 font-body text-lg leading-none text-foreground/80">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-
-                      <div>
-                        <h3 className="font-display text-[26px] uppercase leading-[1.15] tracking-[-0.01em] text-foreground md:text-[32px]">
-                          <Link
-                            href={project.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="transition-colors duration-200 hover:text-foreground/60"
-                          >
-                            {project.title}
-                          </Link>
-                        </h3>
-                        <p className="mt-4 max-w-[46ch] font-body text-[16px] leading-relaxed text-muted-foreground md:text-[18px]">
-                          {project.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Media */}
-                    <Link
-                      href={project.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${project.title} — open the live site`}
-                      className="group relative block aspect-[16/10] overflow-hidden rounded-2xl bg-card lg:aspect-auto lg:min-h-[420px]"
+                    {media}
+                    <span
+                      className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/25"
+                      aria-hidden="true"
+                    />
+                    <span
+                      className="pointer-events-none absolute right-5 top-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-foreground text-background opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:right-8 md:top-8"
+                      aria-hidden="true"
                     >
-                      {media}
-                      <span
-                        className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/45"
-                        aria-hidden="true"
-                      />
-                      <span
-                        className="pointer-events-none absolute bottom-5 right-5 flex h-[56px] w-[56px] translate-y-2 items-center justify-center rounded-2xl bg-foreground text-background opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-                        aria-hidden="true"
-                      >
-                        <ArrowUpRight className="h-6 w-6" />
+                      <ArrowUpRight className="h-6 w-6" />
+                    </span>
+
+                    <div className="absolute inset-x-0 bottom-0 grid gap-3 bg-gradient-to-t from-black/90 to-transparent p-6 md:gap-4 md:p-10">
+                      <h3 className="font-display text-[clamp(2rem,5vw,4rem)] uppercase leading-none tracking-[-0.02em] text-foreground">
+                        {project.title}
+                      </h3>
+                      <p className="max-w-[56ch] font-body text-[16px] leading-[1.55] text-foreground">
+                        {project.description}
+                      </p>
+                      <span className="font-body text-[16px] text-foreground/80">
+                        {project.tags.join(" · ")}
                       </span>
-                    </Link>
-                  </article>
+                    </div>
+                  </Link>
                 );
               })}
             </div>
@@ -737,78 +630,59 @@ export default function Home() {
           <div className="mx-auto w-full max-w-[84rem] px-6 md:px-12">
             <h2
               data-reveal
-              className="mx-auto text-center font-display text-[34px] uppercase leading-[1.05] tracking-[-0.02em] text-foreground sm:text-[44px] md:whitespace-nowrap md:text-[clamp(2.25rem,4.4vw,4rem)]"
+              className="font-display text-[34px] uppercase leading-[1.05] tracking-[-0.02em] text-foreground sm:text-[44px] md:text-[clamp(2.25rem,4.4vw,4rem)]"
             >
               Questions? I&apos;ve got answers.
             </h2>
 
-            {/* Stacked cards — hairline border, plus that turns to cross */}
-            <div className="mt-14 flex flex-col gap-3 md:mt-20">
+            {/* Ruled index — hairline rows; open a row to read its answer, and its dot fills */}
+            <ul className="mt-14 border-t border-foreground/25 md:mt-20">
               {faqs.map((faq, i) => {
                 const isOpen = openFaq === i;
                 return (
-                  <div
+                  <li
                     key={faq.question}
                     data-reveal
-                    data-open={isOpen ? "true" : "false"}
-                    className="rounded-2xl border border-foreground/10 bg-card transition-colors duration-300 data-[open=true]:border-foreground/40"
+                    style={{ transitionDelay: `${i * 0.08}s` }}
+                    className="border-b border-foreground/25"
                   >
                     <button
                       type="button"
                       onClick={() => setOpenFaq(isOpen ? null : i)}
                       aria-expanded={isOpen}
                       aria-controls={`faq-panel-${i}`}
-                      className="flex w-full items-center justify-between gap-6 p-6 text-left md:p-8"
+                      className="flex w-full items-center justify-between gap-6 py-8 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground md:py-10"
                     >
-                      <span className="font-display text-[18px] leading-[1.25] tracking-[-0.01em] text-foreground md:text-[24px]">
+                      <span className="font-display text-[clamp(1.6rem,3.6vw,3rem)] leading-[1.15] tracking-[-0.01em] text-foreground">
                         {faq.question}
                       </span>
                       <span
-                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
-                          isOpen
-                            ? "rotate-45 border-foreground text-foreground"
-                            : "border-foreground/30 text-foreground/80"
+                        className={`h-3.5 w-3.5 shrink-0 rounded-full border border-foreground transition-colors duration-300 ${
+                          isOpen ? "bg-foreground" : "bg-transparent"
                         }`}
                         aria-hidden="true"
-                      >
-                        <svg
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          className="h-[18px] w-[18px]"
-                        >
-                          <path
-                            d="M9 3.75V14.25"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M3.75 9H14.25"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </span>
+                      />
                     </button>
 
                     <div
                       id={`faq-panel-${i}`}
-                      className="grid transition-[grid-template-rows] duration-300 ease-out"
+                      className="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
                       style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
                     >
                       <div className="overflow-hidden">
-                        <p className="max-w-[46ch] px-6 pb-6 font-body text-[16px] leading-relaxed text-muted-foreground md:px-8 md:pb-8 md:text-[18px]">
+                        <p
+                          className={`max-w-[60ch] pb-8 font-body text-[16px] leading-[1.6] text-foreground/80 md:pb-10 md:text-[18px] ${
+                            faq.oneLine ? "xl:max-w-none xl:whitespace-nowrap" : ""
+                          }`}
+                        >
                           {faq.answer}
                         </p>
                       </div>
                     </div>
-                  </div>
+                  </li>
                 );
               })}
-            </div>
+            </ul>
           </div>
         </section>
 

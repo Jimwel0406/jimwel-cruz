@@ -4,9 +4,9 @@ import { ReactLenis } from "lenis/react";
 
 import "@/styles/globals.css";
 
-import { Space_Grotesk, Inter, Noto_Serif } from "next/font/google";
+import { Fraunces, Inter, Noto_Serif } from "next/font/google";
 
-const spaceGrotesk = Space_Grotesk({
+const fraunces = Fraunces({
   display: "swap",
   subsets: ["latin"],
   variable: "--font-display",
@@ -30,7 +30,7 @@ const notoSerif = Noto_Serif({
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <ReactLenis root options={{ autoRaf: true, lerp: 0.08 }}>
-      <div className={`${spaceGrotesk.variable} ${inter.variable} ${notoSerif.variable} font-body`}>
+      <div className={`${fraunces.variable} ${inter.variable} ${notoSerif.variable} font-body`}>
         <Component {...pageProps} />
         <SpeedInsights />
       </div>

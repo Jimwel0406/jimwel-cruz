@@ -96,8 +96,8 @@ A CRM platform for managing customer interactions, showcasing data modeling, lis
 ## Technology Stack
 
 - Frontend: HTML, CSS / Tailwind CSS, JavaScript / TypeScript, React / Next.js
-- Backend: Node.js, PHP, Supabase, REST APIs, Shopify / Liquid, Klaviyo, external app integration
-- Tools: Git / GitHub, Vercel, performance optimization, responsive design
+- Backend: Node.js, PHP, Supabase, REST APIs, Shopify / Liquid, ReCharge (product subscription), Klaviyo, external app integration
+- Tools: Git / GitHub, Vercel, performance optimization, responsive design, Google Apps Script
 - Search: SEO / AEO / GEO, on-page SEO, structured data, Core Web Vitals, Google Search Console, Ahrefs Webmaster Tools
 
 ## FAQ

@@ -98,6 +98,56 @@
   transform: translateY(0);
 }
 
+/* directional reveals: same timing as [data-reveal], slide in from one side */
+[data-reveal="from-left"] {
+  transform: translateX(-48px);
+}
+[data-reveal="from-right"] {
+  transform: translateX(48px);
+}
+[data-reveal="from-left"].is-visible,
+[data-reveal="from-right"].is-visible {
+  transform: none;
+}
+
+/* work timeline: a hairline spine draws down as the entries arrive */
+.ledger-spine {
+  position: relative;
+  list-style: none;
+  padding: 0 0 0 32px;
+}
+.ledger-spine::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: hsl(var(--foreground) / 0.28);
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ledger-spine.is-visible::before {
+  transform: scaleY(1);
+}
+.ledger-entry::before {
+  content: "";
+  position: absolute;
+  left: -37px;
+  top: 8px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: hsl(var(--foreground));
+}
+@media (prefers-reduced-motion: reduce) {
+  .ledger-spine::before {
+    transform: none;
+    transition: none;
+  }
+}
+
 /* intro copy is shown without waiting for the scroll trigger on mobile */
 @media (max-width: 767px) {
   [data-reveal][data-reveal-now] {
