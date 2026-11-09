@@ -21,6 +21,7 @@ const projects = [
     description:
       "A streetwear label in ink and ivory. Oversized editorial type, film-grain photography, and a seven-section flow that reads like a lookbook.",
     video: "/assets/projects/marrow.mp4",
+    image: "/assets/projects/marrow.webp",
     href: "https://marrow-silk.vercel.app/",
     tags: ["Next.js", "Tailwind CSS", "TypeScript", "UI Design"],
   },
@@ -29,6 +30,7 @@ const projects = [
     description:
       "A honey brand in warm cream and ember. A hexagonal comb grid, hand-drawn icons, and a single orange accent used sparingly.",
     video: "/assets/projects/foxhoundbee.mp4",
+    image: "/assets/projects/foxhoundbee.webp",
     href: "https://foxhound-bee.vercel.app/",
     tags: ["Next.js", "React", "CSS", "UI Design"],
   },
@@ -37,6 +39,7 @@ const projects = [
     description:
       "A cupcake shop in cream and dough. Hand-drawn ink outlines, scalloped section seams, and a real-time 3D hero.",
     video: "/assets/projects/crumb.mp4",
+    image: "/assets/projects/crumb.webp",
     href: "https://crumb-drab.vercel.app/",
     tags: ["Next.js", "Three.js", "React Three Fiber", "UI Design"],
   },
@@ -524,7 +527,7 @@ export default function Home() {
                       playsInline
                       preload="none"
                       title={`${project.title} — ${project.description}`}
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                      className="absolute inset-0 h-full w-full object-contain object-top md:object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                     />
                   ) : "image" in project && project.image ? (
                     <Image
@@ -533,7 +536,7 @@ export default function Home() {
                       fill
                       sizes="(max-width: 1024px) 100vw, 75vw"
                       priority={project.priority === true}
-                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                      className="object-contain object-top md:object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                     />
                   ) : null;
 
