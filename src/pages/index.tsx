@@ -17,6 +17,15 @@ import { SITE } from "@/lib/seo";
 
 const projects = [
   {
+    title: "ContactFlow",
+    description:
+      "CRM platform for managing customer interactions. Dashboard with role-based access, analytics, and responsive data visualization.",
+    image: "/assets/projects/contactflow.webp",
+    video: "/assets/projects/contactflow.mp4",
+    href: "https://contactflow-crm.vercel.app/",
+    tags: ["Next.js", "Prisma", "Stripe", "NextAuth"],
+  },
+  {
     title: "Marrow",
     description:
       "A streetwear label in ink and ivory. Oversized editorial type, film-grain photography, and a seven-section flow that reads like a lookbook.",
@@ -71,15 +80,6 @@ const projects = [
     href: "https://modern-haven-nine.vercel.app/",
     tags: ["Next.js", "Shopify", "Tailwind CSS", "AI"],
     priority: true,
-  },
-  {
-    title: "ContactFlow",
-    description:
-      "CRM platform for managing customer interactions. Dashboard with role-based access, analytics, and responsive data visualization.",
-    image: "/assets/projects/contactflow.webp",
-    video: "/assets/projects/contactflow.mp4",
-    href: "https://contactflow-crm.vercel.app/",
-    tags: ["Next.js", "Prisma", "Stripe", "NextAuth"],
   },
   // Hidden for now — restore by removing the comment markers
   // {
