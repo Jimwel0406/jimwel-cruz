@@ -125,7 +125,7 @@ export default function ContactSection() {
                   required
                   maxLength={120}
                   autoComplete="name"
-                  placeholder="Jane Cruz"
+                  placeholder="Your name"
                   className={fieldClass}
                 />
               </div>
@@ -141,7 +141,7 @@ export default function ContactSection() {
                   required
                   maxLength={200}
                   autoComplete="email"
-                  placeholder="jane@studio.com"
+                  placeholder="you@example.com"
                   className={fieldClass}
                 />
               </div>
