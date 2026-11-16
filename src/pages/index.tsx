@@ -382,13 +382,6 @@ export default function Home() {
                 <span className="font-playfair">web applications.</span>
               </h1>
 
-              <p
-                data-reveal
-                className="mt-8 max-w-[44ch] font-body text-[18px] leading-[1.6] text-foreground md:text-[20px]"
-              >
-                A full stack web developer based in the Philippines — building fast, accessible
-                websites and web apps with Shopify, Next.js and Node.js.
-              </p>
               <div className="mt-8 grid max-w-[44ch] grid-cols-3 border-y border-foreground/25">
                 <span className="py-[18px] font-display text-[clamp(1.25rem,2.2vw,1.6rem)] leading-[1.2] text-foreground">
                   Shopify
