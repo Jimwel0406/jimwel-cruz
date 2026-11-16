@@ -148,6 +148,29 @@
   }
 }
 
+/* hero: a soft glow in front of the portrait that breathes slowly */
+/* hero: the glow travels slowly across the top, path only, no scaling */
+.hero-glow-drift {
+  animation: hero-glow-drift 18s ease-in-out infinite;
+}
+@keyframes hero-glow-drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  33% {
+    transform: translate(2.5vw, -2vh);
+  }
+  66% {
+    transform: translate(-2.5vw, 3vh);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-glow-drift {
+    animation: none;
+  }
+}
+
 /* intro copy is shown without waiting for the scroll trigger on mobile */
 @media (max-width: 767px) {
   [data-reveal][data-reveal-now] {

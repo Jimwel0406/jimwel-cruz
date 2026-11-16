@@ -234,13 +234,11 @@ const timeline = [
     when: "Sport Formula · 2023 — Present",
     badge: "Current",
     title: "Full Stack Web Developer",
-    items: ["Frontend", "Backend", "Tools", "SEO"],
   },
   {
     when: "",
-    badge: "Diploma",
+    badge: "Education",
     title: "Diploma in Information Technology",
-    items: [] as string[],
   },
 ];
 
@@ -252,6 +250,7 @@ export default function Home() {
   const faqs = getFaqs(yearsExperience);
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
   // scroll reveal
   useEffect(() => {
     const els = document.querySelectorAll("[data-reveal]");
@@ -362,11 +361,16 @@ export default function Home() {
         ============================================ */}
         <section
           id="home"
-          className="relative flex flex-col justify-center bg-background px-6 pb-[96px] pt-[120px] md:px-12 md:pb-[140px] md:pt-[160px]"
+          className="relative flex flex-col justify-center overflow-hidden bg-background px-6 pb-[96px] pt-[120px] md:px-12 md:pb-[140px] md:pt-[160px]"
         >
           {/* Headline on the left, tall portrait on the right inside a hairline frame */}
           <div className="mx-auto grid w-full max-w-[84rem] grid-cols-1 gap-14 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] md:items-center md:gap-20">
-            <div>
+            <div className="relative z-[1]">
+              {/* Soft glow around the copy only, moving slowly behind the text */}
+              <span
+                aria-hidden="true"
+                className="hero-glow-drift pointer-events-none absolute left-[-12%] right-[-6%] top-[-15%] bottom-[-15%] z-[-1] rounded-full bg-[radial-gradient(ellipse,rgba(240,240,240,0.18)_0%,rgba(240,240,240,0.06)_45%,transparent_72%)] blur-[6px]"
+              />
               <h1
                 data-reveal
                 className="font-display text-[42px] font-medium leading-[1.1] tracking-[-0.03em] text-foreground md:text-[clamp(2.5rem,calc(7.5vw_-_16px),5.75rem)] md:leading-[1.04]"
@@ -375,16 +379,27 @@ export default function Home() {
                 <br />
                 and I build
                 <br />
-                <span className="font-playfair italic">web applications.</span>
+                <span className="font-playfair">web applications.</span>
               </h1>
 
               <p
                 data-reveal
-                className="mt-8 max-w-[44ch] font-body text-[18px] leading-[1.6] text-foreground/80 md:text-[20px]"
+                className="mt-8 max-w-[44ch] font-body text-[18px] leading-[1.6] text-foreground md:text-[20px]"
               >
                 A full stack web developer based in the Philippines — building fast, accessible
                 websites and web apps with Shopify, Next.js and Node.js.
               </p>
+              <div className="mt-8 grid max-w-[44ch] grid-cols-3 border-y border-foreground/25">
+                <span className="py-[18px] font-display text-[clamp(1.25rem,2.2vw,1.6rem)] leading-[1.2] text-foreground">
+                  Shopify
+                </span>
+                <span className="border-l border-foreground/25 py-[18px] pl-[18px] font-display text-[clamp(1.25rem,2.2vw,1.6rem)] leading-[1.2] text-foreground">
+                  Next.js
+                </span>
+                <span className="border-l border-foreground/25 py-[18px] pl-[18px] font-display text-[clamp(1.25rem,2.2vw,1.6rem)] leading-[1.2] text-foreground">
+                  Node.js
+                </span>
+              </div>
             </div>
 
             <div data-reveal className="relative w-full md:max-w-[440px] md:justify-self-end">
@@ -430,7 +445,7 @@ export default function Home() {
                 <div className="flex shrink-0 gap-10 sm:gap-16">
                   <div>
                     <h3 className="font-display text-[30px] font-semibold leading-[1.3] md:text-[42px]">
-                      {yearsExperience.toString().padStart(2, "0")}
+                      {yearsExperience}
                     </h3>
                     <div className="font-body text-[16px] leading-[1.4] text-foreground/80 md:text-[18px]">
                       Years experience
@@ -438,7 +453,7 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="font-display text-[30px] font-semibold leading-[1.3] md:text-[42px]">
-                      {projects.length.toString().padStart(2, "0")}
+                      {projects.length}
                     </h3>
                     <div className="font-body text-[16px] leading-[1.4] text-foreground/80 md:text-[18px]">
                       Projects shipped
@@ -462,30 +477,25 @@ export default function Home() {
                     <h4 className="mt-4 font-display text-[28px] font-semibold leading-[1.2] tracking-[-0.01em] md:text-[44px]">
                       {entry.title}
                     </h4>
-                    {entry.items.length > 0 ? (
-                      <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-body text-[18px] leading-[1.4]">
-                        {entry.items.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
-                    ) : null}
                   </li>
                 ))}
               </ol>
 
-              {/* Skill groups as a ruled table */}
+              {/* Skill groups: ruled rows, title on the left, each skill on its own line */}
               <div data-reveal className="mt-14 border-t border-foreground/25 md:mt-20">
                 {skillGroups.map((group) => (
                   <div
                     key={group.title}
-                    className="grid gap-2 border-b border-foreground/25 py-6 md:grid-cols-[240px_1fr] md:gap-8"
+                    className="grid gap-3 border-b border-foreground/25 py-7 md:grid-cols-[240px_minmax(0,1fr)] md:gap-8 md:py-8"
                   >
                     <h4 className="font-display text-[22px] font-medium leading-[1.3]">
                       {group.title}
                     </h4>
-                    <p className="font-body text-[18px] leading-[1.5]">
-                      {group.items.map(skillLabel).join(" · ")}
-                    </p>
+                    <ul className="grid gap-x-10 gap-y-1.5 font-body text-[18px] leading-[1.5] md:grid-cols-2">
+                      {group.items.map((item) => (
+                        <li key={skillLabel(item)}>{skillLabel(item)}</li>
+                      ))}
+                    </ul>
                   </div>
                 ))}
               </div>
@@ -497,6 +507,11 @@ export default function Home() {
         {/* ============================================
             WORK
         ============================================ */}
+        {/* ============================================
+            WORK + FAQ
+            The project stack is pinned while the FAQ slides up over it,
+            so the cards stay on screen like a folder.
+        ============================================ */}
         <section
           id="work"
           data-nav-theme="dark"
@@ -506,9 +521,10 @@ export default function Home() {
           <div className="mx-auto w-full max-w-[84rem] px-6 md:px-12">
             <h2
               data-reveal
-              className="font-display text-[44px] uppercase leading-[1.02] tracking-[-0.02em] text-foreground sm:text-[54px] xl:text-[80px]"
+              className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2 font-display text-[40px] uppercase leading-[1] tracking-[-0.02em] text-foreground sm:text-[54px] xl:text-[80px]"
             >
-              Some of my recent work
+              <span>Some of my</span>
+              <span className="font-playfair normal-case italic">recent work</span>
             </h2>
 
             <div className="mt-14 md:mt-20">
@@ -638,54 +654,90 @@ export default function Home() {
               Questions? I&apos;ve got answers.
             </h2>
 
-            {/* Ruled index — hairline rows; open a row to read its answer, and its dot fills */}
-            <ul className="mt-14 border-t border-foreground/25 md:mt-20">
+            {/* Flip cards — the question is on the front; select a card to turn it over and read the answer */}
+            <div className="mt-14 grid gap-5 md:mt-20 md:grid-cols-3">
               {faqs.map((faq, i) => {
                 const isOpen = openFaq === i;
                 return (
-                  <li
+                  <div
                     key={faq.question}
                     data-reveal
                     style={{ transitionDelay: `${i * 0.08}s` }}
-                    className="border-b border-foreground/25"
+                    className="[perspective:1200px]"
                   >
                     <button
                       type="button"
                       onClick={() => setOpenFaq(isOpen ? null : i)}
                       aria-expanded={isOpen}
                       aria-controls={`faq-panel-${i}`}
-                      className="flex w-full items-center justify-between gap-6 py-8 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground md:py-10"
+                      className="block h-[440px] w-full rounded-2xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground md:h-[360px]"
                     >
-                      <span className="font-display text-[clamp(1.6rem,3.6vw,3rem)] leading-[1.15] tracking-[-0.01em] text-foreground">
-                        {faq.question}
-                      </span>
                       <span
-                        className={`h-3.5 w-3.5 shrink-0 rounded-full border border-foreground transition-colors duration-300 ${
-                          isOpen ? "bg-foreground" : "bg-transparent"
+                        className={`relative block h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none [transform-style:preserve-3d] ${
+                          isOpen ? "[transform:rotateY(180deg)]" : ""
                         }`}
-                        aria-hidden="true"
-                      />
-                    </button>
-
-                    <div
-                      id={`faq-panel-${i}`}
-                      className="grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
-                      style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
-                    >
-                      <div className="overflow-hidden">
-                        <p
-                          className={`max-w-[60ch] pb-8 font-body text-[16px] leading-[1.6] text-foreground/80 md:pb-10 md:text-[18px] ${
-                            faq.oneLine ? "xl:max-w-none xl:whitespace-nowrap" : ""
-                          }`}
+                      >
+                        <span className="absolute inset-0 flex flex-col justify-between rounded-2xl bg-foreground p-7 text-background [backface-visibility:hidden]">
+                          <span className="font-display text-[clamp(1.6rem,2.8vw,2.3rem)] leading-[1.08] tracking-[-0.02em]">
+                            {faq.question}
+                          </span>
+                          <span className="flex items-center justify-between gap-4">
+                            <span className="font-body text-[16px] font-semibold text-background">
+                              Read answer
+                            </span>
+                            <span
+                              className="flex h-12 w-12 items-center justify-center rounded-full bg-background text-foreground"
+                              aria-hidden="true"
+                            >
+                              <svg
+                                viewBox="0 0 24 24"
+                                className="h-5 w-5"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                              </svg>
+                            </span>
+                          </span>
+                        </span>
+                        <span
+                          id={`faq-panel-${i}`}
+                          className="absolute inset-0 flex flex-col justify-between rounded-2xl border border-foreground bg-background p-7 text-foreground [backface-visibility:hidden] [transform:rotateY(180deg)]"
                         >
-                          {faq.answer}
-                        </p>
-                      </div>
-                    </div>
-                  </li>
+                          <span className="font-body text-[18px] leading-[1.6] text-foreground">
+                            {faq.answer}
+                          </span>
+                          <span className="flex items-center justify-between gap-4 border-t border-foreground/30 pt-5">
+                            <span className="font-body text-[16px] font-semibold text-foreground">
+                              Close
+                            </span>
+                            <span
+                              className="flex h-12 w-12 items-center justify-center rounded-full bg-foreground text-background"
+                              aria-hidden="true"
+                            >
+                              <svg
+                                viewBox="0 0 24 24"
+                                className="h-5 w-5"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="M6 6l12 12M18 6L6 18" />
+                              </svg>
+                            </span>
+                          </span>
+                        </span>
+                      </span>
+                    </button>
+                  </div>
                 );
               })}
-            </ul>
+            </div>
           </div>
         </section>
 
