@@ -110,41 +110,29 @@
   transform: none;
 }
 
-/* work timeline: a hairline spine draws down as the entries arrive */
-.ledger-spine {
+/* work timeline: a short rule per entry with a dot, the second step indented */
+.work-step {
   position: relative;
   list-style: none;
-  padding: 0 0 0 32px;
+  border-left: 1px solid hsl(var(--foreground) / 0.25);
+  padding-left: 24px;
 }
-.ledger-spine::before {
+.work-step::before {
   content: "";
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: hsl(var(--foreground) / 0.28);
-  transform-origin: top;
-  transform: scaleY(0);
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.ledger-spine.is-visible::before {
-  transform: scaleY(1);
-}
-.ledger-entry::before {
-  content: "";
-  position: absolute;
-  left: -37px;
-  top: 8px;
-  width: 11px;
-  height: 11px;
+  left: -5px;
+  top: 6px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background: hsl(var(--foreground));
 }
-@media (prefers-reduced-motion: reduce) {
-  .ledger-spine::before {
-    transform: none;
-    transition: none;
+@media (min-width: 768px) {
+  .work-step {
+    padding-left: 36px;
+  }
+  .work-step:nth-child(2) {
+    margin-left: 34%;
   }
 }
 

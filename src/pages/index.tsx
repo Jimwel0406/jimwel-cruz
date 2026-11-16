@@ -455,19 +455,21 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Timeline: a hairline spine draws down as the entries arrive */}
-              <ol data-reveal className="ledger-spine mt-20 md:mt-28">
+              {/* Timeline: a short rule per entry, the second step indented */}
+              <ol data-reveal className="mt-20 grid gap-11 md:mt-28">
                 {timeline.map((entry) => (
-                  <li key={entry.title} data-reveal className="ledger-entry relative pb-16 last:pb-0 md:pb-20">
-                    {entry.when ? (
-                      <p className="font-body text-[16px] leading-[1.4] text-foreground/80">
-                        {entry.when}
-                      </p>
-                    ) : null}
-                    <span className="mt-3 inline-block rounded-[10px] border border-foreground/25 px-[10px] py-[4px] font-body text-[16px] leading-[1.2] text-foreground/80">
-                      {entry.badge}
-                    </span>
-                    <h4 className="mt-4 font-display text-[28px] font-semibold leading-[1.2] tracking-[-0.01em] md:text-[44px]">
+                  <li key={entry.title} data-reveal className="work-step">
+                    <div className="flex flex-wrap items-center gap-3.5">
+                      {entry.when ? (
+                        <p className="font-body text-[17px] leading-[1.45] text-foreground/80">
+                          {entry.when}
+                        </p>
+                      ) : null}
+                      <span className="inline-block rounded-[10px] border border-foreground/25 px-[10px] py-[4px] font-body text-[16px] leading-[1.2] text-foreground/80">
+                        {entry.badge}
+                      </span>
+                    </div>
+                    <h4 className="mt-3 font-display text-[32px] font-semibold leading-[1.02] tracking-[-0.01em] md:text-[clamp(2rem,4.6vw,3.625rem)]">
                       {entry.title}
                     </h4>
                   </li>
@@ -536,7 +538,7 @@ export default function Home() {
                       playsInline
                       preload="none"
                       title={`${project.title} — ${project.description}`}
-                      className="absolute inset-0 h-full w-full object-contain object-top md:object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                      className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                     />
                   ) : "image" in project && project.image ? (
                     <Image
@@ -545,7 +547,7 @@ export default function Home() {
                       fill
                       sizes="(max-width: 1024px) 100vw, 75vw"
                       priority={project.priority === true}
-                      className="object-contain object-top md:object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                      className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                     />
                   ) : null;
 
@@ -557,9 +559,11 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label={`${project.title} — open the live site`}
                     style={{ top: `calc(96px + ${i} * 18px)` }}
-                    className="group sticky mx-auto mb-7 block h-[min(74vh,620px)] max-w-[75rem] overflow-hidden rounded-[20px] bg-card shadow-[0_-24px_48px_rgba(0,0,0,0.55)]"
+                    className="group sticky mx-auto mb-7 block h-auto max-w-[75rem] overflow-hidden rounded-[20px] bg-card shadow-[0_-24px_48px_rgba(0,0,0,0.55)] md:h-[min(74vh,620px)]"
                   >
-                    {media}
+                    <div className="relative aspect-[2/1] w-full md:absolute md:inset-0 md:aspect-auto md:h-full">
+                      {media}
+                    </div>
                     <span
                       className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/25"
                       aria-hidden="true"
@@ -571,16 +575,20 @@ export default function Home() {
                       <ArrowUpRight className="h-6 w-6" />
                     </span>
 
-                    <div className="absolute inset-x-0 bottom-0 grid gap-3 bg-gradient-to-t from-black/90 to-transparent p-6 md:gap-4 md:p-10">
-                      <h3 className="font-display text-[clamp(2rem,5vw,4rem)] uppercase leading-none tracking-[-0.02em] text-foreground">
-                        {project.title}
-                      </h3>
-                      <p className="max-w-[56ch] font-body text-[16px] leading-[1.55] text-foreground">
-                        {project.description}
-                      </p>
-                      <span className="font-body text-[16px] text-foreground/80">
-                        {project.tags.join(" · ")}
-                      </span>
+                    <div className="relative border-t border-foreground/25 bg-background px-6 pb-6 pt-5 md:absolute md:inset-x-0 md:bottom-0 md:px-9 md:pb-[30px] md:pt-[22px]">
+                      <div className="flex flex-wrap gap-x-[18px] gap-y-1.5 font-body text-[16px] leading-[1.4] text-foreground/80">
+                        {project.tags.map((tag) => (
+                          <span key={tag}>{tag}</span>
+                        ))}
+                      </div>
+                      <div className="mt-3.5 grid gap-2.5 md:grid-cols-[1.1fr_1fr] md:items-start md:gap-12">
+                        <h3 className="font-display text-[clamp(1.9rem,3.4vw,2.9rem)] font-semibold uppercase leading-none tracking-[-0.02em] text-foreground">
+                          {project.title}
+                        </h3>
+                        <p className="font-body text-[16px] leading-[1.55] text-foreground">
+                          {project.description}
+                        </p>
+                      </div>
                     </div>
                   </Link>
                 );
