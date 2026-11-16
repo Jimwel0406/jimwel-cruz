@@ -670,14 +670,14 @@ export default function Home() {
                       onClick={() => setOpenFaq(isOpen ? null : i)}
                       aria-expanded={isOpen}
                       aria-controls={`faq-panel-${i}`}
-                      className="block h-[440px] w-full rounded-2xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground md:h-[360px]"
+                      className="block h-[300px] w-full rounded-2xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground md:h-[360px]"
                     >
                       <span
                         className={`relative block h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none [transform-style:preserve-3d] ${
                           isOpen ? "[transform:rotateY(180deg)]" : ""
                         }`}
                       >
-                        <span className="absolute inset-0 flex flex-col justify-between rounded-2xl bg-foreground p-7 text-background [backface-visibility:hidden]">
+                        <span className="absolute inset-0 flex flex-col justify-between rounded-2xl bg-foreground p-6 text-background [backface-visibility:hidden] md:p-7">
                           <span className="font-display text-[clamp(1.6rem,2.8vw,2.3rem)] leading-[1.08] tracking-[-0.02em]">
                             {faq.question}
                           </span>
@@ -705,9 +705,9 @@ export default function Home() {
                         </span>
                         <span
                           id={`faq-panel-${i}`}
-                          className="absolute inset-0 flex flex-col justify-between rounded-2xl border border-foreground bg-background p-7 text-foreground [backface-visibility:hidden] [transform:rotateY(180deg)]"
+                          className="absolute inset-0 flex flex-col justify-between rounded-2xl border border-foreground bg-background p-6 text-foreground [backface-visibility:hidden] [transform:rotateY(180deg)] md:p-7"
                         >
-                          <span className="font-body text-[18px] leading-[1.6] text-foreground">
+                          <span className="font-body text-[16px] leading-[1.6] text-foreground md:text-[18px]">
                             {faq.answer}
                           </span>
                           <span className="flex items-center justify-between gap-4 border-t border-foreground/30 pt-5">

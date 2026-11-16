@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Loader2, Send } from "lucide-react";
 import { SITE } from "@/lib/seo";
 
-// Underline fields: a letter's blank lines. Focus thickens the rule.
+// Quiet boxes: 1px rule, 4px radius, example placeholder inside. Focus doubles the rule.
 const fieldClass =
-  "w-full border-0 border-b border-black bg-transparent px-0 py-3 font-body text-[16px] text-black transition-colors placeholder:text-black/70 hover:border-black/60 focus:border-b-2 focus:border-black focus:outline-none";
+  "w-full rounded-[4px] border border-black/35 bg-transparent px-4 py-3.5 font-body text-[16px] text-black transition-colors placeholder:text-[#5a5a5a] hover:border-black/60 focus:border-black focus:shadow-[0_0_0_1px_#0a0a0a] focus:outline-none";
 
-const boxedFieldClass =
-  "w-full rounded-2xl border border-black/30 bg-transparent px-4 py-3 font-body text-[16px] text-black transition-colors placeholder:text-black/70 hover:border-black/60 focus:border-black focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black";
+const labelClass =
+  "mb-2 block font-body text-[16px] font-medium leading-[1.3] text-black";
 
 const buttonClass =
   "inline-flex items-center gap-2 self-start rounded-[4px] border border-black bg-black px-6 py-4 font-body text-[16px] font-semibold text-[#f0f0f0] transition-colors hover:bg-transparent hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-60";
@@ -75,18 +75,18 @@ export default function ContactSection() {
         </h2>
 
         <p className="mt-5 font-body text-[18px] leading-[1.55] text-[#2b2b2b]">
-          <span className="block md:whitespace-nowrap">
-            Freelance builds, Shopify stores and full-stack apps.
+          <span className="block">
+            Need an online store, a web app, or a hand with an existing site?
           </span>
+          <span className="block">Tell me about it below.</span>
           <span className="mt-2 block">
-            Write to{" "}
+            Or email{" "}
             <a
               href={`mailto:${SITE.email}`}
               className="text-black underline decoration-1 underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
             >
               {SITE.email}
-            </a>{" "}
-            or use the form below.
+            </a>
           </span>
         </p>
 
@@ -114,59 +114,67 @@ export default function ContactSection() {
             className="mt-12 flex flex-col gap-6"
           >
             <div className="grid gap-6 sm:grid-cols-2">
-              <label className="sr-only" htmlFor="contact-name">
-                Name
-              </label>
-              <input
-                id="contact-name"
-                name="name"
-                type="text"
-                required
-                maxLength={120}
-                autoComplete="name"
-                placeholder="Name"
-                className={fieldClass}
-              />
+              <div>
+                <label htmlFor="contact-name" className={labelClass}>
+                  Name
+                </label>
+                <input
+                  id="contact-name"
+                  name="name"
+                  type="text"
+                  required
+                  maxLength={120}
+                  autoComplete="name"
+                  placeholder="Jane Cruz"
+                  className={fieldClass}
+                />
+              </div>
 
-              <label className="sr-only" htmlFor="contact-email">
-                Email
+              <div>
+                <label htmlFor="contact-email" className={labelClass}>
+                  Email
+                </label>
+                <input
+                  id="contact-email"
+                  name="email"
+                  type="email"
+                  required
+                  maxLength={200}
+                  autoComplete="email"
+                  placeholder="jane@studio.com"
+                  className={fieldClass}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="contact-project" className={labelClass}>
+                Project type
               </label>
               <input
-                id="contact-email"
-                name="email"
-                type="email"
-                required
-                maxLength={200}
-                autoComplete="email"
-                placeholder="Email"
+                id="contact-project"
+                name="projectType"
+                type="text"
+                maxLength={120}
+                placeholder="Shopify store, web app, other"
                 className={fieldClass}
               />
             </div>
 
-            <label className="sr-only" htmlFor="contact-project">
-              Project type
-            </label>
-            <input
-              id="contact-project"
-              name="projectType"
-              type="text"
-              maxLength={120}
-              placeholder="Project type"
-              className={fieldClass}
-            />
-
-            <label className="sr-only" htmlFor="contact-message">
-              Message
-            </label>
-            <textarea
-              id="contact-message"
-              name="message"
-              required
-              rows={5}
-              maxLength={5000}
-              placeholder="Tell me about the project"
-              className={`${boxedFieldClass} resize-y`}
-            />
+            <div>
+              <label htmlFor="contact-message" className={labelClass}>
+                Message
+              </label>
+              <textarea
+                id="contact-message"
+                name="message"
+                required
+                rows={4}
+                maxLength={5000}
+                placeholder="A few lines about the project, the timeline, and anything already in place."
+                className={`${fieldClass} min-h-[148px] resize-y`}
+              />
+            </div>
 
             {/* Honeypot */}
             <input
