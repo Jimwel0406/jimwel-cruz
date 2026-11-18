@@ -373,7 +373,7 @@ export default function Home() {
               />
               <h1
                 data-reveal
-                className="font-display text-[42px] font-medium leading-[1.1] tracking-[-0.03em] text-foreground md:text-[clamp(2.5rem,calc(7.5vw_-_16px),5.75rem)] md:leading-[1.04]"
+                className="font-display text-[clamp(2rem,10.4vw,2.625rem)] font-medium leading-[1.1] tracking-[-0.03em] text-foreground md:text-[clamp(2.5rem,calc(7.5vw_-_16px),5.75rem)] md:leading-[1.04]"
               >
                 I&apos;m Jimwel,
                 <br />
