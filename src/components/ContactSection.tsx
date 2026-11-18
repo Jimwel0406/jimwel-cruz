@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Loader2, Send } from "lucide-react";
-import { SITE } from "@/lib/seo";
 
 // Quiet boxes: 1px rule, 4px radius, example placeholder inside. Focus doubles the rule.
 const fieldClass =
@@ -73,22 +72,6 @@ export default function ContactSection() {
           Let&apos;s build{" "}
           <span className="font-playfair italic">something great.</span>
         </h2>
-
-        <p className="mt-10 font-body text-[18px] leading-[1.55] text-[#2b2b2b]">
-          <span className="block">
-            Need an online store, a web app, or a hand with an existing site?
-          </span>
-          <span className="block">Tell me about it below.</span>
-          <span className="mt-2 block">
-            Or email{" "}
-            <a
-              href={`mailto:${SITE.email}`}
-              className="text-black underline decoration-1 underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black"
-            >
-              {SITE.email}
-            </a>
-          </span>
-        </p>
 
         {status === "success" ? (
           <div className="mt-12 border-t border-black pt-8">
