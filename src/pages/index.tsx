@@ -382,14 +382,22 @@ export default function Home() {
                 <span className="font-playfair">web applications.</span>
               </h1>
 
-              <div className="mt-8 grid max-w-[44ch] grid-cols-3 border-y border-foreground/25">
-                <span className="py-[18px] font-display text-[clamp(1.25rem,2.2vw,1.6rem)] leading-[1.2] text-foreground">
+              <div className="mt-8 flex w-full max-w-[352px] items-center justify-between rounded-full border border-foreground/25 bg-foreground/[0.02] px-5 py-3 shadow-[0_0_44px_rgba(240,240,240,0.08)]">
+                <span className="font-display text-[clamp(1.25rem,2.2vw,1.6rem)] font-medium leading-none tracking-[-0.01em] text-foreground">
                   Shopify
                 </span>
-                <span className="border-l border-foreground/25 py-[18px] pl-[18px] font-display text-[clamp(1.25rem,2.2vw,1.6rem)] leading-[1.2] text-foreground">
+                <span
+                  aria-hidden="true"
+                  className="h-1 w-1 rounded-full bg-foreground/50"
+                />
+                <span className="font-display text-[clamp(1.25rem,2.2vw,1.6rem)] font-medium leading-none tracking-[-0.01em] text-foreground">
                   Next.js
                 </span>
-                <span className="border-l border-foreground/25 py-[18px] pl-[18px] font-display text-[clamp(1.25rem,2.2vw,1.6rem)] leading-[1.2] text-foreground">
+                <span
+                  aria-hidden="true"
+                  className="h-1 w-1 rounded-full bg-foreground/50"
+                />
+                <span className="font-display text-[clamp(1.25rem,2.2vw,1.6rem)] font-medium leading-none tracking-[-0.01em] text-foreground">
                   Node.js
                 </span>
               </div>
@@ -435,17 +443,21 @@ export default function Home() {
                   Work experience
                 </h2>
 
-                <div className="flex shrink-0 gap-10 sm:gap-16">
-                  <div>
-                    <h3 className="font-display text-[30px] font-semibold leading-[1.3] md:text-[42px]">
+                <div className="grid w-full grid-cols-2 gap-6 md:flex md:w-auto md:shrink-0 md:items-center md:gap-7 md:rounded-full md:border md:border-foreground/25 md:bg-foreground/[0.02] md:px-7 md:py-3 md:shadow-[0_0_44px_rgba(240,240,240,0.08)]">
+                  <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-2">
+                    <h3 className="font-display text-[30px] font-semibold leading-none md:text-[42px]">
                       {yearsExperience}
                     </h3>
                     <div className="font-body text-[16px] leading-[1.4] text-foreground/80 md:text-[18px]">
                       Years experience
                     </div>
                   </div>
-                  <div>
-                    <h3 className="font-display text-[30px] font-semibold leading-[1.3] md:text-[42px]">
+                  <span
+                    aria-hidden="true"
+                    className="hidden h-1 w-1 shrink-0 rounded-full bg-foreground/50 md:block"
+                  />
+                  <div className="flex flex-col gap-1 border-l border-foreground/25 pl-6 md:flex-row md:items-baseline md:gap-2 md:border-0 md:pl-0">
+                    <h3 className="font-display text-[30px] font-semibold leading-none md:text-[42px]">
                       {projects.length}
                     </h3>
                     <div className="font-body text-[16px] leading-[1.4] text-foreground/80 md:text-[18px]">
@@ -459,13 +471,19 @@ export default function Home() {
               <ol data-reveal className="mt-20 grid gap-11 md:mt-28">
                 {timeline.map((entry) => (
                   <li key={entry.title} data-reveal className="work-step">
-                    <div className="flex flex-wrap items-center gap-3.5">
+                    <div className="flex flex-col items-start gap-2 md:inline-flex md:w-auto md:flex-row md:items-center md:gap-2.5 md:rounded-full md:border md:border-foreground/25 md:bg-foreground/[0.02] md:px-3.5 md:py-[9px] md:shadow-[0_0_28px_rgba(240,240,240,0.06)]">
                       {entry.when ? (
-                        <p className="font-body text-[17px] leading-[1.45] text-foreground/80">
-                          {entry.when}
-                        </p>
+                        <>
+                          <span className="whitespace-nowrap font-body text-[16px] leading-[1.4] text-foreground/80">
+                            {entry.when}
+                          </span>
+                          <span
+                            aria-hidden="true"
+                            className="hidden h-[3px] w-[3px] shrink-0 rounded-full bg-foreground/50 md:block"
+                          />
+                        </>
                       ) : null}
-                      <span className="inline-block rounded-[10px] border border-foreground/25 px-[10px] py-[4px] font-body text-[16px] leading-[1.2] text-foreground/80">
+                      <span className="inline-flex items-center rounded-full border border-foreground/25 bg-foreground/[0.02] px-3 py-1.5 font-body text-[16px] leading-[1.4] text-foreground shadow-[0_0_18px_rgba(240,240,240,0.06)] md:rounded-none md:border-0 md:bg-transparent md:p-0 md:shadow-none">
                         {entry.badge}
                       </span>
                     </div>

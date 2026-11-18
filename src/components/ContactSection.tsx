@@ -74,7 +74,7 @@ export default function ContactSection() {
           <span className="font-playfair italic">something great.</span>
         </h2>
 
-        <p className="mt-5 font-body text-[18px] leading-[1.55] text-[#2b2b2b]">
+        <p className="mt-10 font-body text-[18px] leading-[1.55] text-[#2b2b2b]">
           <span className="block">
             Need an online store, a web app, or a hand with an existing site?
           </span>

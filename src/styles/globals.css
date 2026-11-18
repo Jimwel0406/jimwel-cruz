@@ -110,27 +110,12 @@
   transform: none;
 }
 
-/* work timeline: a short rule per entry with a dot, the second step indented */
+/* work timeline: the entries step right, with no rail */
 .work-step {
   position: relative;
   list-style: none;
-  border-left: 1px solid hsl(var(--foreground) / 0.25);
-  padding-left: 24px;
-}
-.work-step::before {
-  content: "";
-  position: absolute;
-  left: -5px;
-  top: 6px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: hsl(var(--foreground));
 }
 @media (min-width: 768px) {
-  .work-step {
-    padding-left: 36px;
-  }
   .work-step:nth-child(2) {
     margin-left: 34%;
   }
