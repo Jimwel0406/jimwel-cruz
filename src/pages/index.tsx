@@ -282,7 +282,8 @@ export default function Home() {
     }
   }, []);
 
-  // lazy-play videos when they enter viewport
+  // play videos only while they are in view: start from the first frame each
+  // time they arrive, and pause when they scroll away
   useEffect(() => {
     const videos = document.querySelectorAll("video[preload='none']");
     if (!("IntersectionObserver" in window)) {
@@ -296,8 +297,10 @@ export default function Home() {
         entries.forEach((entry) => {
           const video = entry.target as HTMLVideoElement;
           if (entry.isIntersecting) {
+            video.currentTime = 0;
             void video.play();
-            observer.unobserve(video);
+          } else {
+            video.pause();
           }
         });
       },
@@ -568,7 +571,7 @@ export default function Home() {
                     rel="noopener noreferrer"
                     aria-label={`${project.title} — open the live site`}
                     style={{ top: `calc(96px + ${i} * 18px)` }}
-                    className="group sticky mx-auto mb-7 block h-auto max-w-[75rem] overflow-hidden rounded-[20px] bg-card shadow-[0_-24px_48px_rgba(0,0,0,0.55)] md:h-[min(74vh,620px)]"
+                    className="group sticky mx-auto mb-7 block h-auto max-w-[75rem] overflow-hidden rounded-[20px] bg-card shadow-[0_-24px_48px_rgba(0,0,0,0.55)] md:h-[min(80vh,720px)]"
                   >
                     <div className="relative aspect-[2/1] w-full md:absolute md:inset-0 md:aspect-auto md:h-full">
                       {media}
@@ -584,7 +587,7 @@ export default function Home() {
                       <ArrowUpRight className="h-6 w-6" />
                     </span>
 
-                    <div className="relative bg-foreground px-6 pb-6 pt-5 text-background md:absolute md:inset-x-0 md:bottom-0 md:px-10 md:pb-9 md:pt-[30px]">
+                    <div className="relative bg-foreground px-6 pb-6 pt-5 text-background md:absolute md:inset-x-0 md:bottom-0 md:px-10 md:pb-7 md:pt-6">
                       <div className="flex flex-wrap gap-2 font-body text-[16px] leading-[1.4] text-background">
                         {project.tags.map((tag) => (
                           <span
@@ -724,7 +727,7 @@ export default function Home() {
                           <span className="font-body text-[16px] leading-[1.6] text-foreground md:text-[18px]">
                             {faq.answer}
                           </span>
-                          <span className="flex items-center justify-between gap-4 border-t border-foreground/30 pt-5">
+                          <span className="flex items-center justify-between gap-4 border-t border-foreground pt-5">
                             <span className="font-body text-[16px] font-semibold text-foreground">
                               Close
                             </span>
