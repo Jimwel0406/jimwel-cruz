@@ -46,6 +46,7 @@
   html {
     @apply antialiased;
     scroll-behavior: smooth;
+    text-wrap: pretty;
   }
   body {
     @apply bg-background text-foreground;

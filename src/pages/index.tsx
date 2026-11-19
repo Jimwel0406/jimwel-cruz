@@ -207,6 +207,18 @@ const services = [
   },
 ];
 
+// keeps hyphenated terms on one line so the hyphen never leaves a stub at a line end
+const keepTerm = (text: string) =>
+  text.split(/(e-commerce|front-ends|back-ends)/i).map((part, i) =>
+    i % 2 === 1 ? (
+      <span key={i} className="whitespace-nowrap">
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  );
+
 const getFaqs = (years: number) => [
   {
     question: "What kind of work do you do?",
@@ -687,7 +699,7 @@ export default function Home() {
                       onClick={() => setOpenFaq(isOpen ? null : i)}
                       aria-expanded={isOpen}
                       aria-controls={`faq-panel-${i}`}
-                      className="block h-[300px] w-full rounded-2xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground md:h-[360px]"
+                      className="block h-[400px] w-full rounded-2xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground md:h-[360px]"
                     >
                       <span
                         className={`relative block h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none [transform-style:preserve-3d] ${
@@ -725,7 +737,7 @@ export default function Home() {
                           className="absolute inset-0 flex flex-col justify-between rounded-2xl border border-foreground bg-background p-6 text-foreground [backface-visibility:hidden] [transform:rotateY(180deg)] md:p-7"
                         >
                           <span className="font-body text-[16px] leading-[1.6] text-foreground md:text-[18px]">
-                            {faq.answer}
+                            {keepTerm(faq.answer)}
                           </span>
                           <span className="flex items-center justify-between gap-4 border-t border-foreground pt-5">
                             <span className="font-body text-[16px] font-semibold text-foreground">
