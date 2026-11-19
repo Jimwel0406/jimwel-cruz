@@ -1,15 +1,22 @@
 import { useState } from "react";
 import { Loader2, Send } from "lucide-react";
 
-// Quiet boxes: 1px rule, 4px radius, example placeholder inside. Focus doubles the rule.
+// Knockout float: each label sits inside its field. On focus, or once the field
+// has a value, it jumps onto the border and a paper-coloured knockout cuts the line.
 const fieldClass =
-  "w-full rounded-[4px] border border-black/35 bg-transparent px-4 py-3.5 font-body text-[16px] text-black transition-colors placeholder:text-[#5a5a5a] hover:border-black/60 focus:border-black focus:shadow-[0_0_0_1px_#0a0a0a] focus:outline-none";
+  "peer w-full rounded-[4px] border border-black bg-transparent px-4 py-3.5 font-body text-[16px] text-black transition-colors placeholder:text-transparent focus:placeholder:text-[#5a5a5a] hover:border-black/70 focus:border-black focus:shadow-[inset_0_0_0_1px_#0a0a0a] focus:outline-none";
 
-const labelClass =
-  "mb-2 block font-body text-[16px] font-medium leading-[1.3] text-black";
+const textareaClass =
+  "peer w-full min-h-[148px] resize-y rounded-[4px] border border-black bg-transparent px-4 pb-4 pt-6 font-body text-[16px] text-black transition-colors placeholder:text-transparent focus:placeholder:text-[#5a5a5a] hover:border-black/70 focus:border-black focus:shadow-[inset_0_0_0_1px_#0a0a0a] focus:outline-none";
+
+const floatLabelClass =
+  "pointer-events-none absolute left-4 top-1/2 z-[1] -translate-y-1/2 px-1.5 font-body text-[16px] leading-none text-black transition-all duration-200 ease-out peer-focus:top-0 peer-focus:bg-[#f0f0f0] peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:bg-[#f0f0f0]";
+
+const floatTextareaLabelClass =
+  "pointer-events-none absolute left-4 top-6 z-[1] px-1.5 font-body text-[16px] leading-none text-black transition-all duration-200 ease-out peer-focus:-translate-y-1/2 peer-focus:top-0 peer-focus:bg-[#f0f0f0] peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:bg-[#f0f0f0]";
 
 const buttonClass =
-  "inline-flex items-center gap-2 self-start rounded-[4px] border border-black bg-black px-6 py-4 font-body text-[16px] font-semibold text-[#f0f0f0] transition-colors hover:bg-transparent hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-60";
+  "inline-flex items-center gap-2 self-start rounded-[4px] border border-black bg-black px-4 py-2.5 font-body text-[20px] font-semibold text-[#f0f0f0] md:text-[22px] transition-colors hover:bg-transparent hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black disabled:cursor-not-allowed disabled:opacity-60";
 
 type Status = "idle" | "sending" | "success" | "error";
 
@@ -61,11 +68,13 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
+      data-nav-theme="dark"
       className="relative overflow-hidden bg-background px-6 py-28 text-foreground md:px-12 md:py-32"
     >
       {/* A single sheet of paper, like a letter, centred on the ink ground */}
       <div
         data-reveal
+        data-nav-theme="light"
         className="mx-auto w-full max-w-[52rem] rounded-2xl bg-[#f0f0f0] px-6 pb-14 pt-16 text-black md:px-[72px] md:pb-[72px] md:pt-[88px]"
       >
         <h2 className="font-display text-[clamp(2.25rem,5vw,3.75rem)] font-medium leading-[1.02] tracking-[-0.04em]">
@@ -97,10 +106,7 @@ export default function ContactSection() {
             className="mt-12 flex flex-col gap-6"
           >
             <div className="grid gap-6 sm:grid-cols-2">
-              <div>
-                <label htmlFor="contact-name" className={labelClass}>
-                  Name
-                </label>
+              <div className="relative">
                 <input
                   id="contact-name"
                   name="name"
@@ -111,12 +117,12 @@ export default function ContactSection() {
                   placeholder="Your name"
                   className={fieldClass}
                 />
+                <label htmlFor="contact-name" className={floatLabelClass}>
+                  Name
+                </label>
               </div>
 
-              <div>
-                <label htmlFor="contact-email" className={labelClass}>
-                  Email
-                </label>
+              <div className="relative">
                 <input
                   id="contact-email"
                   name="email"
@@ -124,39 +130,42 @@ export default function ContactSection() {
                   required
                   maxLength={200}
                   autoComplete="email"
-                  placeholder="you@example.com"
+                  placeholder="name@example.com"
                   className={fieldClass}
                 />
+                <label htmlFor="contact-email" className={floatLabelClass}>
+                  Email
+                </label>
               </div>
             </div>
 
-            <div>
-              <label htmlFor="contact-project" className={labelClass}>
-                Project type
-              </label>
+            <div className="relative">
               <input
                 id="contact-project"
                 name="projectType"
                 type="text"
                 maxLength={120}
-                placeholder="Shopify store, web app, other"
+                placeholder="Shopify store or web app"
                 className={fieldClass}
               />
+              <label htmlFor="contact-project" className={floatLabelClass}>
+                Project type
+              </label>
             </div>
 
-            <div>
-              <label htmlFor="contact-message" className={labelClass}>
-                Message
-              </label>
+            <div className="relative">
               <textarea
                 id="contact-message"
                 name="message"
                 required
                 rows={4}
                 maxLength={5000}
-                placeholder="A few lines about the project, the timeline, and anything already in place."
-                className={`${fieldClass} min-h-[148px] resize-y`}
+                placeholder="Tell me about the project"
+                className={textareaClass}
               />
+              <label htmlFor="contact-message" className={floatTextareaLabelClass}>
+                Message
+              </label>
             </div>
 
             {/* Honeypot */}

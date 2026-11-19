@@ -363,8 +363,8 @@ export default function Home() {
           id="home"
           className="relative flex flex-col justify-center overflow-hidden bg-background px-6 pb-[96px] pt-[120px] md:px-12 md:pb-[140px] md:pt-[160px]"
         >
-          {/* Headline on the left, tall portrait on the right inside a hairline frame */}
-          <div className="mx-auto grid w-full max-w-[84rem] grid-cols-1 gap-14 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] md:items-center md:gap-20">
+          {/* Headline on the left, tall portrait on the right */}
+          <div className="mx-auto grid w-full max-w-[84rem] grid-cols-1 gap-14 md:grid-cols-[auto_minmax(0,440px)] md:items-center md:justify-center md:gap-12">
             <div className="relative z-[1]">
               {/* Soft glow around the copy only, moving slowly behind the text */}
               <span
@@ -404,7 +404,7 @@ export default function Home() {
             </div>
 
             <div data-reveal className="relative w-full md:max-w-[440px] md:justify-self-end">
-              <div className="relative z-[1] aspect-[3/4] overflow-hidden rounded-[4px] bg-card">
+              <div className="relative z-[1] aspect-[3/4] overflow-hidden bg-card">
                 <Image
                   src="/assets/me.jpg"
                   alt="Jimwel Cruz"
@@ -417,10 +417,6 @@ export default function Home() {
                   className="select-none object-cover"
                 />
               </div>
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute -bottom-6 -left-6 right-6 top-6 hidden rounded-[4px] border border-foreground/25 md:block"
-              />
             </div>
           </div>
         </section>
@@ -443,7 +439,7 @@ export default function Home() {
                   Work experience
                 </h2>
 
-                <div className="grid w-full grid-cols-2 gap-6 md:flex md:w-auto md:shrink-0 md:items-center md:gap-7 md:rounded-full md:border md:border-foreground/25 md:bg-foreground/[0.02] md:px-7 md:py-3 md:shadow-[0_0_44px_rgba(240,240,240,0.08)]">
+                <div className="grid w-full grid-cols-2 gap-6 md:flex md:w-auto md:shrink-0 md:items-center md:gap-14">
                   <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-2">
                     <h3 className="font-display text-[30px] font-semibold leading-none md:text-[42px]">
                       {yearsExperience}
@@ -452,11 +448,7 @@ export default function Home() {
                       Years experience
                     </div>
                   </div>
-                  <span
-                    aria-hidden="true"
-                    className="hidden h-1 w-1 shrink-0 rounded-full bg-foreground/50 md:block"
-                  />
-                  <div className="flex flex-col gap-1 border-l border-foreground/25 pl-6 md:flex-row md:items-baseline md:gap-2 md:border-0 md:pl-0">
+                  <div className="flex flex-col gap-1 md:flex-row md:items-baseline md:gap-2">
                     <h3 className="font-display text-[30px] font-semibold leading-none md:text-[42px]">
                       {projects.length}
                     </h3>
@@ -527,7 +519,6 @@ export default function Home() {
         ============================================ */}
         <section
           id="work"
-          data-nav-theme="dark"
           className="relative overflow-x-clip bg-background pt-24 pb-4 md:pt-32 md:pb-8"
         >
           {/* Stacked cards: each project sticks at the top, and the next slides over it */}
@@ -593,17 +584,22 @@ export default function Home() {
                       <ArrowUpRight className="h-6 w-6" />
                     </span>
 
-                    <div className="relative border-t border-foreground/25 bg-background px-6 pb-6 pt-5 md:absolute md:inset-x-0 md:bottom-0 md:px-9 md:pb-[30px] md:pt-[22px]">
-                      <div className="flex flex-wrap gap-x-[18px] gap-y-1.5 font-body text-[16px] leading-[1.4] text-foreground/80">
+                    <div className="relative bg-foreground px-6 pb-6 pt-5 text-background md:absolute md:inset-x-0 md:bottom-0 md:px-10 md:pb-9 md:pt-[30px]">
+                      <div className="flex flex-wrap gap-2 font-body text-[16px] leading-[1.4] text-background">
                         {project.tags.map((tag) => (
-                          <span key={tag}>{tag}</span>
+                          <span
+                            key={tag}
+                            className="rounded-full border border-background/25 bg-background/10 px-3 py-1"
+                          >
+                            {tag}
+                          </span>
                         ))}
                       </div>
                       <div className="mt-3.5 grid gap-2.5 md:grid-cols-[1.1fr_1fr] md:items-start md:gap-12">
-                        <h3 className="font-display text-[clamp(1.9rem,3.4vw,2.9rem)] font-semibold uppercase leading-none tracking-[-0.02em] text-foreground">
+                        <h3 className="font-display text-[clamp(1.9rem,3.4vw,2.9rem)] font-semibold uppercase leading-none tracking-[-0.02em] text-background md:text-[clamp(2.4rem,4.6vw,3.9rem)]">
                           {project.title}
                         </h3>
-                        <p className="font-body text-[16px] leading-[1.55] text-foreground">
+                        <p className="font-body text-[16px] leading-[1.55] text-background md:text-[18px]">
                           {project.description}
                         </p>
                       </div>
@@ -662,7 +658,6 @@ export default function Home() {
         ============================================ */}
         <section
           id="faq"
-          data-nav-theme="dark"
           className="relative overflow-hidden bg-background pt-24 pb-24 md:pt-32 md:pb-32"
         >
           <div className="mx-auto w-full max-w-[84rem] px-6 md:px-12">
