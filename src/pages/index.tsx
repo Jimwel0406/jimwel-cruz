@@ -207,6 +207,15 @@ const services = [
   },
 ];
 
+// Showcase placement on the 12-column grid: wide, narrow, wide on the right,
+// narrow on the left. Narrow photos start lower so the page does not read as a grid.
+const showcaseSlots = [
+  { cell: "lg:col-start-1 lg:col-span-7", ratio: "aspect-[16/10]" },
+  { cell: "lg:col-start-8 lg:col-span-5 lg:mt-32", ratio: "aspect-[16/10]" },
+  { cell: "lg:col-start-1 lg:col-span-5", ratio: "aspect-[16/10]" },
+  { cell: "lg:col-start-6 lg:col-span-7 lg:mt-32", ratio: "aspect-[16/10]" },
+];
+
 // keeps hyphenated terms on one line so the hyphen never leaves a stub at a line end
 const keepTerm = (text: string) =>
   text.split(/(e-commerce|front-ends|back-ends)/i).map((part, i) =>
@@ -527,16 +536,10 @@ export default function Home() {
         {/* ============================================
             WORK
         ============================================ */}
-        {/* ============================================
-            WORK + FAQ
-            The project stack is pinned while the FAQ slides up over it,
-            so the cards stay on screen like a folder.
-        ============================================ */}
         <section
           id="work"
-          className="relative overflow-x-clip bg-background pt-24 pb-4 md:pt-32 md:pb-8"
+          className="relative overflow-x-clip bg-background pt-24 pb-24 md:pt-32 md:pb-32"
         >
-          {/* Stacked cards: each project sticks at the top, and the next slides over it */}
           <div className="mx-auto w-full max-w-[84rem] px-6 md:px-12">
             <h2
               data-reveal
@@ -546,8 +549,11 @@ export default function Home() {
               <span className="font-playfair normal-case italic">recent work</span>
             </h2>
 
-            <div className="mt-14 md:mt-20">
+            {/* Staggered scatter: wide and narrow photos alternate across a 12-column grid,
+                the narrow ones sit lower, and the copy is printed under each photo */}
+            <div className="mt-14 grid grid-cols-1 gap-y-14 md:mt-20 lg:grid-cols-12 lg:items-start lg:gap-x-8 lg:gap-y-16">
               {projects.map((project, i) => {
+                const slot = showcaseSlots[i % showcaseSlots.length]!;
                 const media =
                   "video" in project && project.video ? (
                     <video
@@ -569,57 +575,58 @@ export default function Home() {
                       src={project.image}
                       alt={`${project.title} — ${project.description}`}
                       fill
-                      sizes="(max-width: 1024px) 100vw, 75vw"
+                      sizes="(max-width: 768px) 100vw, 58vw"
                       priority={project.priority === true}
                       className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                     />
                   ) : null;
 
                 return (
-                  <Link
+                  <article
                     key={project.title}
-                    href={project.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`${project.title} — open the live site`}
-                    style={{ top: `calc(96px + ${i} * 18px)` }}
-                    className="group sticky mx-auto mb-7 block h-auto max-w-[75rem] overflow-hidden rounded-[20px] bg-card shadow-[0_-24px_48px_rgba(0,0,0,0.55)] md:h-[min(80vh,720px)]"
+                    data-reveal
+                    style={{ transitionDelay: `${(i % 2) * 0.12}s` }}
+                    className={slot.cell}
                   >
-                    <div className="relative aspect-[2/1] w-full md:absolute md:inset-0 md:aspect-auto md:h-full">
-                      {media}
-                    </div>
-                    <span
-                      className="pointer-events-none absolute inset-0 bg-black/0 transition-colors duration-300 group-hover:bg-black/25"
-                      aria-hidden="true"
-                    />
-                    <span
-                      className="pointer-events-none absolute right-5 top-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-foreground text-background opacity-0 transition-opacity duration-300 group-hover:opacity-100 md:right-8 md:top-8"
-                      aria-hidden="true"
+                    <Link
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${project.title} — open the live site`}
+                      className="group block focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground"
                     >
-                      <ArrowUpRight className="h-6 w-6" />
-                    </span>
-
-                    <div className="relative bg-foreground px-6 pb-6 pt-5 text-background md:absolute md:inset-x-0 md:bottom-0 md:px-10 md:pb-7 md:pt-6">
-                      <div className="flex flex-wrap gap-2 font-body text-[16px] leading-[1.4] text-background">
-                        {project.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="rounded-full border border-background/25 bg-background/10 px-3 py-1"
-                          >
-                            {tag}
-                          </span>
-                        ))}
+                      <div
+                        className={`relative w-full overflow-hidden rounded-2xl bg-card ${slot.ratio}`}
+                      >
+                        {media}
+                        <span
+                          className="pointer-events-none absolute right-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-foreground text-background opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                          aria-hidden="true"
+                        >
+                          <ArrowUpRight className="h-5 w-5" />
+                        </span>
                       </div>
-                      <div className="mt-3.5 grid gap-2.5 md:grid-cols-[1.1fr_1fr] md:items-start md:gap-12">
-                        <h3 className="font-display text-[clamp(1.9rem,3.4vw,2.9rem)] font-semibold uppercase leading-none tracking-[-0.02em] text-background md:text-[clamp(2.4rem,4.6vw,3.9rem)]">
+
+                      <div className="mt-6 flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+                        <h3 className="font-display text-[clamp(1.75rem,2.6vw,2.4rem)] font-semibold uppercase leading-none tracking-[-0.02em] text-foreground">
                           {project.title}
                         </h3>
-                        <p className="font-body text-[16px] leading-[1.55] text-background md:text-[18px]">
-                          {project.description}
-                        </p>
+                        <div className="flex flex-wrap gap-2 font-body text-[16px] leading-[1.4] text-foreground">
+                          {project.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="rounded-full border border-foreground/40 px-3 py-1"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  </Link>
+                      <p className="mt-4 max-w-[60ch] font-body text-[16px] leading-[1.6] text-foreground md:text-[18px]">
+                        {project.description}
+                      </p>
+                    </Link>
+                  </article>
                 );
               })}
             </div>
@@ -699,7 +706,13 @@ export default function Home() {
                       onClick={() => setOpenFaq(isOpen ? null : i)}
                       aria-expanded={isOpen}
                       aria-controls={`faq-panel-${i}`}
-                      className="block h-[400px] w-full rounded-2xl text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground md:h-[360px]"
+                      className={`block w-full rounded-2xl text-left transition-[height] duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground motion-reduce:transition-none md:h-[360px] ${
+                        isOpen
+                          ? faq.answer.length > 150
+                            ? "h-[400px]"
+                            : "h-[300px]"
+                          : "h-[240px]"
+                      }`}
                     >
                       <span
                         className={`relative block h-full w-full transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none [transform-style:preserve-3d] ${
