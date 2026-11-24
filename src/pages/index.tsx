@@ -411,7 +411,7 @@ export default function Home() {
                 </span>
               </h1>
 
-              <p className="mt-8 max-w-[440px] font-display text-[clamp(1.5rem,2.2vw,1.9rem)] font-medium leading-[1.5] tracking-[-0.01em] text-foreground lg:absolute lg:left-[6%] lg:leading-[1.75] lg:top-0 lg:mt-0 lg:max-w-[min(440px,38%)]">
+              <p className="hero-sentence mt-8 max-w-[440px] font-display text-[clamp(1.5rem,2.2vw,1.9rem)] font-medium leading-[1.5] tracking-[-0.01em] text-foreground lg:absolute lg:left-[6%] lg:leading-[1.75] lg:top-0 lg:mt-0 lg:max-w-[min(440px,38%)]">
                 I mostly build with{" "}
                 <span className="whitespace-nowrap">
                   <b className="inline-block rounded-[2px] bg-foreground px-2.5 py-0.5 font-semibold leading-[1.25] text-background">
@@ -497,19 +497,13 @@ export default function Home() {
               <ol data-reveal className="mt-20 grid gap-11 md:mt-28">
                 {timeline.map((entry) => (
                   <li key={entry.title} data-reveal className="work-step">
-                    <div className="flex flex-col items-start gap-2 md:inline-flex md:w-auto md:flex-row md:items-center md:gap-2.5 md:rounded-full md:border md:border-foreground/25 md:bg-foreground/[0.02] md:px-3.5 md:py-[9px] md:shadow-[0_0_28px_rgba(240,240,240,0.06)]">
+                    <div className="flex flex-wrap items-center gap-2">
                       {entry.when ? (
-                        <>
-                          <span className="whitespace-nowrap font-body text-[16px] leading-[1.4] text-foreground/80">
-                            {entry.when}
-                          </span>
-                          <span
-                            aria-hidden="true"
-                            className="hidden h-[3px] w-[3px] shrink-0 rounded-full bg-foreground/50 md:block"
-                          />
-                        </>
+                        <span className="inline-flex items-center whitespace-nowrap rounded-[2px] bg-foreground px-2.5 py-0.5 font-body text-[16px] font-semibold leading-[1.25] text-background">
+                          {entry.when}
+                        </span>
                       ) : null}
-                      <span className="inline-flex items-center rounded-full border border-foreground/25 bg-foreground/[0.02] px-3 py-1.5 font-body text-[16px] leading-[1.4] text-foreground shadow-[0_0_18px_rgba(240,240,240,0.06)] md:rounded-none md:border-0 md:bg-transparent md:p-0 md:shadow-none">
+                      <span className="inline-flex items-center rounded-[2px] bg-foreground px-2.5 py-0.5 font-body text-[16px] font-semibold leading-[1.25] text-background">
                         {entry.badge}
                       </span>
                     </div>
