@@ -246,3 +246,28 @@ html.lenis body {
 .lenis.lenis-stopped {
   overflow: hidden;
 }
+
+/* hero headline lines (desktop): the photo fades in first on its own, then each line fades in
+   by itself over it. Each line animates itself so the blend on the first line applies from the
+   first frame instead of switching on when a parent fade ends */
+@keyframes hero-line-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (min-width: 1024px) {
+  .hero-line {
+    animation: hero-line-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s both;
+  }
+  .hero-line-2 {
+    animation-delay: 1.1s;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-line {
+    animation: none;
+  }
+}

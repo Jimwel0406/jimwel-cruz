@@ -385,11 +385,12 @@ export default function Home() {
         ============================================ */}
         <section
           id="home"
-          className="relative flex flex-col justify-center overflow-hidden bg-background px-6 pb-[96px] pt-[120px] md:px-12 md:pb-[140px] md:pt-[160px]"
+          className="relative flex flex-col justify-center overflow-hidden bg-background px-6 pb-[120px] pt-[120px] md:px-12 md:pb-[160px] md:pt-[160px] lg:pb-[180px] lg:pt-[130px]"
         >
-          {/* Headline on the left, tall portrait on the right */}
-          <div className="mx-auto grid w-full max-w-[84rem] grid-cols-1 gap-14 md:grid-cols-[auto_minmax(0,440px)] md:items-center md:justify-center md:gap-12">
-            <div className="relative z-[1]">
+          {/* Giant headline over the portrait: on large screens the two lines of the
+              headline are placed over the photo, the tools sit top left */}
+          <div className="relative isolate mx-auto grid w-full max-w-[84rem] grid-cols-1 gap-14 md:grid-cols-[auto_minmax(0,440px)] md:items-center md:justify-center md:gap-12 lg:block lg:min-h-[min(72vh,660px)]">
+            <div className="relative z-[1] lg:contents">
               {/* Soft glow around the copy only, moving slowly behind the text */}
               <span
                 aria-hidden="true"
@@ -397,48 +398,57 @@ export default function Home() {
               />
               <h1
                 data-reveal
-                className="font-display text-[clamp(2rem,10.4vw,2.625rem)] font-medium leading-[1.1] tracking-[-0.03em] text-foreground md:text-[clamp(2.5rem,calc(7.5vw_-_16px),5.75rem)] md:leading-[1.04]"
+                className="font-display text-[clamp(2rem,10.4vw,2.625rem)] font-medium leading-[1.1] tracking-[-0.03em] text-foreground md:text-[clamp(2.5rem,calc(7.5vw_-_16px),5.75rem)] md:leading-[1.04] lg:pointer-events-none lg:absolute lg:inset-0 lg:!transform-none lg:!opacity-100 lg:text-[inherit]"
               >
-                I&apos;m Jimwel,
-                <br />
-                and I build
-                <br />
-                <span className="font-playfair">web applications.</span>
+                <span className="hero-line lg:absolute lg:z-20 lg:mix-blend-difference lg:left-[50%] lg:top-[calc(12vh-0.55em)] lg:block lg:whitespace-nowrap lg:text-[clamp(3.5rem,8.2vw,7.5rem)] lg:leading-none">
+                  I&apos;m Jimwel,
+                </span>
+                <br className="lg:hidden" />
+                <span className="hero-line hero-line-2 lg:absolute lg:z-20 lg:bottom-0 lg:left-0 lg:block lg:whitespace-nowrap lg:text-[clamp(3rem,6.8vw,7.5rem)] lg:leading-[0.95]">
+                  and I build
+                  <br />
+                  <span className="font-playfair">web applications.</span>
+                </span>
               </h1>
 
-              <div className="mt-8 flex w-full max-w-[352px] items-center justify-between rounded-full border border-foreground/25 bg-foreground/[0.02] px-5 py-3 shadow-[0_0_44px_rgba(240,240,240,0.08)]">
-                <span className="font-display text-[clamp(1.25rem,2.2vw,1.6rem)] font-medium leading-none tracking-[-0.01em] text-foreground">
-                  Shopify
+              <p className="mt-8 max-w-[440px] font-display text-[clamp(1.5rem,2.2vw,1.9rem)] font-medium leading-[1.5] tracking-[-0.01em] text-foreground lg:absolute lg:left-[6%] lg:leading-[1.75] lg:top-0 lg:mt-0 lg:max-w-[min(440px,38%)]">
+                I mostly build with{" "}
+                <span className="whitespace-nowrap">
+                  <b className="inline-block rounded-[2px] bg-foreground px-2.5 py-0.5 font-semibold leading-[1.25] text-background">
+                    Shopify
+                  </b>
+                  ,
+                </span>{" "}
+                <span className="whitespace-nowrap">
+                  <b className="inline-block rounded-[2px] bg-foreground px-2.5 py-0.5 font-semibold leading-[1.25] text-background">
+                    Next.js
+                  </b>
+                </span>{" "}
+                and{" "}
+                <span className="whitespace-nowrap">
+                  <b className="inline-block rounded-[2px] bg-foreground px-2.5 py-0.5 font-semibold leading-[1.25] text-background">
+                    Node.js
+                  </b>
+                  .
                 </span>
-                <span
-                  aria-hidden="true"
-                  className="h-1 w-1 rounded-full bg-foreground/50"
-                />
-                <span className="font-display text-[clamp(1.25rem,2.2vw,1.6rem)] font-medium leading-none tracking-[-0.01em] text-foreground">
-                  Next.js
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="h-1 w-1 rounded-full bg-foreground/50"
-                />
-                <span className="font-display text-[clamp(1.25rem,2.2vw,1.6rem)] font-medium leading-none tracking-[-0.01em] text-foreground">
-                  Node.js
-                </span>
-              </div>
+              </p>
             </div>
 
-            <div data-reveal className="relative w-full md:max-w-[440px] md:justify-self-end">
-              <div className="relative z-[1] aspect-[3/4] overflow-hidden bg-card">
+            <div
+              data-reveal
+              className="relative w-full md:max-w-[440px] md:justify-self-end lg:absolute lg:right-0 lg:top-[12vh] lg:max-w-none lg:w-[56%] lg:!transform-none"
+            >
+              <div className="relative z-[1] aspect-[3/4] overflow-hidden bg-card lg:aspect-[3/2]">
                 <Image
-                  src="/assets/me.jpg"
+                  src="/assets/me-hero.jpg"
                   alt="Jimwel Cruz"
                   fill
-                  sizes="(min-width: 768px) 440px, 100vw"
+                  sizes="(min-width: 1024px) 56vw, (min-width: 768px) 440px, 100vw"
                   quality={90}
                   priority
                   draggable={false}
                   onContextMenu={(e) => e.preventDefault()}
-                  className="select-none object-cover"
+                  className="select-none object-cover object-top"
                 />
               </div>
             </div>
