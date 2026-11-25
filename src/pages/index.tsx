@@ -521,7 +521,7 @@ export default function Home() {
                     key={group.title}
                     className="grid gap-3 border-b border-foreground/25 py-7 md:grid-cols-[240px_minmax(0,1fr)] md:gap-8 md:py-8"
                   >
-                    <h4 className="font-display text-[22px] font-medium leading-[1.3]">
+                    <h4 className="w-fit self-start rounded-[2px] bg-foreground px-2.5 py-0.5 font-body text-[16px] font-semibold leading-[1.25] text-background">
                       {group.title}
                     </h4>
                     <ul className="grid gap-x-10 gap-y-1.5 font-body text-[18px] leading-[1.5] md:grid-cols-2">
@@ -619,7 +619,7 @@ export default function Home() {
                           {project.tags.map((tag) => (
                             <span
                               key={tag}
-                              className="rounded-full border border-foreground/40 px-3 py-1"
+                              className="rounded-[2px] bg-foreground px-2.5 py-0.5 font-semibold leading-[1.25] text-background"
                             >
                               {tag}
                             </span>
